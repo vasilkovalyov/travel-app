@@ -1,0 +1,21 @@
+.select {
+  display: grid;
+  row-gap: 8px;
+
+  &__label {
+    font-size: var(--app-text-size-sm);
+    font-weight: 800;
+  }
+
+  &__field {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 32px 12px 12px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: var(--app-text-size-base);
+    border: 1px solid rgb(var(--app-color-black));
+    display: block;
+    outline: none;
+  }
+}
