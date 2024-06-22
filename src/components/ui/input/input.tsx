@@ -10,13 +10,14 @@ export default function Input({
   type,
   id,
   label,
+  className,
   ...props
 }: InputProps) {
   const [value, setValue] = useState<string>('');
   const modificationCn = cn({});
 
   return (
-    <div className={cn('input', modificationCn)}>
+    <div className={cn('input', modificationCn, className)}>
       {label && (
         <label htmlFor={id} className="input__label">
           {label}
@@ -30,7 +31,7 @@ export default function Input({
         className="input__field"
         value={value}
         onChange={(e) => {
-          setValue(e.target.value);
+          setValue(e.currentTarget.value);
           onChange && onChange(e);
         }}
         {...props}

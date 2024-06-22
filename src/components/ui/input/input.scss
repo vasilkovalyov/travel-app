@@ -3,6 +3,8 @@
 
 .input {
   &__field {
+    width: 100%;
+    outline-color: rgb(var(--app-color-black));
   }
 
   &__label {
