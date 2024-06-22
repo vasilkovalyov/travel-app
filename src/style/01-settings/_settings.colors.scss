@@ -1,33 +1,13 @@
 :root {
   --app-color-light: 255 255 255;
+  --app-color-black: 0 0 0;
   --app-color-dark-light: 247 244 243;
 
   --app-color-dark: 3 38 59;
   --app-color-primary: 11 60 128;
+  --app-color-primary-dark: 7 50 110;
   --app-color-secondary: 255 92 0;
-
-  // --app-color-green: 30 215 96; // #1ed760
-  // --app-color-blue: 80 155 245; // #509af5
-
-  // --app-color-grey: 179 179 179; // #b3b3b3
-
-  // --app-color-accent: rgb(var(--app-color-green));
-
-  // --app-color-subdued: 167 167 167;
-
-  // --app-color-dark-base: 18 18 18; // #121212
-  // --app-color-dark-highlight: 26 26 26; // #1a1a1a
-
-  // --app-color-elevated-base: 36 36 36; // #242424
-  // --app-color-elevated-highlight: 42 42 42; // #2a2a2a
-
-  // // --app-color-light-tinted-base: rgb(var(--app-color-light), 0.7);
-  // --app-color-light-tinted-highlight: rgb(var(--app-color-light) / 0.7);
-
-  // // --app-color-dark-tinted-base: rgb(var(--app-color-dark), 0.7);
-  // --app-color-dark-tinted-highlight: rgb(var(--app-color-dark) / 0.7);
-
-  // --app-text-subdued: rgb(var(--app-color-subdued));
+  --app-color-secondary-dark: 229 82 0;
 
   --app-base-bg: rgb(var(--app-color-dark-light));
 }

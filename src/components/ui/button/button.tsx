@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 import { ButtonProps } from './button.type';
-import './button.scss';
 import { Icon } from '../icon';
+
+import './button.scss';
 
 const Button = forwardRef(
   (
@@ -17,15 +18,38 @@ const Button = forwardRef(
       iconSize,
       contentReversed,
       type = 'button',
+      size = 'sm',
+      view = 'fill',
+      variant = 'primary',
       ...props
     }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement | HTMLAnchorElement>,
   ) => {
-    const modificationCn = cn({
-      'btn--loading': isLoading,
-      'btn--link': href,
-      'btn--content-reversed': contentReversed,
+    const modificationSizeCn = cn({
+      'btn--sm': size === 'sm',
+      'btn--md': size === 'md',
+      'btn--lg': size === 'lg',
+      'btn--xl': size === 'xl',
     });
+    const modificationViewCn = cn({
+      'btn--fill': view === 'fill',
+      'btn--outline': view === 'outline',
+    });
+    const modificationVariantCn = cn({
+      'btn--primary': variant === 'primary',
+      'btn--secondary': variant === 'secondary',
+    });
+
+    const modificationCn = cn(
+      {
+        'btn--loading': isLoading,
+        'btn--link': href,
+        'btn--content-reversed': contentReversed,
+      },
+      modificationSizeCn,
+      modificationViewCn,
+      modificationVariantCn,
+    );
 
     const classnames = cn('btn', modificationCn, className);
 

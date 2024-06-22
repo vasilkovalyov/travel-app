@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { InputProps } from './input.type';
 
-import './search.scss';
+import './input.scss';
 
 export default function Input({
   onChange,

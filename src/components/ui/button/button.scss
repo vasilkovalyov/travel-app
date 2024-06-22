@@ -1,7 +1,37 @@
-@use 'styles/03-mixins/_common.mixins' as common;
+@use '@/style/03-mixins/common.mixins' as common;
+
+:root {
+  --app-button-color: rgb(var(--app-color-light));
+  --app-button-bg: rgb(var(--app-color-primary));
+  --app-button-border-color: rgb(var(--app-color-primary));
+  --app-button-border-radius: 16px;
+  --app-button-height: 32px;
+  --app-button-padding-inline: 16px;
+  --app-button-font-size: var(--app-text-size-sm);
+}
 
 .btn {
   @include common.animate(color background-color);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  color: var(--app-button-color);
+  border-width: 2px;
+  border-style: solid;
+  font-weight: 800;
+  background-color: var(--app-button-bg);
+  font-size: var(--app-button-font-size);
+  padding-inline: var(--app-button-padding-inline);
+  height: var(--app-button-height);
+  border-color: var(--app-button-border-color);
+  border-radius: var(--app-button-border-radius);
+  cursor: pointer;
+
+  &:hover {
+    --app-button-bg: rgb(var(--app-color-primary-dark));
+  }
 
   &--content-reversed {
     flex-direction: row-reverse;
@@ -10,5 +40,64 @@
   &__text {
     display: flex;
     align-items: center;
+  }
+
+  &--md {
+    --app-button-border-radius: 18px;
+    --app-button-height: 36px;
+  }
+
+  &--lg {
+    --app-button-border-radius: 24px;
+    --app-button-height: 48px;
+    --app-button-padding-inline: 20px;
+    --app-button-font-size: var(--app-text-size-base);
+  }
+
+  &--xl {
+    --app-button-border-radius: 34px;
+    --app-button-height: 70px;
+    --app-button-padding-inline: 20px;
+    --app-button-font-size: var(--app-text-size-lg);
+  }
+
+  &--fill.btn--secondary {
+    &:hover {
+      background-color: rgb(var(--app-color-secondary-dark));
+    }
+  }
+
+  &--outline {
+    --app-button-bg: transparent;
+
+    &:hover {
+      --app-button-bg: rgb(var(--app-color-primary));
+      --app-button-color: rgb(var(--app-color-light));
+    }
+  }
+
+  &--primary.btn--outline {
+    --app-button-color: rgb(var(--app-color-primary));
+    --app-button-border-color: rgb(var(--app-color-primary));
+
+    &:hover {
+      --app-button-color: rgb(var(--app-color-light));
+    }
+  }
+
+  &--secondary {
+    --app-button-bg: rgb(var(--app-color-secondary));
+    --app-button-border-color: rgb(var(--app-color-secondary));
+  }
+
+  &--secondary.btn--outline {
+    --app-button-bg: transparent;
+    --app-button-border-color: rgb(var(--app-color-secondary));
+    --app-button-color: rgb(var(--app-color-secondary));
+
+    &:hover {
+      --app-button-color: rgb(var(--app-color-light));
+      --app-button-bg: rgb(var(--app-color-secondary));
+    }
   }
 }

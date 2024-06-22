@@ -1,0 +1,47 @@
+.checkbox {
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+
+  &__mark-box {
+    position: relative;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__mark {
+    width: 100%;
+    height: 100%;
+    color: rgb(var(--app-color-light));
+    background-color: rgb(var(--app-color-primary));
+    border-color: transparent;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      content: '\e903';
+      font-family: 'icomoon' !important;
+      opacity: 0;
+    }
+  }
+
+  &__field {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+
+    &:checked + .checkbox__mark::before {
+      opacity: 1;
+    }
+  }
+
+  &__label {
+    line-height: 1.5;
+  }
+}
