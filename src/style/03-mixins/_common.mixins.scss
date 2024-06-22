@@ -1,0 +1,67 @@
+@use '../01-settings/settings.breakpoints' as breakpoints;
+
+// transition
+@mixin transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/// Animate css properties
+// usage
+// scss - @include animate(color);
+//     or @include animate(color width);
+//     or @include animate(color width, 1s, linear);
+//
+$animation-speed: 0.3s !default;
+
+@mixin animate($properties, $duration: $animation-speed, $easing: ease-in-out) {
+  $list: ();
+  @each $prop in $properties {
+    $str: #{$prop} #{$duration} #{$easing};
+    $list: join($list, #{$str}, comma);
+  }
+  transition: $list;
+}
+
+@mixin hover() {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin media($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (min-width: breakpoints.$mobile) {
+      @content;
+    }
+  } @else if $breakpoint == mobile_md {
+    @media (min-width: breakpoints.$mobile_md) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media (min-width: breakpoints.$tablet) {
+      @content;
+    }
+  } @else if $breakpoint == tablet_md {
+    @media (min-width: breakpoints.$tablet_md) {
+      @content;
+    }
+  } @else if $breakpoint == tablet_lg {
+    @media (min-width: breakpoints.$tablet_lg) {
+      @content;
+    }
+  } @else if $breakpoint == laptop {
+    @media (min-width: breakpoints.$laptop) {
+      @content;
+    }
+  } @else if $breakpoint == laptop_md {
+    @media (min-width: breakpoints.$laptop_md) {
+      @content;
+    }
+  } @else if $breakpoint == laptop_lg {
+    @media (min-width: breakpoints.$laptop_lg) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.2;
+}
+
+body {
+  font-family: var(--app-font-family);
+  font-size: var(--app-text-size-base);
+  color: rgb(var(--app-color-primary));
+  background-color: var(--app-base-bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  touch-action: none;
+  color: inherit;
+  text-decoration: none;
+}

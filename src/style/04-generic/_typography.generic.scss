@@ -1,0 +1,26 @@
+@use '../03-mixins/common.mixins' as common;
+
+h1 {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+h5 {
+  font-size: 16px;
+  font-weight: 800;
+}

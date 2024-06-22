@@ -1,0 +1,14 @@
+@use 'styles/03-mixins/_common.mixins' as common;
+
+.btn {
+  @include common.animate(color background-color);
+
+  &--content-reversed {
+    flex-direction: row-reverse;
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+  }
+}

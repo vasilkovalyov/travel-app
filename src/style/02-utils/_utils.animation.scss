@@ -1,0 +1,21 @@
+@use '../04-generic/animations.generic' as animation;
+
+.pulse-animation {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    animation: 2s linear 0.5s infinite normal none running
+      skeletonPulseAnimation;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--app-color-light) / 0.08),
+      transparent
+    );
+    position: absolute;
+    transform: translateX(-100%);
+    inset: 0px;
+  }
+}

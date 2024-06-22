@@ -1,0 +1,32 @@
+.text-center {
+  text-align: center;
+}
+
+.text-xs {
+  font-size: var(--app-text-size-xs);
+}
+
+.text-sm {
+  font-size: var(--app-text-size-sm);
+}
+
+.text-light {
+  color: rgb(var(--app-color-light));
+}
+
+.text-600 {
+  font-weight: 600;
+}
+
+.text-800 {
+  font-weight: 800;
+}
+
+.clamp-one-line {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space: unset;
+  word-break: break-all;
+  overflow: hidden;
+}
