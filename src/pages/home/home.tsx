@@ -1,3 +1,4 @@
+import { BlockGuestsClass } from '@/blocks';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
 
 export default function Home() {
@@ -78,6 +79,8 @@ export default function Home() {
         <Input />
         <br />
         <FieldPlaceholder text="Anywhere" />
+        <br />
+        <BlockGuestsClass />
       </div>
     </div>
   );

@@ -1,0 +1,54 @@
+.guest-counter {
+  display: grid;
+  column-gap: 8px;
+  grid-template-columns: 1fr 160px;
+  padding: 8px 0;
+
+  &__content {
+    display: grid;
+    row-gap: 2px;
+    font-size: var(--app-text-size-sm);
+  }
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &__description {
+    color: rgb(var(--app-color-grey));
+  }
+}
+
+.guests-class {
+  display: grid;
+  row-gap: 16px;
+
+  &__panel {
+    padding: 16px 12px;
+    background-color: rgb(var(--app-color-light));
+    border-radius: 12px;
+    display: grid;
+    row-gap: 24px;
+  }
+
+  &__room {
+    display: grid;
+    row-gap: 8px;
+  }
+
+  &__counter-list {
+    display: grid;
+    grid-row: 24px;
+  }
+
+  &__childrens {
+    display: grid;
+    row-gap: 8px;
+  }
+
+  &__childrens-selects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}

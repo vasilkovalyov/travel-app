@@ -15,6 +15,7 @@
 
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   border-radius: 16px;
   color: var(--app-button-color);
@@ -31,6 +32,11 @@
 
   &:hover {
     --app-button-bg: rgb(var(--app-color-primary-dark));
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+    pointer-events: none;
   }
 
   &--content-reversed {
