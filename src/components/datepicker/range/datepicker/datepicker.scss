@@ -5,13 +5,15 @@
   --rdp-caption-font-size: 18px;
   --rdp-accent-color: rgb(var(--app-color-primary));
   --rdp-accent-color-dark: rgb(var(--app-color-primary));
-  --rdp-background-color: #e7edff;
-  --rdp-background-color-dark: #180270;
+  --rdp-background-color: rgb(var(--app-color-blue-light));
+  --rdp-background-color-dark: rgb(var(--app-color-primary));
   --rdp-outline: 2px solid rgb(var(--app-color-primary));
   --rdp-outline-selected: 2px solid rgb(var(--app-color-primary));
-  --rdp-selected-color: #fff;
+  --rdp-selected-color: rgb(var(--app-color-light));
 
+  margin: 0;
   max-width: max-content;
+  background-color: rgb(var(--app-color-light));
 
   .rdp-months {
     gap: 6px;
@@ -19,6 +21,7 @@
 
   .rdp-month {
     margin: 0;
+    padding: 12px 8px;
   }
 
   .rdp-head_cell {

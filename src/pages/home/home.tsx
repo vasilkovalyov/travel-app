@@ -1,4 +1,4 @@
-import { BlockDates, BlockGuestsClass } from '@/blocks';
+import { BlockDates, BlockGuestsClass, BlockMonths } from '@/blocks';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
 
 export default function Home() {
@@ -85,6 +85,8 @@ export default function Home() {
         <br />
 
         <BlockDates />
+        <br />
+        <BlockMonths />
         <br />
       </div>
     </div>

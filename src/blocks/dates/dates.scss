@@ -1,4 +1,15 @@
-.dates {
+.block-dates {
+  display: grid;
+  row-gap: 12px;
+
+  &__footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .datepicker {
+    margin: 0 auto;
+  }
 }
 
 .dates-info {
