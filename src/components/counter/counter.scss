@@ -5,6 +5,22 @@
   column-gap: 4px;
   grid-template-columns: repeat(3, 48px);
 
+  &__middle {
+    display: grid;
+    row-gap: 4px;
+  }
+
+  &__value {
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: var(--app-text-size-xs);
+    text-align: center;
+  }
+
   &__button {
     width: 48px;
     height: 48px;

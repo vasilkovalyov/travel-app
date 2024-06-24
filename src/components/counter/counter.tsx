@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import cn from 'classnames';
 import { Button, IconEnum, Input } from '../ui';
 import { CountaerProps } from './counter.type';
 
@@ -8,6 +9,9 @@ export default function Counter({
   id,
   value = 0,
   minValue = 0,
+  input = true,
+  title,
+  className,
   onChange,
 }: CountaerProps) {
   const [counterValue, setCounterValue] = useState<number>(0);
@@ -30,7 +34,7 @@ export default function Counter({
   }
 
   return (
-    <div className="counter">
+    <div className={cn('counter', className)}>
       <Button
         view="outline"
         className="counter__button"
@@ -39,7 +43,14 @@ export default function Counter({
         {...{ disabled: counterValue === minValue }}
         onClick={() => onHandleClick('dec')}
       ></Button>
-      <Input id={id} value={counterValue} className="counter__field" />
+      {input ? (
+        <Input id={id} value={counterValue} className="counter__field" />
+      ) : (
+        <div className="counter__middle">
+          <span className="counter__value">{counterValue}</span>
+          {title && <span className="counter__title">{title}</span>}
+        </div>
+      )}
       <Button
         view="outline"
         className="counter__button"
