@@ -1,0 +1,91 @@
+@import 'react-day-picker/dist/style.css';
+
+.datepicker {
+  --rdp-cell-size: 44px;
+  --rdp-caption-font-size: 18px;
+  --rdp-accent-color: rgb(var(--app-color-primary));
+  --rdp-accent-color-dark: rgb(var(--app-color-primary));
+  --rdp-background-color: #e7edff;
+  --rdp-background-color-dark: #180270;
+  --rdp-outline: 2px solid rgb(var(--app-color-primary));
+  --rdp-outline-selected: 2px solid rgb(var(--app-color-primary));
+  --rdp-selected-color: #fff;
+
+  max-width: max-content;
+
+  .rdp-months {
+    gap: 6px;
+  }
+
+  .rdp-month {
+    margin: 0;
+  }
+
+  .rdp-head_cell {
+    color: rgb(var(--app-color-grey));
+    font-size: var(--app-text-size-sm);
+    text-transform: capitalize;
+    font-weight: 400;
+  }
+
+  .rdp-caption_dropdowns {
+    border: 1px solid rgb(var(--app-color-primary));
+    height: 48px;
+    border-radius: 24px;
+    padding: 0px 20px;
+  }
+
+  .rdp-dropdown {
+    cursor: pointer;
+  }
+
+  .rdp-caption_label {
+    display: inline-flex;
+    align-items: center;
+    color: rgb(var(--app-color-dark));
+    font-size: var(--app-text-size-base);
+    font-weight: 800;
+    padding-inline: 4px;
+    white-space: nowrap;
+  }
+
+  .rdp-button {
+    &:hover:not([disabled]):not(.rdp-day_selected) {
+      background-color: transparent;
+      border-color: rgb(var(--app-color-primary));
+    }
+  }
+
+  .rdp-day {
+    border-radius: 10px;
+    font-size: var(--app-text-size-sm);
+    color: rgb(var(--app-color-black));
+    font-weight: 600;
+
+    &:not(.rdp-day_selected) {
+      &:hover {
+        background-color: transparent;
+        border: 2px solid rgb(var(--app-color-primary));
+      }
+    }
+  }
+
+  .rdp-day_selected {
+    color: rgb(var(--app-color-light));
+  }
+
+  .rdp-day_range_middle {
+    color: rgb(var(--app-color-primary));
+    background-color: rgb(var(--app-color-blue-light));
+  }
+
+  .rdp-table {
+    border-spacing: 4px;
+    border-collapse: unset;
+  }
+}
+
+.rdp:not([dir='rtl']) .rdp-day_range_start:not(.rdp-day_range_end),
+.rdp:not([dir='rtl']) .rdp-day_range_end:not(.rdp-day_range_start) {
+  border-radius: 10px;
+}
