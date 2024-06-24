@@ -73,6 +73,19 @@
     }
   }
 
+  &--transparent {
+    --app-button-bg: transparent;
+    --app-button-border-color: transparent;
+    --app-button-color: rgb(var(--app-color-primary));
+    --app-button-padding-inline: 0;
+    text-decoration: underline;
+    font-weight: 600;
+
+    &:hover {
+      --app-button-bg: transparent;
+    }
+  }
+
   &--outline {
     --app-button-bg: transparent;
 

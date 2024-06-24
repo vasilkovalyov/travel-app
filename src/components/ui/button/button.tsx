@@ -34,6 +34,7 @@ const Button = forwardRef(
     const modificationViewCn = cn({
       'btn--fill': view === 'fill',
       'btn--outline': view === 'outline',
+      'btn--transparent': view === 'transparent',
     });
     const modificationVariantCn = cn({
       'btn--primary': variant === 'primary',

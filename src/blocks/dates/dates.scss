@@ -1,0 +1,20 @@
+.dates {
+}
+
+.dates-info {
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: rgb(var(--app-color-light));
+  text-align: center;
+  font-size: var(--app-text-size-sm);
+  color: rgb(var(--app-color-dark));
+  height: 48px;
+
+  &__date {
+    font-weight: 800;
+  }
+}

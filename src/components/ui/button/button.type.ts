@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 import { IconEnum } from '../icon';
 
 type ButtonSizeType = 'sm' | 'md' | 'lg' | 'xl';
-type ButtonViewType = 'outline' | 'fill';
+type ButtonViewType = 'outline' | 'fill' | 'transparent';
 type ButtonVariantType = 'primary' | 'secondary';
 
 export type ButtonProps = {
