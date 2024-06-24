@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import cn from 'classnames';
-import { addMonths, format } from 'date-fns';
+import { addMonths, format, startOfMonth, endOfMonth } from 'date-fns';
 
 import { Counter } from '@/components';
 import { Button } from '@/components/ui';
@@ -16,7 +16,7 @@ type MonthType = {
 
 function getNextMonths(countMonth: number): MonthType[] {
   const months: MonthType[] = [];
-  const currentDate = new Date();
+  const currentDate = startOfMonth(new Date());
 
   for (let i = 0; i < countMonth; i++) {
     const futureDate = addMonths(currentDate, i);
@@ -34,18 +34,20 @@ function getNextMonths(countMonth: number): MonthType[] {
 export default function BlockMonths() {
   const countNextMonth = 18;
   const defaultDayCount = 7;
+  const messageMonthsDate = 'Select a month';
 
   const [days, setDays] = useState<number>(defaultDayCount);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const messageMonthsDate = 'Select a month';
-
-  const getMessageForDate = () => {
-    return messageMonthsDate;
-  };
-
   function onHandleChangeDays(days: number) {
     setDays(days);
+  }
+
+  function onHandleSelectMonth(date: Date) {
+    const lastDayMonthDate = endOfMonth(date);
+    console.log(lastDayMonthDate);
+
+    setSelectedDate(date);
   }
 
   return (
@@ -78,7 +80,7 @@ export default function BlockMonths() {
                 className="month-btn__input"
                 value={value}
                 checked={isSelected}
-                onChange={() => setSelectedDate(date)}
+                onChange={() => onHandleSelectMonth(date)}
               />
               <span className="month-btn__title">{title}</span>
             </label>
@@ -103,7 +105,7 @@ export default function BlockMonths() {
             </Button>
           </>
         ) : (
-          getMessageForDate()
+          messageMonthsDate
         )}
       </div>
     </div>
