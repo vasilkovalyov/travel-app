@@ -5,4 +5,5 @@ export enum IconEnum {
   SEARCH = 'search',
   MINUS = 'minus',
   PLUS = 'plus',
+  CROSS = 'cross',
 }

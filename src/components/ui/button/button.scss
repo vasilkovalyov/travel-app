@@ -29,6 +29,7 @@
   border-color: var(--app-button-border-color);
   border-radius: var(--app-button-border-radius);
   cursor: pointer;
+  appearance: none;
 
   &:hover {
     --app-button-bg: rgb(var(--app-color-primary-dark));
@@ -46,6 +47,11 @@
   &__text {
     display: flex;
     align-items: center;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   &--md {

@@ -1,4 +1,5 @@
 import { BlockDates, BlockGuestsClass, BlockMonths } from '@/blocks';
+import { FilterToggler } from '@/components';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
 
 export default function Home() {
@@ -6,6 +7,26 @@ export default function Home() {
     <div>
       <h1>Home page</h1>
       <div>
+        <div
+          style={{
+            backgroundColor: '#ffffff',
+            padding: '40px',
+            display: 'grid',
+            gap: '14px',
+            gridTemplateColumns: 'repeat(3, 40%)',
+          }}
+        >
+          <FilterToggler
+            label="Going to"
+            placeholder="Destination or hotel name"
+          />
+          <FilterToggler
+            label="Going to"
+            text="London Gatwick (+ 5 others)"
+            placeholder="Destination or hotel name"
+          />
+        </div>
+        <br />
         <div>
           <Checkbox id="check" label="Checkbox" />
         </div>

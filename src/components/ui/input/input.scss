@@ -5,6 +5,8 @@
   &__field {
     width: 100%;
     outline-color: rgb(var(--app-color-black));
+    appearance: none;
+    border: none;
   }
 
   &__label {
