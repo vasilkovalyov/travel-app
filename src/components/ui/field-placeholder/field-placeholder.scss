@@ -1,18 +1,27 @@
 .field-placeholder {
-  display: inline-flex;
+  display: grid;
   align-items: center;
-  width: 100%;
+  grid-row: 4px;
+  max-width: 100%;
+  width: auto;
+  min-width: 0;
   height: 36px;
   border-radius: 12px;
   padding-inline: 12px;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
+  color: rgb(var(--app-color-black));
   background-color: rgb(var(--app-color-dark-light));
 
-  &__text {
+  &__title {
+    width: 100%;
+    min-width: 0;
     font-weight: 800;
     line-height: 1.4;
     font-size: var(--app-text-size-sm);
-    color: var(--app-color-black);
+  }
+
+  &__description {
+    font-size: var(--app-text-size-sm);
   }
 }

@@ -100,7 +100,7 @@ export default function Home() {
         <br />
         <Input />
         <br />
-        <FieldPlaceholder text="Anywhere" />
+        <FieldPlaceholder title="Anywhere" />
         <br />
         <BlockGuestsClass />
         <br />

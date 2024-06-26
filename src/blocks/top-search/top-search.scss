@@ -1,0 +1,102 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+.top-search {
+  --grid-gap: 8px;
+
+  padding-block: 20px;
+  background-color: rgb(var(--app-color-light));
+
+  &__container {
+    display: grid;
+    row-gap: 12px;
+  }
+
+  &__toggler {
+    display: none;
+    justify-content: flex-end;
+  }
+
+  &__toggler--visible {
+    display: flex;
+  }
+
+  &__filters {
+    display: none;
+    min-width: 0px;
+    align-items: flex-start;
+    flex-flow: wrap;
+    gap: var(--grid-gap);
+
+    .filter-toggler {
+      flex-grow: 1;
+      max-width: 100%;
+      width: auto;
+      flex-basis: 100%;
+
+      @include common.media(tablet) {
+        flex-basis: 0px;
+      }
+    }
+  }
+
+  &__search-btn {
+    width: 100%;
+
+    @include common.media(tablet) {
+      width: auto;
+    }
+  }
+
+  &__filters--visible {
+    display: flex;
+  }
+
+  &__placeholders {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    align-items: center;
+    gap: var(--grid-gap);
+    background-color: rgb(var(--app-color-dark-light));
+    border-radius: 12px;
+    padding: 10px 12px;
+
+    @include common.media(tablet) {
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+
+  &__placeholders--hide {
+    display: none;
+  }
+
+  &__placeholders-grid {
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    flex-direction: row;
+    gap: var(--grid-gap);
+
+    @include common.media(tablet) {
+      display: grid;
+    }
+  }
+
+  &__placeholders-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  &__placeholder-common {
+    padding-inline: 0;
+
+    @include common.media(tablet) {
+      display: none;
+      padding-inline: 12px;
+    }
+  }
+}

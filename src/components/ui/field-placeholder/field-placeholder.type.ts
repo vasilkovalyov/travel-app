@@ -1,3 +1,6 @@
 export type FieldPlaceholderProps = {
-  text: string;
+  title: string;
+  description?: string;
+  extend?: boolean;
+  className?: string;
 };

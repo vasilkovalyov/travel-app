@@ -1,7 +1,7 @@
 @use '@/style/03-mixins/common.mixins' as common;
 
 :root {
-  --app-filter-toggler-label-top-position: 24px;
+  --app-filter-toggler-label-top-position: 18px;
   --app-filter-toggler-label-transform: none;
   --app-filter-toggler-label-max-width: calc(
     100% - var(--app-filter-toggler-label-top-position)
@@ -10,11 +10,22 @@
   --app-filter-toggler-field-border-color: transparent;
 }
 
+%label_position {
+  --app-filter-toggler-label-transform: translateY(-12px) scale(0.75);
+  --app-filter-toggler-label-max-width: calc(
+    133% - var(--app-filter-toggler-label-top-position)
+  );
+
+  @include common.media(tablet) {
+    --app-filter-toggler-label-transform: translateY(-8px) scale(0.75);
+  }
+}
+
 @mixin field {
   position: relative;
   z-index: 1;
-  min-height: 70px;
-  padding: 30px 40px 14px 12px;
+  min-height: 50px;
+  padding: 18px 30px 10px 12px;
   border-radius: var(--app-filter-toggler-border-radius);
   font-size: inherit;
   background-color: transparent;
@@ -26,6 +37,11 @@
   background-color: transparent;
   cursor: pointer;
   justify-content: flex-start;
+
+  @include common.media(tablet) {
+    min-height: 70px;
+    padding: 30px 40px 14px 12px;
+  }
 }
 
 .filter-toggler {
@@ -36,14 +52,16 @@
   border-radius: var(--app-filter-toggler-border-radius);
   overflow: hidden;
 
+  @include common.media(tablet) {
+    --app-filter-toggler-label-top-position: 24px;
+  }
+
   &--filled {
-    --app-filter-toggler-label-transform: translateY(-8px) scale(0.75);
-    --app-filter-toggler-label-max-width: calc(133% - 24px);
+    @extend %label_position;
   }
 
   &--focused {
-    --app-filter-toggler-label-transform: translateY(-8px) scale(0.75);
-    --app-filter-toggler-label-max-width: calc(133% - 24px);
+    @extend %label_position;
     --app-filter-toggler-field-border-color: rgb(0 0 0);
   }
 
@@ -52,14 +70,16 @@
     left: 12px;
     top: var(--app-filter-toggler-label-top-position);
     max-width: var(--app-filter-toggler-label-max-width);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    font-size: var(--app-text-size-sm);
     pointer-events: none;
     transform-origin: top left;
     z-index: 1;
     font-weight: 600;
     transform: var(--app-filter-toggler-label-transform);
+
+    @include common.media(tablet) {
+      font-size: var(--app-text-size-base);
+    }
   }
 
   &__field {

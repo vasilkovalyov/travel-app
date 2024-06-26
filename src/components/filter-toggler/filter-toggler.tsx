@@ -41,7 +41,7 @@ export default function FilterToggler({
 
   return (
     <div className={classnames}>
-      <label className="filter-toggler__label">{label}</label>
+      <label className="filter-toggler__label text-truncate">{label}</label>
       {isFocusedInput && (
         <Input
           ref={inputRef}
@@ -72,6 +72,9 @@ export default function FilterToggler({
           view="transparent"
           icon={IconEnum.CROSS}
           className="filter-toggler__clear-btn"
+          onClick={() => {
+            setInputValue('');
+          }}
         ></Button>
       )}
       {isFocusedInput && <div className="filter-toggler__placeholder"></div>}

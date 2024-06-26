@@ -68,9 +68,14 @@
 
   &--xl {
     --app-button-border-radius: 34px;
-    --app-button-height: 70px;
-    --app-button-padding-inline: 20px;
+    --app-button-height: 50px;
+    --app-button-padding-inline: 14px;
     --app-button-font-size: var(--app-text-size-lg);
+
+    @include common.media(tablet) {
+      --app-button-height: 70px;
+      --app-button-padding-inline: 20px;
+    }
   }
 
   &--fill.btn--secondary {
