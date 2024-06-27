@@ -1,6 +1,5 @@
 export type FilterCategoryProps = {
   name: string;
-  title: string;
   items: FilterCategoryItemType[];
   checkedItems?: number[];
   visibleLimit?: number;

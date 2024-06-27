@@ -2,53 +2,8 @@
 
 .filter-category {
   display: grid;
-  row-gap: 8px;
-
-  border-radius: 28px;
-  background: rgb(var(--app-color-light));
-
-  &__toggle-box {
-    // display: none;
-  }
-
-  &__toggle-box--active {
-    display: none;
-  }
-
-  &__toggler {
-    position: relative;
-    display: flex;
-    align-items: center;
-    user-select: none;
-    gap: 16px;
-    padding-inline: 16px;
-    cursor: pointer;
-    color: rgb(var(--app-color-dark));
-
-    svg {
-      @include common.animate(transform);
-
-      transform-origin: center;
-    }
-  }
-
-  &__toggler--active {
-    svg {
-      transform: rotate(180deg);
-    }
-  }
-
-  &__heading {
-    padding-block: 16px;
-    flex: 1 1 0%;
-    font-size: var(--app-text-size-sm);
-  }
-
-  &__list {
-    display: grid;
-    row-gap: 24px;
-    padding: 0 16px 16px;
-  }
+  row-gap: 24px;
+  padding-bottom: 16px;
 
   &__show-more-btn {
     text-decoration: none;
