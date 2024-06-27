@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { HomePage } from '@/pages';
+import { HomePage, UiPage } from '@/pages';
 
 import { Pages } from '@/constants/pages';
 import { Layout } from '@/components';
@@ -15,6 +15,10 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
     ],
+  },
+  {
+    path: Pages.UI,
+    element: <UiPage />,
   },
 ]);
 
