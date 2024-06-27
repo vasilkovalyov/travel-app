@@ -6,4 +6,5 @@ export enum IconEnum {
   MINUS = 'minus',
   PLUS = 'plus',
   CROSS = 'cross',
+  CHEVRON_DOWN = 'chevron-down',
 }

@@ -7,7 +7,6 @@ import './checkbox.scss';
 
 export default function Checkbox({
   onChange,
-  type,
   id,
   label,
   ...props
