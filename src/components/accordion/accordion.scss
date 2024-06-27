@@ -1,0 +1,45 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+.accordion {
+  &__toggler {
+    --app-accordion-icon-rotate: 0;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    gap: 16px;
+    cursor: pointer;
+    color: rgb(var(--app-color-dark));
+  }
+
+  &__toggler--active {
+    --app-accordion-icon-rotate: 180deg;
+  }
+
+  &__title {
+    padding-block: 16px;
+    flex: 1 1 0%;
+    font-weight: 800;
+    font-size: var(--app-text-size-sm);
+  }
+
+  &__help-title {
+    font-weight: 400;
+    font-size: var(--app-text-size-xs);
+  }
+
+  &__icon {
+    @include common.animate(transform);
+    transform-origin: center;
+    transform: rotate((var(--app-accordion-icon-rotate)));
+  }
+
+  &__content {
+    display: none;
+  }
+
+  &__content--active {
+    display: block;
+  }
+}
