@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import cn from 'classnames';
-import { Checkbox, Icon, IconEnum } from '../ui';
+import { Button, Checkbox, Icon, IconEnum } from '../ui';
 
 import {
-  getCheckedIdFilters,
-  getFormattedFilters,
-  getUpdatedCheckedFilters,
+  getFilterItemsChekedId,
+  getFilterItemsExtended,
+  getFilterItemsUpdateChecked,
 } from './filter-category.utils';
 
 import {
@@ -20,20 +20,67 @@ export default function FilterCategory({
   title,
   items = [],
   checkedItems = [],
+  visibleLimit = 6,
   onChange,
 }: FilterCategoryProps) {
-  const [filterItems, setFilterItem] = useState<FilterSelectCategoryType[]>([]);
-  const [isOpened, setIsOpened] = useState<boolean>(true);
+  const [visibleItems, setVisibleItems] = useState<FilterSelectCategoryType[]>(
+    [],
+  );
+  const [invisibleItems, setInvisibleItems] = useState<
+    FilterSelectCategoryType[]
+  >([]);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const [isShowedMore, setIsShowedMore] = useState<boolean>(false);
 
   useEffect(() => {
-    setFilterItem(getFormattedFilters(items, checkedItems));
+    const filterItemsExtended = getFilterItemsExtended(items, checkedItems);
+    if (visibleLimit && filterItemsExtended.length > visibleLimit) {
+      const visibleFilterItems = filterItemsExtended.splice(0, visibleLimit);
+      setVisibleItems(visibleFilterItems);
+      setInvisibleItems(filterItemsExtended);
+    } else {
+      setVisibleItems(filterItemsExtended);
+    }
   }, []);
 
   function onHandleChangeCheckbox(id: number) {
-    const formattedFilters = getUpdatedCheckedFilters(filterItems, id);
-    setFilterItem(formattedFilters);
-    const checkedIds = getCheckedIdFilters(formattedFilters);
+    const filterItemsUpdateChecked = getFilterItemsUpdateChecked(
+      visibleItems,
+      id,
+    );
+    setVisibleItems(filterItemsUpdateChecked);
+
+    let invisibleFormattedFilters: FilterSelectCategoryType[] = invisibleItems;
+
+    if (isShowedMore) {
+      invisibleFormattedFilters = getFilterItemsUpdateChecked(
+        invisibleItems,
+        id,
+      );
+      setInvisibleItems(invisibleFormattedFilters);
+    }
+
+    const checkedIds = getFilterItemsChekedId([
+      ...filterItemsUpdateChecked,
+      ...invisibleFormattedFilters,
+    ]);
+
     onChange && onChange(checkedIds);
+  }
+
+  function renderFilterItems(filterItems: FilterSelectCategoryType[]) {
+    return filterItems.map(({ id, title, checked }) => (
+      <li key={id} className="filter-category__item">
+        <Checkbox
+          name={name}
+          label={title}
+          checked={checked}
+          onChange={(_) => {
+            onHandleChangeCheckbox(id);
+          }}
+        />
+      </li>
+    ));
   }
 
   return (
@@ -41,33 +88,38 @@ export default function FilterCategory({
       <div
         role="button"
         className={cn('filter-category__toggler', {
-          'filter-category__toggler--active': isOpened,
+          'filter-category__toggler--active': isExpanded,
         })}
-        onClick={() => setIsOpened(!isOpened)}
+        onClick={() => setIsExpanded(!isExpanded)}
       >
         <h5 className="filter-category__heading">{title}</h5>
         <Icon icon={IconEnum.CHEVRON_DOWN} />
       </div>
       <div
         className={cn('filter-category__toggle-box', {
-          'filter-category__toggle-box--active': !isOpened,
+          'filter-category__toggle-box--active': !isExpanded,
         })}
       >
         <ul className="filter-category__list">
-          {filterItems.length
-            ? filterItems.map(({ id, title, checked }) => (
-                <li key={id} className="filter-category__item">
-                  <Checkbox
-                    name={name}
-                    label={title}
-                    checked={checked}
-                    onChange={(_) => {
-                      onHandleChangeCheckbox(id);
-                    }}
-                  />
-                </li>
-              ))
+          {visibleItems.length ? renderFilterItems(visibleItems) : null}
+          {isShowedMore && invisibleItems.length
+            ? renderFilterItems(invisibleItems)
             : null}
+          {items.length > visibleLimit && (
+            <Button
+              view="transparent"
+              className={cn('filter-category__show-more-btn', {
+                'filter-category__show-more-btn--active': isShowedMore,
+              })}
+              icon={IconEnum.CHEVRON_DOWN}
+              iconRight
+              onClick={() => setIsShowedMore(!isShowedMore)}
+            >
+              {isShowedMore
+                ? 'Show less'
+                : `Show ${invisibleItems.length} more`}
+            </Button>
+          )}
         </ul>
       </div>
     </div>

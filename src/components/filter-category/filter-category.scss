@@ -49,4 +49,14 @@
     row-gap: 24px;
     padding: 0 16px 16px;
   }
+
+  &__show-more-btn {
+    text-decoration: none;
+  }
+
+  &__show-more-btn--active {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
 }

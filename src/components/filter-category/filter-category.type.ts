@@ -3,6 +3,7 @@ export type FilterCategoryProps = {
   title: string;
   items: FilterCategoryItemType[];
   checkedItems?: number[];
+  visibleLimit?: number;
   onChange?: (checkedIds: number[]) => void;
 };
 

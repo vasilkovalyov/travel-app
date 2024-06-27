@@ -3,7 +3,7 @@ import {
   FilterSelectCategoryType,
 } from './filter-category.type';
 
-export function getFormattedFilters(
+export function getFilterItemsExtended(
   items: FilterCategoryItemType[],
   checkedItems: number[],
 ): FilterSelectCategoryType[] {
@@ -16,7 +16,7 @@ export function getFormattedFilters(
   });
 }
 
-export function getUpdatedCheckedFilters(
+export function getFilterItemsUpdateChecked(
   items: FilterSelectCategoryType[],
   id: number,
 ) {
@@ -29,7 +29,7 @@ export function getUpdatedCheckedFilters(
   });
 }
 
-export function getCheckedIdFilters(
+export function getFilterItemsChekedId(
   items: FilterSelectCategoryType[],
 ): number[] {
   return items.reduce<number[]>((acc, item) => {
