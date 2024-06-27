@@ -130,4 +130,8 @@
       --app-button-bg: rgb(var(--app-color-secondary));
     }
   }
+
+  &--icon-right {
+    flex-direction: row-reverse;
+  }
 }

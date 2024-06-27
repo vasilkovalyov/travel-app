@@ -12,6 +12,7 @@ export type ButtonProps = {
   href?: string;
   icon?: IconEnum;
   iconSize?: number;
+  iconRight?: boolean;
   contentReversed?: boolean;
   variant?: ButtonVariantType;
   view?: ButtonViewType;
