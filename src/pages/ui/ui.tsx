@@ -29,6 +29,7 @@ export default function Ui() {
             },
           ]}
           checkedItems={[2, 4]}
+          onChange={(e) => console.log(e)}
         />
         <br />
         <div

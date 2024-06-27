@@ -20,21 +20,20 @@ export default function FilterCategory({
   title,
   items = [],
   checkedItems = [],
+  onChange,
 }: FilterCategoryProps) {
   const [filterItems, setFilterItem] = useState<FilterSelectCategoryType[]>([]);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [isOpened, setIsOpened] = useState<boolean>(true);
 
   useEffect(() => {
-    const formattedFilters = getFormattedFilters(items, checkedItems);
-    setFilterItem(formattedFilters);
-    setSelectedIds(getCheckedIdFilters(formattedFilters));
+    setFilterItem(getFormattedFilters(items, checkedItems));
   }, []);
 
   function onHandleChangeCheckbox(id: number) {
     const formattedFilters = getUpdatedCheckedFilters(filterItems, id);
     setFilterItem(formattedFilters);
-    setSelectedIds(getCheckedIdFilters(formattedFilters));
+    const checkedIds = getCheckedIdFilters(formattedFilters);
+    onChange && onChange(checkedIds);
   }
 
   return (
@@ -62,7 +61,7 @@ export default function FilterCategory({
                     name={name}
                     label={title}
                     checked={checked}
-                    onChange={(e) => {
+                    onChange={(_) => {
                       onHandleChangeCheckbox(id);
                     }}
                   />
