@@ -83,6 +83,7 @@ export default function BlockMonths() {
                 onChange={() => onHandleSelectMonth(date)}
               />
               <span className="month-btn__title">{title}</span>
+              <div className="month-btn__border"></div>
             </label>
           );
         })}

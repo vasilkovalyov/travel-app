@@ -42,11 +42,16 @@
     top: 0;
     left: 0;
     opacity: 0;
-    visibility: hidden;
+    z-index: -1;
 
     &:checked + .checkbox__mark {
       --app-checkbox-mark-bg: rgb(var(--app-color-primary));
       --app-checkbox-mark-opacity: 1;
+    }
+
+    &:focus + .checkbox__mark {
+      outline: 2px solid rgb(var(--app-color-primary-dark));
+      outline-offset: 1px;
     }
   }
 
