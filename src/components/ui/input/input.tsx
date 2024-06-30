@@ -88,7 +88,7 @@ const Input = forwardRef(
               if (
                 !e.relatedTarget?.classList.contains('text-field__clear-btn')
               ) {
-                // setIsFocused(false);
+                setIsFocused(false);
                 return;
               }
             }}
