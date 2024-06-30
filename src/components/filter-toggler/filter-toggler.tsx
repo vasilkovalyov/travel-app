@@ -12,7 +12,7 @@ export default function FilterToggler({
   onBlur,
   onFocus,
 }: FilterTogglerType) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<{ field: HTMLInputElement }>(null);
 
   const [isFocusedInput, setIsFocusedInput] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
@@ -30,36 +30,33 @@ export default function FilterToggler({
 
   useEffect(() => {
     if (isFocusedInput && inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.field.focus();
       onFocus && onFocus();
     }
   }, [isFocusedInput]);
 
-  function onHandleChangeInput(value: string) {
-    setInputValue(value);
-  }
-
   return (
     <div className={classnames}>
       <label className="filter-toggler__label text-truncate">{label}</label>
-      {isFocusedInput && (
+      {isFocusedInput ? (
         <Input
-          ref={inputRef}
+          ref={inputRef as any}
           autoComplete="off"
           placeholder={placeholder}
           value={inputValue}
-          className="filter-toggler__field filter-toggler__field--input"
-          onBlur={() => {
+          className="filter-toggler__text-field"
+          largeSize
+          clearTextButton
+          onCustomBlur={() => {
             setIsFocusedInput(false);
             onBlur && onBlur();
           }}
-          onChange={(e) => onHandleChangeInput(e.currentTarget.value)}
+          onChange={(e) => setInputValue(e.currentTarget.value)}
         />
-      )}
-      {!isFocusedInput && (
+      ) : (
         <Button
           view="transparent"
-          className="filter-toggler__field filter-toggler__field--button"
+          className="filter-toggler__button"
           onFocus={() => {
             setIsFocusedInput(true);
           }}
@@ -67,17 +64,6 @@ export default function FilterToggler({
           {inputValue}
         </Button>
       )}
-      {isFocusedInput && inputValue.length !== 0 && (
-        <Button
-          view="transparent"
-          icon={IconEnum.CROSS}
-          className="filter-toggler__clear-btn"
-          onClick={() => {
-            setInputValue('');
-          }}
-        ></Button>
-      )}
-      {isFocusedInput && <div className="filter-toggler__placeholder"></div>}
     </div>
   );
 }

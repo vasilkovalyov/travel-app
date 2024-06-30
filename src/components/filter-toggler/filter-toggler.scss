@@ -1,68 +1,41 @@
 @use '@/style/03-mixins/common.mixins' as common;
 
-:root {
-  --app-filter-toggler-label-top-position: 18px;
+.filter-toggler {
+  --app-filter-toggler-label-top-position: 15px;
   --app-filter-toggler-label-transform: none;
   --app-filter-toggler-label-max-width: calc(
     100% - var(--app-filter-toggler-label-top-position)
   );
-  --app-filter-toggler-border-radius: 10px;
-  --app-filter-toggler-field-border-color: transparent;
-}
+  --app-filter-toggler-button-height: 50px;
+  --app-filter-toggler-button-padding: 18px 30px 10px 12px;
+  --app-filter-toggler-button-border-color: transparent;
+  --app-filter-toggler-button-border-radius: 10px;
 
-%label_position {
-  --app-filter-toggler-label-transform: translateY(-12px) scale(0.75);
-  --app-filter-toggler-label-max-width: calc(
-    133% - var(--app-filter-toggler-label-top-position)
-  );
-
-  @include common.media(tablet) {
-    --app-filter-toggler-label-transform: translateY(-8px) scale(0.75);
-  }
-}
-
-@mixin field {
   position: relative;
-  z-index: 1;
-  min-height: 50px;
-  padding: 18px 30px 10px 12px;
-  border-radius: var(--app-filter-toggler-border-radius);
-  font-size: inherit;
-  background-color: transparent;
-  width: 100%;
-  font-weight: 800;
-  outline: none;
-  background-image: none;
-  appearance: none;
-  background-color: transparent;
-  cursor: pointer;
-  justify-content: flex-start;
-
-  @include common.media(tablet) {
-    min-height: 70px;
-    padding: 30px 40px 14px 12px;
-  }
-}
-
-.filter-toggler {
-  position: relative;
-  display: flex;
   color: rgb(var(--app-color-black));
-  background-color: rgb(var(--app-color-dark-light));
-  border-radius: var(--app-filter-toggler-border-radius);
-  overflow: hidden;
+
+  border-radius: var(--app-filter-toggler-button-border-radius);
 
   @include common.media(tablet) {
     --app-filter-toggler-label-top-position: 24px;
+    --app-filter-toggler-button-height: 70px;
+    --app-filter-toggler-button-padding: 30px 40px 14px 12px;
   }
 
+  &--focused,
   &--filled {
-    @extend %label_position;
+    --app-filter-toggler-label-transform: translateY(-12px) scale(0.75);
+    --app-filter-toggler-label-max-width: calc(
+      133% - var(--app-filter-toggler-label-top-position)
+    );
+
+    @include common.media(tablet) {
+      --app-filter-toggler-label-transform: translateY(-8px) scale(0.75);
+    }
   }
 
   &--focused {
-    @extend %label_position;
-    --app-filter-toggler-field-border-color: rgb(0 0 0);
+    --app-filter-toggler-button-border-color: rgb(0 0 0);
   }
 
   &__label {
@@ -73,8 +46,9 @@
     font-size: var(--app-text-size-sm);
     pointer-events: none;
     transform-origin: top left;
+    color: currentColor;
     z-index: 1;
-    font-weight: 600;
+    font-weight: 400;
     transform: var(--app-filter-toggler-label-transform);
 
     @include common.media(tablet) {
@@ -82,36 +56,32 @@
     }
   }
 
-  &__field {
+  &__button {
+    min-height: var(--app-filter-toggler-button-height);
+    padding: var(--app-filter-toggler-button-padding);
+    border-radius: var(--app-filter-toggler-button-border-radius);
+    border-color: var(--app-filter-toggler-button-border-color);
+    background-color: rgb(var(--app-color-dark-light));
+    font-size: inherit;
     width: 100%;
-  }
-
-  &__field--input {
-    &.input {
-      .input__field {
-        @include field;
-      }
-    }
-  }
-
-  &__field--button {
-    @include field;
-    text-decoration: none;
-  }
-
-  &__placeholder {
-    position: absolute;
-    inset: 0;
+    font-weight: 800;
     border-width: 2px;
     border-style: solid;
-    border-color: var(--app-filter-toggler-field-border-color);
-    border-radius: var(--app-filter-toggler-border-radius);
+    outline: none;
+    color: inherit;
+    text-decoration: none;
+    appearance: none;
+    cursor: pointer;
+    justify-content: flex-start;
   }
 
-  &__clear-btn {
-    position: absolute;
-    z-index: 2;
-    top: 10px;
-    right: 10px;
+  &__text-field {
+    .text-field__input {
+      padding-block: 18px 10px;
+
+      @include common.media(tablet) {
+        padding-block: 30px 14px;
+      }
+    }
   }
 }
