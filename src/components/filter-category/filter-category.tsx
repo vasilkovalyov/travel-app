@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import cn from 'classnames';
-import { Button, Checkbox, Icon, IconEnum } from '../ui';
+import { Button, Checkbox, IconEnum } from '../ui';
 
 import {
   getFilterItemsChekedId,

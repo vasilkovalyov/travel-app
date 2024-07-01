@@ -5,7 +5,6 @@ import {
   BlockSidebarFilter,
 } from '@/blocks';
 import { FilterToggler } from '@/components';
-import { FilterCategory } from '@/components/filter-category';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
 import { useRef } from 'react';
 
@@ -15,31 +14,6 @@ export default function Ui() {
   return (
     <div>
       <div>
-        {/* <FilterCategory
-          title="Board type"
-          name="board-type"
-          items={[
-            {
-              id: 1,
-              title: 'Room Only',
-            },
-            {
-              id: 2,
-              title: 'Bed & Breakfast',
-            },
-            {
-              id: 3,
-              title: 'Half Board',
-            },
-            {
-              id: 4,
-              title: 'Full Board',
-            },
-          ]}
-          checkedItems={[2, 4]}
-          onChange={(e) => console.log(e)}
-        /> */}
-        <br />
         <p>Input button toggler</p>
         <div
           style={{

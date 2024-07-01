@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { FilterTogglerType } from './filter-toggler.type';
-import { Input, Button, IconEnum } from '../ui';
+import { Input, Button } from '../ui';
 import { useEffect, useRef, useState } from 'react';
 
 import './filter-toggler.scss';
