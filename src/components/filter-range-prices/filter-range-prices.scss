@@ -1,0 +1,29 @@
+.filter-range-prices {
+  display: grid;
+  row-gap: 4px;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__validation-messages {
+    display: grid;
+    row-gap: 2px;
+  }
+
+  &__error-message {
+    color: rgb(var(--app-color-red));
+    font-size: var(--app-text-size-xs);
+  }
+
+  &__result {
+    color: rgb(var(--app-color-grey));
+    font-size: var(--app-text-size-sm);
+  }
+
+  .text-field {
+    flex: 1;
+  }
+}

@@ -4,3 +4,4 @@ export * from './datepicker';
 export * from './filter-toggler';
 export * from './filter-category';
 export * from './accordion';
+export * from './filter-range-prices';

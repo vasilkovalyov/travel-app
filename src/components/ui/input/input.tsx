@@ -26,6 +26,7 @@ const Input = forwardRef(
       value,
       buttonToggler = false,
       clearTextButton,
+      invalid,
       onChange,
       onCustomBlur,
       onFocus,
@@ -43,15 +44,16 @@ const Input = forwardRef(
       'text-field--focused': isFocused,
       'text-field--filled': inputValue.length,
       'text-field--without-label': !label,
+      'text-field--invalid': invalid,
     });
 
     const classnames = cn('text-field', modificationSizeCn, className);
 
     useEffect(() => {
-      if (value) {
+      if (value !== undefined) {
         setInputValue(value.toString());
       }
-    }, []);
+    }, [value]);
 
     useImperativeHandle(ref, (): any => {
       return {

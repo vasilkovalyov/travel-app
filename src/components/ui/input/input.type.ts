@@ -5,5 +5,6 @@ export type InputProps = {
   largeSize?: boolean;
   buttonToggler?: boolean;
   clearTextButton?: boolean;
+  invalid?: boolean;
   onCustomBlur?: () => void;
 } & Partial<InputHTMLAttributes<HTMLInputElement>>;

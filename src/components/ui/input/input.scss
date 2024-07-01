@@ -19,6 +19,10 @@
   border-radius: var(--app-text-field-border-radius);
   overflow: hidden;
 
+  &--invalid {
+    --app-text-field-border-color: rgb(var(--app-color-red));
+  }
+
   &--without-label {
     --app-text-field-input-padding: 14px 30px 14px 12px;
   }
