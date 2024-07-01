@@ -1,0 +1,220 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+.hotel-card {
+  background-color: rgb(var(--app-color-light));
+  display: grid;
+  border-radius: 20px;
+  color: rgb(var(--app-color-dark));
+  margin: 20px;
+
+  @include common.media(mobile_md) {
+    grid-template-columns: 36% 1fr;
+  }
+
+  @include common.media(tablet) {
+    min-height: 300px;
+    grid-template-columns: 220px 1fr;
+  }
+
+  &__image-box {
+    position: relative;
+    padding-top: 80%;
+
+    @include common.media(mobile_md) {
+      padding-top: 60%;
+      margin-top: 16px;
+      margin-left: 16px;
+    }
+
+    @include common.media(tablet) {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &__breakfast-label {
+    position: absolute;
+    display: none;
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__body {
+    display: grid;
+    row-gap: 8px;
+    padding: 16px;
+  }
+
+  &__top-content,
+  &__bottom-content {
+    display: grid;
+    row-gap: 8px;
+
+    @include common.media(tablet) {
+      grid-template-columns: 1fr 170px;
+    }
+  }
+
+  &__top-content {
+    grid-template-areas:
+      'top-right-content'
+      'top-left-content';
+
+    @include common.media(tablet) {
+      grid-template-areas: 'top-left-content top-right-content';
+    }
+  }
+
+  &__bottom-content {
+    grid-template-areas:
+      'bottom-left-content'
+      'bottom-right-content';
+
+    @include common.media(tablet) {
+      grid-template-areas: 'bottom-left-content bottom-right-content';
+    }
+  }
+
+  &__top-content &__left-content {
+    grid-area: top-left-content;
+  }
+
+  &__top-content &__right-content {
+    grid-area: top-right-content;
+  }
+
+  &__bottom-content &__left-content {
+    grid-area: bottom-left-content;
+  }
+
+  &__bottom-content &__right-content {
+    grid-area: bottom-right-content;
+  }
+
+  &__left-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+
+    @include common.media(tablet) {
+      padding-right: 20px;
+    }
+
+    &::after {
+      @include common.media(tablet) {
+        content: '';
+        position: absolute;
+        inset: 8px 0 8px auto;
+        width: 2px;
+        background-color: rgb(var(--app-color-dark-light));
+      }
+    }
+  }
+
+  &__right-content {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+
+    @include common.media(tablet) {
+      text-align: right;
+      align-items: flex-end;
+      padding-left: 20px;
+    }
+  }
+
+  &__score-container {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__title {
+    color: rgb(var(--app-color-primary));
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__location {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 16px 1fr;
+    column-gap: 4px;
+    font-size: var(--app-text-size-sm);
+  }
+
+  &__distance-to-city-center {
+    font-size: var(--app-text-size-sm);
+  }
+
+  &__reviews {
+    font-size: 12px;
+  }
+
+  &__score-text {
+    font-weight: 600;
+  }
+
+  &__score {
+    width: 32px;
+    height: 32px;
+    color: rgb(var(--app-color-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    padding: 4px;
+    background-color: rgb(var(--app-color-primary));
+    border-radius: 4px;
+  }
+
+  &__visitors {
+    font-size: var(--app-text-size-sm);
+  }
+
+  &__charge-detail {
+    font-size: var(--app-text-size-sm);
+    margin-bottom: 10px;
+  }
+
+  &__configuration-content {
+    font-size: var(--app-text-size-sm);
+  }
+
+  &__details {
+    color: rgb(var(--app-color-green));
+    font-size: var(--app-text-size-xs);
+    line-height: 1.8;
+
+    li {
+      position: relative;
+      padding-left: 20px;
+
+      &::before {
+        content: '\e903';
+        font-family: 'icomoon' !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        line-height: 1.4;
+        font-weight: 700;
+        font-size: var(--app-text-size-base);
+      }
+    }
+  }
+
+  &__new-price {
+    font-size: var(--app-text-size-xl);
+    color: rgb(var(--app-color-primary));
+    font-weight: 700;
+  }
+}
