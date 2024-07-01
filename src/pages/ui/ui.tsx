@@ -1,13 +1,21 @@
-import { BlockDates, BlockGuestsClass, BlockMonths } from '@/blocks';
+import {
+  BlockDates,
+  BlockGuestsClass,
+  BlockMonths,
+  BlockSidebarFilter,
+} from '@/blocks';
 import { FilterToggler } from '@/components';
 import { FilterCategory } from '@/components/filter-category';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
+import { useRef } from 'react';
 
 export default function Ui() {
+  const refInput = useRef<HTMLInputElement>(null);
+
   return (
     <div>
       <div>
-        <FilterCategory
+        {/* <FilterCategory
           title="Board type"
           name="board-type"
           items={[
@@ -30,8 +38,9 @@ export default function Ui() {
           ]}
           checkedItems={[2, 4]}
           onChange={(e) => console.log(e)}
-        />
+        /> */}
         <br />
+        <p>Input button toggler</p>
         <div
           style={{
             backgroundColor: '#ffffff',
@@ -56,7 +65,28 @@ export default function Ui() {
           <Checkbox id="check" label="Checkbox" />
         </div>
         <br />
-
+        <div
+          style={{
+            backgroundColor: '#ffffff',
+            padding: '20px',
+          }}
+        >
+          <p>Input md</p>
+          <br />
+          <Input ref={refInput} placeholder="Placeholder" clearTextButton />
+          <br />
+          <Input placeholder="Placeholder" largeSize clearTextButton />
+          <p>Input lg</p>
+          <br />
+          <Input label="Label" largeSize clearTextButton />
+        </div>
+        <div
+          style={{
+            backgroundColor: '#ffffff',
+            padding: '20px',
+          }}
+        ></div>
+        <br />
         <div>
           <div>
             <Button size="sm">Button primary sm</Button>
@@ -129,10 +159,11 @@ export default function Ui() {
         <br />
         <BlockGuestsClass />
         <br />
-
         <BlockDates />
         <br />
         <BlockMonths />
+        <br />
+        <BlockSidebarFilter />
         <br />
       </div>
     </div>

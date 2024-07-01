@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import cn from 'classnames';
+import TopSearch from '@/blocks/top-search/top-search';
 
 import './layout.scss';
-import TopSearch from '@/blocks/top-search/top-search';
 
 function Layout() {
   return (
