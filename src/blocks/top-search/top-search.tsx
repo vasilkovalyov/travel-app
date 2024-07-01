@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import cn from 'classnames';
-import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
+import { Button, FieldPlaceholder, IconEnum, Input } from '@/components/ui';
 
 import './top-search.scss';
-import { FilterToggler } from '@/components';
 
 export default function TopSearch() {
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
@@ -30,9 +29,9 @@ export default function TopSearch() {
             'top-search__filters--visible': visibleFilters,
           })}
         >
-          <FilterToggler label="Going to" />
-          <FilterToggler label="Travel dates" />
-          <FilterToggler label="Guests & Cabin Class" />
+          <Input label="Going to" largeSize clearTextButton />
+          <Input label="Travel dates" largeSize clearTextButton />
+          <Input label="Guests & Cabin Class" largeSize clearTextButton />
           <Button
             icon={IconEnum.SEARCH}
             iconSize={24}
