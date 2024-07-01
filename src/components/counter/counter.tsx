@@ -44,13 +44,14 @@ export default function Counter({
         iconSize={20}
         {...{ disabled: counterValue === minValue }}
         onClick={() => onHandleClick('dec')}
-      ></Button>
+      />
       {input ? (
         <Input
           data-testid={dataAttributes.input}
           id={id}
           value={counterValue}
           className="counter__field"
+          readOnly
         />
       ) : (
         <div className="counter__middle">
@@ -71,7 +72,7 @@ export default function Counter({
         icon={IconEnum.PLUS}
         iconSize={20}
         onClick={() => onHandleClick('inc')}
-      ></Button>
+      />
     </div>
   );
 }
