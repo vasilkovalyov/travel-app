@@ -32,7 +32,9 @@ export default function HotelCard({
     <div className="hotel-card">
       <div className="hotel-card__image-box">
         {includeBreakfast && (
-          <p className="hotel-card__breakfast-label">Breakfast included</p>
+          <span className="hotel-card__breakfast-label">
+            Breakfast included
+          </span>
         )}
         <img src={image} alt={name} className="hotel-card__image" />
       </div>

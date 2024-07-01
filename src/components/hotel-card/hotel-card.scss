@@ -34,7 +34,28 @@
 
   &__breakfast-label {
     position: absolute;
-    display: none;
+    top: 20px;
+    left: -4px;
+    z-index: 1;
+    color: rgb(var(--app-color-light));
+    background-color: rgb(var(--app-color-green));
+    padding-inline: 8px;
+    padding-block: 4px;
+    font-weight: 700;
+    font-size: var(--app-text-size-xs);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 0;
+      border: 2px solid rgb(var(--app-color-green));
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      z-index: -1;
+    }
   }
 
   &__image {
