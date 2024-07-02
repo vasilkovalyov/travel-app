@@ -8,7 +8,6 @@ type ButtonVariantType = 'primary' | 'secondary';
 export type ButtonProps = {
   children?: React.ReactNode;
   className?: string;
-  isLoading?: boolean;
   href?: string;
   icon?: IconEnum;
   iconSize?: number;
@@ -17,4 +16,6 @@ export type ButtonProps = {
   variant?: ButtonVariantType;
   view?: ButtonViewType;
   size?: ButtonSizeType;
+  fullwidth?: boolean;
+  loading?: boolean;
 } & Partial<ButtonHTMLAttributes<HTMLButtonElement>>;

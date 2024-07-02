@@ -1,4 +1,4 @@
-import { HotelCard, hotelModel } from '@/components';
+import { FilterPanel, HotelCard, hotelModel } from '@/components';
 import { BlockSidebarFilter } from '../sidebar-filter';
 import { Button, IconEnum } from '@/components/ui';
 

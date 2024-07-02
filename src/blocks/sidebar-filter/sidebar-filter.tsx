@@ -42,9 +42,23 @@ export default function BlockSidebarFilter({
 }) {
   return (
     <aside className={cn('block-sidebar-filter', className)}>
-      <Button type="reset" view="outline" size="md">
+      <Button type="reset" view="outline" size="lg">
         Reset filters
       </Button>
+      <Accordion
+        title="Lorem ipsum"
+        helpTitle="(inc flights)"
+        expanded={true}
+        className="sidebar-filter-category"
+      >
+        <FilterCategory
+          name="board-type"
+          items={filterItems}
+          checkedItems={[2, 4, 6]}
+          visibleLimit={4}
+          onChange={(e) => console.log(e)}
+        />
+      </Accordion>
       <Accordion
         title="Lorem ipsum"
         helpTitle="(inc flights)"

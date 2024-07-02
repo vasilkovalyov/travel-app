@@ -1,7 +1,7 @@
 @use '@/style/03-mixins/common.mixins' as common;
 
 .text-field {
-  --app-text-field-label-top-position: 15px;
+  --app-text-field-label-top-position: 18px;
   --app-text-field-label-transform: none;
   --app-text-field-label-max-width: calc(
     100% - var(--app-text-field-label-top-position)

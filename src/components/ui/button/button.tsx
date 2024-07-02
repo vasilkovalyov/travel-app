@@ -11,7 +11,7 @@ const Button = forwardRef(
   (
     {
       children,
-      isLoading,
+      loading,
       className,
       href,
       icon,
@@ -22,6 +22,7 @@ const Button = forwardRef(
       size = 'sm',
       view = 'fill',
       variant = 'primary',
+      fullwidth,
       ...props
     }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement | HTMLAnchorElement>,
@@ -44,10 +45,11 @@ const Button = forwardRef(
 
     const modificationCn = cn(
       {
-        'btn--loading': isLoading,
+        'btn--loading': loading,
         'btn--link': href,
         'btn--content-reversed': contentReversed,
         'btn--icon-right': iconRight,
+        'btn--fullwidth': fullwidth,
       },
       modificationSizeCn,
       modificationViewCn,
