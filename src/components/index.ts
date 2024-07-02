@@ -8,3 +8,5 @@ export * from './filter-range-prices';
 export * from './hotel-card';
 export * from './rating';
 export * from './filter-panel';
+export * from './modal';
+export * from './portal';
