@@ -1,0 +1,11 @@
+.block-sidebar-filter {
+  display: grid;
+  row-gap: 20px;
+}
+
+.sidebar-filter-category {
+  display: grid;
+  border-radius: 28px;
+  background: rgb(var(--app-color-light));
+  padding-inline: 16px;
+}

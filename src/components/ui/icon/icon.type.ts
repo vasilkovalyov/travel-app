@@ -9,4 +9,5 @@ export enum IconEnum {
   CHEVRON_DOWN = 'chevron-down',
   STAR = 'star',
   LOCATION = 'location',
+  FILTER = 'filter',
 }
