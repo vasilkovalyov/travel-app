@@ -5,7 +5,6 @@
   display: grid;
   border-radius: 20px;
   color: rgb(var(--app-color-dark));
-  margin: 20px;
 
   @include common.media(mobile_md) {
     grid-template-columns: 36% 1fr;
@@ -132,7 +131,7 @@
       @include common.media(tablet) {
         content: '';
         position: absolute;
-        inset: 8px 0 8px auto;
+        inset: 0 0 0 auto;
         width: 2px;
         background-color: rgb(var(--app-color-dark-light));
       }

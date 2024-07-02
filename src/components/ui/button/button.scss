@@ -45,10 +45,9 @@
   }
 
   &__text {
-    display: flex;
+    display: inline-flex;
+    gap: 8px;
     align-items: center;
-
-    display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
