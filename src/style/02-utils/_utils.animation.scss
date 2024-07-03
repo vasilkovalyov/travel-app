@@ -3,6 +3,7 @@
 .pulse-animation {
   position: relative;
   overflow: hidden;
+  background-color: rgb(var(--app-color-grey) / 0.3);
 
   &::before {
     content: '';
@@ -11,11 +12,23 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgb(var(--app-color-light) / 0.08),
+      rgb(var(--app-color-grey) / 0.08),
       transparent
     );
     position: absolute;
     transform: translateX(-100%);
     inset: 0px;
+  }
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  to {
+    transform: translate(0);
   }
 }

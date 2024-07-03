@@ -26,7 +26,7 @@ export default function Modal({
   return (
     <ReactPortal wrapperId="react-portal-modal-container">
       <div className="modal">
-        <div className="modal__overlay" onClick={onHandleClose}></div>
+        <div className="modal__overlay overlay" onClick={onHandleClose}></div>
         <div className="modal__box">
           <div className="modal__heading">
             <h3 className="modal__title">{title}</h3>

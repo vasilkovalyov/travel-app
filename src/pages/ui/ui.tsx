@@ -2,7 +2,7 @@ import {
   BlockDates,
   BlockGuestsClass,
   BlockMonths,
-  BlockSidebarFilter,
+  BlockFilter,
 } from '@/blocks';
 import { FilterToggler } from '@/components';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
@@ -137,7 +137,7 @@ export default function Ui() {
         <br />
         <BlockMonths />
         <br />
-        <BlockSidebarFilter />
+        <BlockFilter />
         <br />
       </div>
     </div>

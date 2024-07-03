@@ -1,10 +1,24 @@
-import { HotelCard, hotelModel } from '@/components';
-import { BlockSidebarFilter } from '../sidebar-filter';
+import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+
+import { useStaticFilterStore } from '@/store';
+
+import { HotelCard, FilterModal, hotelModel } from '@/components';
 import { Button, IconEnum } from '@/components/ui';
+import { BlockFilter } from '../filter';
+
+import { breakpoints } from '@/constants/breakpoints';
 
 import './hotels.scss';
 
 export default function BlockHotels() {
+  const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const { selectedFilterCount } = useStaticFilterStore((store) => store);
+
+  const isTabletMd = useMediaQuery({
+    query: `(min-width: ${breakpoints.tabletMd}px)`,
+  });
+
   return (
     <section className="block-hotels">
       <div className="block-hotels__container container">
@@ -16,24 +30,44 @@ export default function BlockHotels() {
             your search to one destination or call our travel experts.
           </p>
         </div>
-        <div className="block-hotels__filter-toggler-container">
-          <Button
-            icon={IconEnum.FILTER}
-            iconSize={20}
-            className="filter-toggler-btn"
-            size="md"
-          >
-            Filter results{' '}
-            <span className="filter-toggler-btn__counter">1</span>
-          </Button>
-        </div>
+        {!isTabletMd && (
+          <div className="block-hotels__filter-toggler-container">
+            <Button
+              icon={IconEnum.FILTER}
+              iconSize={20}
+              className="filter-toggler-btn"
+              size="md"
+              onClick={() => setOpenFilter(!openFilter)}
+            >
+              Filter results{''}
+              {selectedFilterCount !== 0 && (
+                <span className="filter-toggler-btn__counter">
+                  {selectedFilterCount}
+                </span>
+              )}
+            </Button>
+          </div>
+        )}
         <div className="block-hotels__grid">
-          <BlockSidebarFilter className="block-hotels__sidebar-filter" />
+          {isTabletMd && (
+            <aside className="block-hotels__sidebar">
+              <BlockFilter />
+            </aside>
+          )}
           <div className="block-hotels__list">
             <HotelCard {...hotelModel} />
           </div>
         </div>
       </div>
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          title="Filter Results"
+          onHandleClose={() => setOpenFilter(false)}
+        >
+          <BlockFilter />
+        </FilterModal>
+      )}
     </section>
   );
 }

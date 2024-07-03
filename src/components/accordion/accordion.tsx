@@ -15,7 +15,6 @@ export default function Accordion({
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log('expanded', expanded);
     if (expanded !== undefined) {
       setIsExpanded(expanded);
     }

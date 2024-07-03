@@ -32,14 +32,6 @@
     }
   }
 
-  &__sidebar-filter {
-    display: none;
-
-    @include common.media(tablet_md) {
-      display: grid;
-    }
-  }
-
   &__list {
     display: grid;
     row-gap: 24px;

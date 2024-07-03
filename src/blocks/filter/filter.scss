@@ -1,0 +1,27 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+.block-filter {
+  display: grid;
+  row-gap: 20px;
+
+  .filter-category {
+    &__list {
+      padding-top: 2px;
+      padding-left: 4px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    &__show-more-btn {
+      margin-bottom: -14px;
+      height: 36px;
+    }
+  }
+}
+
+.accordion-filter-category {
+  display: grid;
+  border-radius: 28px;
+  background: rgb(var(--app-color-light));
+  padding-inline: 16px;
+}

@@ -1,0 +1,57 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+.filter-modal {
+  --filter-width: 100%;
+  --filter-heading-height: 60px;
+  --filter-bottom-height: 72px;
+
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  animation: show 0.25s ease forwards;
+  z-index: 10;
+
+  @include common.media(tablet) {
+    --filter-width: 400px;
+  }
+
+  &__box {
+    background-color: rgb(var(--app-color-dark-light));
+    transform: translateX(0);
+    display: grid;
+    grid-template-rows:
+      var(--filter-heading-height) calc(
+        100dvh - calc(
+            var(--filter-heading-height) + var(--filter-bottom-height)
+          )
+      )
+      var(--filter-bottom-height);
+
+    @include common.media(mobile_md) {
+      transform: translateX(calc(-1 * var(--filter-width)));
+      max-width: var(--filter-width);
+      animation: slideRight 0.25s ease forwards;
+    }
+  }
+
+  &__heading {
+    padding: 12px;
+    background-color: rgb(var(--app-color-light));
+    border-bottom: 2px solid rgb(228 221 215);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__content {
+    padding: 16px;
+    overflow-y: auto;
+    background-color: rgb(var(--app-color-dark-light));
+  }
+
+  &__bottom {
+    padding: 12px;
+    background-color: rgb(var(--app-color-light));
+    border-top: 2px solid rgb(228 221 215);
+  }
+}

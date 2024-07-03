@@ -15,6 +15,9 @@ export default defineConfig({
     css: true,
     setupFiles: './src/tests/setup.ts',
   },
+  optimizeDeps: {
+    exclude: ['js-big-decimal'],
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

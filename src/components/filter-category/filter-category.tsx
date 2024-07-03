@@ -17,7 +17,7 @@ import './filter-category.scss';
 
 export default function FilterCategory({
   name,
-  items = [],
+  items,
   checkedItems = [],
   visibleLimit = 6,
   onChange,
@@ -39,7 +39,7 @@ export default function FilterCategory({
     } else {
       setVisibleItems(filterItemsExtended);
     }
-  }, []);
+  }, [items]);
 
   function onHandleChangeCheckbox(id: number) {
     const filterItemsUpdateChecked = getFilterItemsUpdateChecked(
@@ -83,10 +83,12 @@ export default function FilterCategory({
 
   return (
     <div className="filter-category">
-      {visibleItems.length ? renderFilterItems(visibleItems) : null}
-      {isShowedMore && invisibleItems.length
-        ? renderFilterItems(invisibleItems)
-        : null}
+      <div className="filter-category__list">
+        {visibleItems.length ? renderFilterItems(visibleItems) : null}
+        {isShowedMore && invisibleItems.length
+          ? renderFilterItems(invisibleItems)
+          : null}
+      </div>
       {items.length > visibleLimit && (
         <Button
           view="transparent"

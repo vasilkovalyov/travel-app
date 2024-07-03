@@ -1,9 +1,12 @@
 .filter-category {
-  display: grid;
-  row-gap: 24px;
+  &__list {
+    display: grid;
+    row-gap: 24px;
+  }
 
   &__show-more-btn {
     text-decoration: none;
+    width: 100%;
   }
 
   &__show-more-btn--active {
