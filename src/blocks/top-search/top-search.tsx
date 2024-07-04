@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import cn from 'classnames';
-import { Button, FieldPlaceholder, IconEnum, Input } from '@/components/ui';
+import { Popover } from 'react-tiny-popover';
+
+import { useSearchFilterStore } from '@/store';
+import { FilterToggler } from '@/components';
+import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
+
+import { BlockDatesPeriodTab } from '../dates-period-tab';
 
 import './top-search.scss';
 
 export default function TopSearch() {
+  const { activeFormattedDates } = useSearchFilterStore();
+
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
+  const [popoverActive, setPopoverActive] = useState<string | null>(null);
 
   return (
     <div className="top-search">
@@ -29,9 +38,32 @@ export default function TopSearch() {
             'top-search__filters--visible': visibleFilters,
           })}
         >
-          <Input label="Going to" largeSize clearTextButton />
-          <Input label="Travel dates" largeSize clearTextButton />
-          <Input label="Guests & Cabin Class" largeSize clearTextButton />
+          <FilterToggler label="Going to" placeholder="Destination name" />
+          <Popover
+            isOpen={popoverActive === 'travel_dates'}
+            positions={['bottom', 'left']}
+            align="center"
+            padding={20}
+            onClickOutside={() => setPopoverActive(null)}
+            clickOutsideCapture={true}
+            content={
+              <div className="popover">
+                <BlockDatesPeriodTab />
+              </div>
+            }
+          >
+            <FilterToggler
+              label="Travel dates"
+              text={activeFormattedDates}
+              readonly
+              onFocus={() => setPopoverActive('travel_dates')}
+            />
+          </Popover>
+          <FilterToggler
+            label="Guests & cabin class"
+            text="Guests & Cabin Class"
+            readonly
+          />
           <Button
             icon={IconEnum.SEARCH}
             iconSize={24}
@@ -54,8 +86,7 @@ export default function TopSearch() {
           />
           <div className="top-search__placeholders-grid">
             <FieldPlaceholder title="Anywhere" />
-            <FieldPlaceholder title="London Gatwick (+ 5 others)" />
-            <FieldPlaceholder title="Jul 8, 2024 - Jul 12, 2024" />
+            <FieldPlaceholder title={activeFormattedDates} />
             <FieldPlaceholder title="2 Adults, 1 Room, Economy" />
           </div>
           <Button icon={IconEnum.EDIT} variant="secondary" size="sm">

@@ -1,5 +1,16 @@
 @use '@/style/03-mixins/common.mixins' as common;
 
+@mixin filter_item {
+  flex-grow: 1;
+  max-width: 100%;
+  width: auto;
+  flex-basis: 100%;
+
+  @include common.media(tablet) {
+    flex-basis: 0px;
+  }
+}
+
 .top-search {
   --grid-gap: 8px;
 
@@ -27,15 +38,8 @@
     flex-flow: wrap;
     gap: var(--grid-gap);
 
-    .text-field {
-      flex-grow: 1;
-      max-width: 100%;
-      width: auto;
-      flex-basis: 100%;
-
-      @include common.media(tablet) {
-        flex-basis: 0px;
-      }
+    .filter-toggler {
+      @include filter_item;
     }
   }
 
@@ -73,13 +77,17 @@
 
   &__placeholders-grid {
     display: none;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center;
-    flex-direction: row;
+    align-items: flex-start;
+    flex-flow: wrap;
     gap: var(--grid-gap);
+    align-items: center;
 
     @include common.media(tablet) {
-      display: grid;
+      display: flex;
+    }
+
+    .field-placeholder {
+      @include filter_item;
     }
   }
 

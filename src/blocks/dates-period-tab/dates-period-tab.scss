@@ -1,0 +1,15 @@
+.block-dates-period-tab {
+  display: grid;
+  row-gap: 12px;
+
+  &__togglers {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+  .btn {
+    &.active {
+      pointer-events: none;
+    }
+  }
+}
