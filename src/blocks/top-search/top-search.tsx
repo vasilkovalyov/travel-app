@@ -6,12 +6,14 @@ import { useSearchFilterStore } from '@/store';
 import { FilterToggler } from '@/components';
 import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
 
+import GuestClass from '../guests-class/guests-class';
 import { BlockDatesPeriodTab } from '../dates-period-tab';
 
 import './top-search.scss';
 
 export default function TopSearch() {
-  const { activeFormattedDates } = useSearchFilterStore();
+  const { activeFormattedDates, guestsFormattedMessage } =
+    useSearchFilterStore();
 
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
   const [popoverActive, setPopoverActive] = useState<string | null>(null);
@@ -38,7 +40,13 @@ export default function TopSearch() {
             'top-search__filters--visible': visibleFilters,
           })}
         >
-          <FilterToggler label="Going to" placeholder="Destination name" />
+          <FilterToggler
+            label="Going to"
+            placeholder="Destination name"
+            onFocus={() => {
+              setPopoverActive('destination');
+            }}
+          />
           <Popover
             isOpen={popoverActive === 'travel_dates'}
             positions={['bottom', 'left']}
@@ -59,11 +67,26 @@ export default function TopSearch() {
               onFocus={() => setPopoverActive('travel_dates')}
             />
           </Popover>
-          <FilterToggler
-            label="Guests & cabin class"
-            text="Guests & Cabin Class"
-            readonly
-          />
+          <Popover
+            isOpen={popoverActive === 'guests'}
+            positions={['bottom', 'right']}
+            align="end"
+            padding={20}
+            onClickOutside={() => setPopoverActive(null)}
+            clickOutsideCapture={true}
+            content={
+              <div className="popover">
+                <GuestClass />
+              </div>
+            }
+          >
+            <FilterToggler
+              label="Guests & cabin class"
+              text={guestsFormattedMessage}
+              readonly
+              onFocus={() => setPopoverActive('guests')}
+            />
+          </Popover>
           <Button
             icon={IconEnum.SEARCH}
             iconSize={24}
@@ -87,7 +110,7 @@ export default function TopSearch() {
           <div className="top-search__placeholders-grid">
             <FieldPlaceholder title="Anywhere" />
             <FieldPlaceholder title={activeFormattedDates} />
-            <FieldPlaceholder title="2 Adults, 1 Room, Economy" />
+            <FieldPlaceholder title={guestsFormattedMessage} />
           </div>
           <Button icon={IconEnum.EDIT} variant="secondary" size="sm">
             Edit

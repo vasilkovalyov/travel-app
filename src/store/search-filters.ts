@@ -7,13 +7,22 @@ import { baseDateFormat } from '@/constants/dates';
 
 import { DateRange } from '@/types/common';
 
+export type GuestType = {
+  rooms: number;
+  adults: number;
+  children: number[];
+};
+
 interface SearchFiltersState {
+  guests: GuestType;
+  guestsFormattedMessage: string;
   datesDatePicker: DateRange;
   datesMonth: DateRange;
   formattedDatesForDatePicker: string;
   formattedDatesForMonth: string;
   activeFormattedDates: string;
   activeTabDates: string;
+  updateGuests: (guests: GuestType) => void;
   updateDatePickerDates: (from: Date, to?: Date) => void;
   clearActiveFormattedDates: () => void;
   clearDatesDatePicker: () => void;
@@ -25,9 +34,24 @@ const defaultDateRange: DateRange = {
   to: undefined,
 };
 
+const getGuestFormattedMessage = (guests: GuestType): string => {
+  let adults = `${guests.adults} ${guests.adults > 1 ? 'adults' : 'adult'}`;
+  let rooms = `${guests.rooms} ${guests.rooms > 1 ? 'rooms' : 'room'}`;
+  const childrenLength = guests.children.length;
+  let children = childrenLength
+    ? `, ${childrenLength} ${childrenLength > 1 ? 'children' : 'child'}`
+    : '';
+  return `${adults}, ${rooms}${children}`;
+};
+
 const useSearchFilterStore = create<SearchFiltersState>()(
   devtools(
     immer((set) => ({
+      guests: {
+        rooms: 1,
+        adults: 1,
+        children: [],
+      },
       guestsFormattedMessage: '',
       datesDatePicker: defaultDateRange,
       datesMonth: defaultDateRange,
@@ -35,6 +59,12 @@ const useSearchFilterStore = create<SearchFiltersState>()(
       formattedDatesForMonth: '',
       activeFormattedDates: '',
       activeTabDates: 'dates',
+      updateGuests: (guests: GuestType) => {
+        set(() => ({
+          guests: guests,
+          guestsFormattedMessage: getGuestFormattedMessage(guests),
+        }));
+      },
       updateDatePickerDates: (from: Date, to?: Date) => {
         set(() => ({
           datesDatePicker: { from, to },

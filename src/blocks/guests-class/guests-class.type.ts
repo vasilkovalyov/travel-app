@@ -1,4 +1,4 @@
-export type RoomType = {
+export type GuestRoomType = {
   room: number;
   adults: number;
   children: number[];

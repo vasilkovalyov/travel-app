@@ -19,7 +19,7 @@
   }
 }
 
-.guests-class {
+.block-guests-class {
   display: grid;
   row-gap: 16px;
 
@@ -31,6 +31,13 @@
     row-gap: 24px;
   }
 
+  &__rooms {
+    display: grid;
+    row-gap: 24px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
   &__room {
     display: grid;
     row-gap: 8px;
@@ -38,12 +45,12 @@
 
   &__counter-list {
     display: grid;
-    grid-row: 24px;
+    row-gap: 14px;
   }
 
   &__childrens {
     display: grid;
-    row-gap: 8px;
+    row-gap: 12px;
   }
 
   &__childrens-selects {

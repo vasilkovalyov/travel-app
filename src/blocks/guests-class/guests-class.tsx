@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Counter } from '@/components';
 import { Select } from '@/components/ui';
+import { useSearchFilterStore } from '@/store';
 
-import { defaultRoom, getUpdatedRoom } from './guests.class.utils';
-import { RoomType } from './guests-class.type';
+import {
+  defaultRoom,
+  getGuestTypeInfo,
+  getUpdatedRoom,
+} from './guests-class.utils';
+import { GuestRoomType } from './guests-class.type';
 
 import './guests-class.scss';
 
@@ -40,14 +45,11 @@ function GuestCounter({
   );
 }
 
-export default function GuestClass() {
+export default function BlockGuestClass() {
   const roomCount = 3;
   const childrenMaxAge = 18;
-  const [rooms, setRooms] = useState<RoomType[]>([defaultRoom]);
-
-  function onHandleChangeRoom(roomCount: number) {
-    setRooms(getUpdatedRoom(rooms, roomCount));
-  }
+  const { updateGuests } = useSearchFilterStore();
+  const [rooms, setRooms] = useState<GuestRoomType[]>([defaultRoom]);
 
   function onHandleChangeAdults(room: number, value: number) {
     const arr = [...rooms];
@@ -78,12 +80,18 @@ export default function GuestClass() {
     setRooms(arr);
   }
 
+  useEffect(() => {
+    updateGuests(getGuestTypeInfo(rooms));
+  }, [rooms]);
+
   return (
-    <div className="guests-class">
-      <div className="guests-class__panel">
+    <div className="block-guests-class">
+      <div className="block-guests-class__panel">
         <Select
           label="How many rooms do you need?"
-          onChange={(e) => onHandleChangeRoom(+e.currentTarget.value)}
+          onChange={(e) =>
+            setRooms(getUpdatedRoom(rooms, +e.currentTarget.value))
+          }
         >
           {Array.from(Array(roomCount).keys()).map((item) => (
             <option key={item} value={item + 1}>
@@ -91,59 +99,64 @@ export default function GuestClass() {
             </option>
           ))}
         </Select>
-        {rooms.map((room, index) => (
-          <div key={`${room.room}-${index}`} className="guests-class__room">
-            {rooms.length !== 1 && <h6>Room {room.room}</h6>}
-            <div key={index} className="guests-class__counter-list">
-              <GuestCounter
-                id="adults"
-                title="Adults"
-                description="18+ years"
-                value={room.adults}
-                minValue={1}
-                room={room.room}
-                onChange={onHandleChangeAdults}
-              />
-              <GuestCounter
-                id="children"
-                title="Children"
-                description="0-17 years"
-                value={room.children.length}
-                room={room.room}
-                onChange={onHandleChangeChildren}
-              />
-              {room.children.length ? (
-                <div className="guests-class__childrens">
-                  <p>Age of children at time of return</p>
-                  <div className="guests-class__childrens-selects">
-                    {room.children.map((child, index) => (
-                      <Select
-                        key={`child-${index + 1}`}
-                        id={`child-${index + 1}`}
-                        defaultValue={child}
-                        onChange={(e) =>
-                          onHandleChangeChildAge(
-                            room.room,
-                            index,
-                            +e.currentTarget.value,
-                          )
-                        }
-                      >
-                        {Array.from(Array(childrenMaxAge).keys()).map(
-                          (item) => (
-                            <option key={item} value={item}>
-                              {item}
-                            </option>
-                          ),
-                        )}
-                      </Select>
-                    ))}
+        <div className="block-guests-class__rooms">
+          {rooms.map((room, index) => (
+            <div
+              key={`${room.room}-${index}`}
+              className="block-guests-class__room"
+            >
+              {rooms.length !== 1 && <h6>Room {room.room}</h6>}
+              <div key={index} className="block-guests-class__counter-list">
+                <GuestCounter
+                  id="adults"
+                  title="Adults"
+                  description="18+ years"
+                  value={room.adults}
+                  minValue={1}
+                  room={room.room}
+                  onChange={onHandleChangeAdults}
+                />
+                <GuestCounter
+                  id="children"
+                  title="Children"
+                  description="0-17 years"
+                  value={room.children.length}
+                  room={room.room}
+                  onChange={onHandleChangeChildren}
+                />
+                {room.children.length ? (
+                  <div className="block-guests-class__childrens">
+                    <p>Age of children at time of return</p>
+                    <div className="block-guests-class__childrens-selects">
+                      {room.children.map((child, index) => (
+                        <Select
+                          key={`child-${index + 1}`}
+                          id={`child-${index + 1}`}
+                          defaultValue={child}
+                          onChange={(e) =>
+                            onHandleChangeChildAge(
+                              room.room,
+                              index,
+                              +e.currentTarget.value,
+                            )
+                          }
+                        >
+                          {Array.from(Array(childrenMaxAge).keys()).map(
+                            (item) => (
+                              <option key={item} value={item}>
+                                {item}
+                              </option>
+                            ),
+                          )}
+                        </Select>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
