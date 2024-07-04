@@ -22,16 +22,20 @@ export default function Counter({
   }, []);
 
   useEffect(() => {
-    onChange && onChange(counterValue);
-  }, [counterValue]);
+    setCounterValue(value);
+  }, [value]);
 
-  function onHandleClick(type: 'inc' | 'dec') {
-    if (type === 'inc') {
-      setCounterValue((prev) => prev + 1);
-    }
-    if (type === 'dec' && counterValue > 0) {
-      setCounterValue((prev) => prev - 1);
-    }
+  function onHandleInc() {
+    const updateValue = counterValue + 1;
+    setCounterValue(updateValue);
+    onChange && onChange(updateValue);
+  }
+  function onHandleDec() {
+    if (counterValue < 0) return;
+
+    const updateValue = counterValue - 1;
+    setCounterValue(updateValue);
+    onChange && onChange(updateValue);
   }
 
   return (
@@ -43,7 +47,7 @@ export default function Counter({
         icon={IconEnum.MINUS}
         iconSize={20}
         {...{ disabled: counterValue === minValue }}
-        onClick={() => onHandleClick('dec')}
+        onClick={onHandleDec}
       />
       {input ? (
         <Input
@@ -71,7 +75,7 @@ export default function Counter({
         className="counter__button"
         icon={IconEnum.PLUS}
         iconSize={20}
-        onClick={() => onHandleClick('inc')}
+        onClick={onHandleInc}
       />
     </div>
   );

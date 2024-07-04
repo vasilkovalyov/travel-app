@@ -32,17 +32,20 @@
   &__field {
     width: 48px;
     height: 48px;
+    background-color: transparent;
 
-    .text-field__input {
-      min-height: 100%;
-      border: none;
-      background-color: transparent;
-      font-size: var(--app-text-size-base);
-      text-align: center;
-      font-weight: 800;
-      padding: 10px;
-      text-align: center;
-      pointer-events: none;
+    .text-field {
+      &__input {
+        min-height: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: var(--app-text-size-base);
+        text-align: center;
+        font-weight: 800;
+        padding: 10px;
+        text-align: center;
+        pointer-events: none;
+      }
     }
   }
 }
