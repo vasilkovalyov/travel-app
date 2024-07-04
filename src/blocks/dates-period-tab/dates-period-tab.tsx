@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import cn from 'classnames';
 
 import { useSearchFilterStore } from '@/store';
@@ -10,18 +10,11 @@ import { BlockMonths } from '../months';
 import './dates-period-tab.scss';
 
 export default function BlockDatesPeriodTab() {
-  const { updateTab, activeTabDates } = useSearchFilterStore();
-
-  const [activeTab, setActiveTab] = useState<string>('dates');
-
-  function onHandleClickTab(tab: string) {
-    setActiveTab(tab);
-    updateTab(tab);
-  }
+  const { activeTabDates, updateTab } = useSearchFilterStore();
 
   useEffect(() => {
     if (activeTabDates) {
-      setActiveTab(activeTabDates);
+      updateTab(activeTabDates);
     }
   }, []);
 
@@ -30,32 +23,24 @@ export default function BlockDatesPeriodTab() {
       <div className="block-dates-period-tab__togglers">
         <Button
           size="md"
-          variant={activeTab === 'dates' ? 'primary' : 'light'}
-          onClick={() => {
-            onHandleClickTab('dates');
-          }}
-          className={cn({
-            active: activeTab === 'dates',
-          })}
+          variant={activeTabDates === 'dates' ? 'primary' : 'light'}
+          onClick={() => updateTab('dates')}
+          className={cn({ active: activeTabDates === 'dates' })}
         >
           Choose dates
         </Button>
         <Button
           size="md"
-          variant={activeTab === 'month' ? 'primary' : 'light'}
-          onClick={() => {
-            onHandleClickTab('month');
-          }}
-          className={cn({
-            active: activeTab === 'month',
-          })}
+          variant={activeTabDates === 'month' ? 'primary' : 'light'}
+          onClick={() => updateTab('month')}
+          className={cn({ active: activeTabDates === 'month' })}
         >
           Choose month
         </Button>
       </div>
       <div className="block-dates-period-tab__content">
-        {activeTab === 'dates' && <BlockDates />}
-        {activeTab === 'month' && <BlockMonths />}
+        {activeTabDates === 'dates' && <BlockDates />}
+        {activeTabDates === 'month' && <BlockMonths />}
       </div>
     </div>
   );
