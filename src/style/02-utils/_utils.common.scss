@@ -23,3 +23,19 @@
   z-index: -1;
   background-color: rgb(var(--app-color-black) / 0.7);
 }
+
+#react-tiny-popover-container {
+  z-index: 10;
+}
+
+.popover {
+  border-radius: 20px;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid rgb(228, 221, 215);
+  padding: 12px;
+  background-color: rgb(var(--app-color-dark-light));
+
+  .block-guests-class {
+    width: 375px;
+  }
+}
