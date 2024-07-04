@@ -1,4 +1,4 @@
-import { DateRange } from 'react-day-picker';
+import { DateRange } from '@/types/common';
 
 export const selectedRangeDefault: DateRange = {
   from: undefined,

@@ -52,3 +52,8 @@ export type BadgeType = {
   id: string;
   badge_variant: string;
 };
+
+export type DateRange = {
+  from: Date | undefined;
+  to?: Date | undefined;
+};

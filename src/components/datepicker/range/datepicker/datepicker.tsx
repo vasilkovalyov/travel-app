@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { DayPicker, DateRange } from 'react-day-picker';
+import { DayPicker } from 'react-day-picker';
+import { DateRange } from '@/types/common';
 
 import {
   getNextDay,
