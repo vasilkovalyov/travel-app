@@ -20,7 +20,7 @@ function getNextMonths(countMonth: number): MonthType[] {
 
   for (let i = 0; i < countMonth; i++) {
     const futureDate = addMonths(currentDate, i);
-    const formattedDate = format(futureDate, 'MMMM yyyy');
+    const formattedDate = format(futureDate, shortDateFormat);
     months.push({
       date: futureDate,
       value: futureDate.toISOString().split('T')[0],
@@ -43,52 +43,57 @@ export default function BlockMonths() {
     setDays(days);
   }
 
+  function onHandleReset() {
+    setDays(defaultDayCount);
+    setSelectedDate(null);
+  }
+
   function onHandleSelectMonth(date: Date) {
     const lastDayMonthDate = endOfMonth(date);
     console.log(lastDayMonthDate);
-
     setSelectedDate(date);
   }
 
   return (
     <div className="block-months">
-      <Counter
-        id="month-days"
-        input={false}
-        title="nights"
-        className="block-months__counter"
-        minValue={1}
-        value={days}
-        onChange={onHandleChangeDays}
-      />
-      <div className="block-months__grid">
-        {getNextMonths(countNextMonth).map(({ date, title, value }) => {
-          const dateValue = date?.toISOString().split('T')[0];
-          const isSelected =
-            selectedDate?.toISOString().split('T')[0] === dateValue;
+      <div className="block-months__content">
+        <Counter
+          id="month-days"
+          input={false}
+          title="nights"
+          className="block-months__counter"
+          minValue={1}
+          value={days}
+          onChange={onHandleChangeDays}
+        />
+        <div className="block-months__grid">
+          {getNextMonths(countNextMonth).map(({ date, title, value }) => {
+            const dateValue = date?.toISOString().split('T')[0];
+            const isSelected =
+              selectedDate?.toISOString().split('T')[0] === dateValue;
 
-          return (
-            <label
-              key={dateValue}
-              className={cn('month-btn', {
-                'month-btn--selected': isSelected,
-              })}
-            >
-              <input
-                type="radio"
-                name="month-options"
-                className="month-btn__input"
-                value={value}
-                checked={isSelected}
-                onChange={() => onHandleSelectMonth(date)}
-              />
-              <span className="month-btn__title">{title}</span>
-              <div className="month-btn__border"></div>
-            </label>
-          );
-        })}
+            return (
+              <label
+                key={dateValue}
+                className={cn('month-btn', {
+                  'month-btn--selected': isSelected,
+                })}
+              >
+                <input
+                  type="radio"
+                  name="month-options"
+                  className="month-btn__input"
+                  value={value}
+                  checked={isSelected}
+                  onChange={() => onHandleSelectMonth(date)}
+                />
+                <span className="month-btn__title">{title}</span>
+                <div className="month-btn__border"></div>
+              </label>
+            );
+          })}
+        </div>
       </div>
-
       <div className="months-info">
         {selectedDate ? (
           <>
@@ -100,7 +105,7 @@ export default function BlockMonths() {
               view="transparent"
               size="sm"
               className="dates-info__reset-btn"
-              onClick={() => setSelectedDate(null)}
+              onClick={onHandleReset}
             >
               Reset
             </Button>

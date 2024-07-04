@@ -2,6 +2,14 @@
   display: grid;
   row-gap: 12px;
 
+  &__content {
+    display: grid;
+    row-gap: 12px;
+    background-color: rgb(var(--app-color-light));
+    border-radius: 12px;
+    padding: 16px;
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -66,7 +74,7 @@
   justify-content: center;
   gap: 4px;
   padding: 8px 12px;
-  background: rgb(var(--app-color-light));
+  background-color: rgb(var(--app-color-light));
   text-align: center;
   font-size: var(--app-text-size-sm);
   color: rgb(var(--app-color-dark));
