@@ -91,6 +91,7 @@ const Input = forwardRef(
                 !e.relatedTarget?.classList.contains('text-field__clear-btn')
               ) {
                 setIsFocused(false);
+                onCustomBlur && onCustomBlur();
                 return;
               }
             }}
