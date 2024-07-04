@@ -3,7 +3,7 @@ import { IconEnum } from '../icon';
 
 type ButtonSizeType = 'sm' | 'md' | 'lg' | 'xl';
 type ButtonViewType = 'outline' | 'fill' | 'transparent';
-type ButtonVariantType = 'primary' | 'secondary';
+type ButtonVariantType = 'primary' | 'secondary' | 'light';
 
 export type ButtonProps = {
   children?: React.ReactNode;

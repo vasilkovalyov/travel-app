@@ -41,6 +41,7 @@ const Button = forwardRef(
     const modificationVariantCn = cn({
       'btn--primary': variant === 'primary',
       'btn--secondary': variant === 'secondary',
+      'btn--light': variant === 'light',
     });
 
     const modificationCn = cn(

@@ -130,6 +130,16 @@
     }
   }
 
+  &--light {
+    --app-button-bg: rgb(var(--app-color-light));
+    --app-button-border-color: transparent;
+    --app-button-color: rgb(var(--app-color-black));
+
+    &:hover {
+      --app-button-bg: rgb(var(--app-color-light));
+    }
+  }
+
   &--icon-right {
     flex-direction: row-reverse;
   }
