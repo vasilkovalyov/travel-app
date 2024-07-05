@@ -50,7 +50,7 @@
       --app-checkbox-mark-opacity: 1;
     }
 
-    &:focus + .checkbox__mark {
+    &:focus-visible + .checkbox__mark {
       outline: 2px solid rgb(var(--app-color-primary-dark));
       outline-offset: 1px;
     }

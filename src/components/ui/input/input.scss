@@ -113,7 +113,7 @@
     width: 20px;
     height: 20px;
 
-    &:focus {
+    &:focus-visible {
       outline: 2px solid rgb(var(--app-color-black));
     }
   }
@@ -130,7 +130,7 @@
     pointer-events: none;
     outline: none;
 
-    &:focus {
+    &:focus-visible {
       outline: none;
     }
   }

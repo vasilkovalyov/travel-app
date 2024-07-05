@@ -2,7 +2,7 @@
   display: grid;
   row-gap: 8px;
 
-  &:focus {
+  &:focus-visible {
     outline: 1px solid rgb(var(--app-color-primary-dark));
   }
 
