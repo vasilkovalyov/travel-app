@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import cn from 'classnames';
-import { addMonths, format, startOfMonth, endOfMonth } from 'date-fns';
+import { addMonths, format, startOfMonth } from 'date-fns';
+
+import { useSearchFilterStore } from '@/store';
 
 import { Counter } from '@/components';
 import { Button } from '@/components/ui';
-import { shortDateFormat } from '@/constants/dates';
+import { shortDateFormat, standartDateFormat } from '@/constants/dates';
 
 import './months.scss';
 
@@ -16,15 +17,14 @@ type MonthType = {
 
 function getNextMonths(countMonth: number): MonthType[] {
   const months: MonthType[] = [];
-  const currentDate = startOfMonth(new Date());
+  const currentDate = startOfMonth(new Date().setUTCDate(1));
 
   for (let i = 0; i < countMonth; i++) {
     const futureDate = addMonths(currentDate, i);
-    const formattedDate = format(futureDate, shortDateFormat);
     months.push({
       date: futureDate,
-      value: futureDate.toISOString().split('T')[0],
-      title: formattedDate,
+      value: format(futureDate, standartDateFormat),
+      title: format(futureDate, shortDateFormat),
     });
   }
 
@@ -32,27 +32,27 @@ function getNextMonths(countMonth: number): MonthType[] {
 }
 
 export default function BlockMonths() {
-  const countNextMonth = 18;
-  const defaultDayCount = 7;
   const messageMonthsDate = 'Select a month';
 
-  const [days, setDays] = useState<number>(defaultDayCount);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const {
+    datesMonth,
+    countNextMonth,
+    monthDays,
+    updateDatesForMonthByCounter,
+    updateDatesForMonth,
+    resetDatesForMonth,
+  } = useSearchFilterStore();
 
-  function onHandleChangeDays(days: number) {
-    setDays(days);
-  }
+  const isCurrentDate = (date: Date): boolean => {
+    if (!datesMonth.from) return false;
+    const formattedDateMonth = format(datesMonth.from, standartDateFormat);
+    const formattedDate = format(date, standartDateFormat);
 
-  function onHandleReset() {
-    setDays(defaultDayCount);
-    setSelectedDate(null);
-  }
-
-  function onHandleSelectMonth(date: Date) {
-    const lastDayMonthDate = endOfMonth(date);
-    console.log(lastDayMonthDate);
-    setSelectedDate(date);
-  }
+    if (formattedDateMonth === formattedDate) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="block-months">
@@ -63,18 +63,15 @@ export default function BlockMonths() {
           title="nights"
           className="block-months__counter"
           minValue={1}
-          value={days}
-          onChange={onHandleChangeDays}
+          value={monthDays}
+          onChange={updateDatesForMonthByCounter}
         />
         <div className="block-months__grid">
           {getNextMonths(countNextMonth).map(({ date, title, value }) => {
-            const dateValue = date?.toISOString().split('T')[0];
-            const isSelected =
-              selectedDate?.toISOString().split('T')[0] === dateValue;
-
+            const isSelected = isCurrentDate(date);
             return (
               <label
-                key={dateValue}
+                key={date.toISOString()}
                 className={cn('month-btn', {
                   'month-btn--selected': isSelected,
                 })}
@@ -85,7 +82,7 @@ export default function BlockMonths() {
                   className="month-btn__input"
                   value={value}
                   checked={isSelected}
-                  onChange={() => onHandleSelectMonth(date)}
+                  onChange={() => updateDatesForMonth(date)}
                 />
                 <span className="month-btn__title">{title}</span>
                 <div className="month-btn__border"></div>
@@ -95,17 +92,17 @@ export default function BlockMonths() {
         </div>
       </div>
       <div className="months-info">
-        {selectedDate ? (
+        {datesMonth.from ? (
           <>
             <span className="dates-info__date">
-              {format(selectedDate, shortDateFormat)}
+              {format(datesMonth.from, shortDateFormat)}
             </span>
-            <span className="dates-info__nights">({days} nights)</span>
+            <span className="dates-info__nights">({monthDays} nights)</span>
             <Button
               view="transparent"
               size="sm"
               className="dates-info__reset-btn"
-              onClick={onHandleReset}
+              onClick={resetDatesForMonth}
             >
               Reset
             </Button>

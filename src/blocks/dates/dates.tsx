@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { format, intervalToDuration } from 'date-fns';
 
 import { useSearchFilterStore } from '@/store';
@@ -7,80 +5,50 @@ import { useSearchFilterStore } from '@/store';
 import { DatePickerRange } from '@/components';
 import { Button } from '@/components/ui';
 import { baseDateFormat } from '@/constants/dates';
-import { DateRange } from '@/types/common';
 
 import './dates.scss';
-
-const defaultRangeDates: DateRange = {
-  from: undefined,
-  to: undefined,
-};
 
 export default function BlockDates() {
   const messageDepartureDate = 'Select a departure date';
   const messageReturnDate = 'Select a return date';
 
-  const [selectedDates, setSelectedDates] =
-    useState<DateRange>(defaultRangeDates);
-  const { datesDatePicker, updateDatePickerDates, clearDatesDatePicker } =
+  const { datesDatePicker, updateDatePickerDates, resetDatesDatePicker } =
     useSearchFilterStore();
 
-  useEffect(() => {
-    setSelectedDates({
-      from: datesDatePicker.from,
-      to: datesDatePicker.to,
-    });
-  }, [datesDatePicker]);
-
-  function onHandleReset() {
-    setSelectedDates(defaultRangeDates);
-    clearDatesDatePicker();
-  }
-
-  function onHandleDatePickerRange(from: Date, to?: Date) {
-    setSelectedDates({ from, to });
-    updateDatePickerDates(from, to);
-  }
-
   const getMessageForDate = () => {
-    if (!selectedDates.from && !selectedDates.to) return messageDepartureDate;
-    if (selectedDates.from && !selectedDates.to) return messageReturnDate;
+    if (!datesDatePicker.from && !datesDatePicker.to)
+      return messageDepartureDate;
+    if (datesDatePicker.from && !datesDatePicker.to) return messageReturnDate;
     return null;
-  };
-
-  const getCountNights = (from: Date, to: Date) => {
-    return (
-      intervalToDuration({
-        start: from,
-        end: to,
-      }).days + ' nights'
-    );
   };
 
   return (
     <div className="block-dates">
       <DatePickerRange
-        selected={selectedDates}
-        onSelectRange={onHandleDatePickerRange}
+        selected={datesDatePicker}
+        onSelectRange={updateDatePickerDates}
       />
       <div className="dates-info">
-        {selectedDates.from && selectedDates.to ? (
+        {datesDatePicker.from && datesDatePicker.to ? (
           <>
             <span className="dates-info__date">
-              {format(selectedDates.from, baseDateFormat)}
+              {format(datesDatePicker.from, baseDateFormat)}
             </span>{' '}
             <span>-</span>{' '}
             <span className="dates-info__date">
-              {format(selectedDates.to, baseDateFormat)}
+              {format(datesDatePicker.to, baseDateFormat)}
             </span>
             <span className="dates-info__nights">
-              {getCountNights(selectedDates.from, selectedDates.to)}
+              {intervalToDuration({
+                start: datesDatePicker.from,
+                end: datesDatePicker.to,
+              }).days + ' nights'}
             </span>
             <Button
               view="transparent"
               size="sm"
               className="dates-info__reset-btn"
-              onClick={onHandleReset}
+              onClick={resetDatesDatePicker}
             >
               Reset
             </Button>
