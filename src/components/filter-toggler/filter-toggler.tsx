@@ -51,7 +51,7 @@ const FilterToggler = forwardRef(
 
     function onFocusButton() {
       setIsFocusedInput(true);
-      onFocus && onFocus();
+      // onFocus && onFocus();
     }
 
     return (
