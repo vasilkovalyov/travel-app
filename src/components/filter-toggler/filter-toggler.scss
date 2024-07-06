@@ -74,6 +74,7 @@
     appearance: none;
     cursor: pointer;
     justify-content: flex-start;
+    pointer-events: all;
   }
 
   &__text-field {

@@ -14,6 +14,7 @@ const FilterToggler = forwardRef(
       readonly,
       onBlur,
       onFocus,
+      onClick,
     }: FilterTogglerType,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
@@ -51,6 +52,7 @@ const FilterToggler = forwardRef(
 
     function onFocusButton() {
       setIsFocusedInput(true);
+      onClick && onClick();
       // onFocus && onFocus();
     }
 
@@ -73,8 +75,9 @@ const FilterToggler = forwardRef(
         ) : (
           <Button
             view="transparent"
-            className="filter-toggler__button"
+            className="filter-toggler__button text-truncate"
             onFocus={onFocusButton}
+            onClick={onClick}
           >
             {inputValue}
           </Button>
