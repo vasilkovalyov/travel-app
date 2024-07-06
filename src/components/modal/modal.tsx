@@ -17,40 +17,52 @@ export default function Modal({
 }: ModalProps) {
   const onHandleCloseEscapeKey = (e: KeyboardEvent) =>
     e.key === 'Escape' ? onHandleClose() : null;
+  const bodyActiveModalCn = 'modal-open';
 
   useEffect(() => {
+    if (open) {
+      document.body.classList.add(bodyActiveModalCn);
+    }
     document.body.addEventListener('keydown', onHandleCloseEscapeKey);
     return () => {
       document.body.removeEventListener('keydown', onHandleCloseEscapeKey);
+      document.body.classList.remove(bodyActiveModalCn);
     };
   }, [onHandleClose]);
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add(bodyActiveModalCn);
+    } else {
+      // document.body.classList.remove(bodyActiveModalCn);
+    }
+  }, [open]);
 
   if (!open) return null;
 
   return (
-    <ReactPortal wrapperId="react-portal-modal-container">
-      <div className={cn('modal', className)}>
-        <div className="modal__overlay overlay" onClick={onHandleClose}></div>
-        <div className="modal__box">
-          <div className="modal__header">
-            <div className="modal__header-heading">
-              <h3 className="modal__title">{title}</h3>
-              <Button
-                iconSize={22}
-                view="transparent"
-                icon={IconEnum.CROSS}
-                onClick={onHandleClose}
-              />
-            </div>
-            {headerContent && (
-              <div className="modal__header-embed">{headerContent}</div>
-            )}
+    <ReactPortal
+      wrapperId="react-portal-modal-container"
+      className={cn('modal', className)}
+    >
+      <div className="modal__overlay overlay" onClick={onHandleClose}></div>
+      <div className="modal__box">
+        <div className="modal__header">
+          <div className="modal__header-heading">
+            <h3 className="modal__title">{title}</h3>
+            <Button
+              iconSize={22}
+              view="transparent"
+              icon={IconEnum.CROSS}
+              onClick={onHandleClose}
+            />
           </div>
-          <div className="modal__content">{children}</div>
-          {bottomContent && (
-            <div className="modal__footer">{bottomContent}</div>
+          {headerContent && (
+            <div className="modal__header-embed">{headerContent}</div>
           )}
         </div>
+        <div className="modal__content">{children}</div>
+        {bottomContent && <div className="modal__footer">{bottomContent}</div>}
       </div>
     </ReactPortal>
   );
