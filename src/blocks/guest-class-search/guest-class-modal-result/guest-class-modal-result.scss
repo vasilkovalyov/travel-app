@@ -1,0 +1,39 @@
+.block-guest-class-modal-result {
+  display: grid;
+  row-gap: 12px;
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__done-btn {
+    flex: 1;
+  }
+
+  &__list {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.guest-class-info {
+  display: flex;
+  gap: 8px;
+
+  &__item {
+    flex: 1;
+    border-radius: 12px;
+    padding: 8px;
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    background-color: rgb(var(--app-color-dark-light));
+    font-size: var(--app-text-size-sm);
+    color: rgb(var(--app-color-dark));
+  }
+
+  &__title {
+    font-weight: 800;
+  }
+}
