@@ -9,20 +9,14 @@ import { breakpoints } from '@/constants/breakpoints';
 import './date-picker-range.scss';
 
 export default function BlockDatePickerRange() {
-  const {
-    datesDays,
-    datesDatePicker,
-    messageDepartureDate,
-    messageReturnDate,
-    formattedDatesForDatePicker,
-    updateDatePickerDates,
-    resetDatesDatePicker,
-  } = useSearchFilterStore();
+  const { dateMonth, datePicker, updateDatePickerDates, resetDatesDatePicker } =
+    useSearchFilterStore();
 
   const getMessageForDate = () => {
-    if (!datesDatePicker.from && !datesDatePicker.to)
-      return messageDepartureDate;
-    if (datesDatePicker.from && !datesDatePicker.to) return messageReturnDate;
+    if (!datePicker.datesDatePicker.from && !datePicker.datesDatePicker.to)
+      return datePicker.messageDepartureDate;
+    if (datePicker.datesDatePicker.from && !datePicker.datesDatePicker.to)
+      return datePicker.messageReturnDate;
     return null;
   };
 
@@ -34,18 +28,18 @@ export default function BlockDatePickerRange() {
     <div className="block-date-picker-range">
       <DatePickerRange
         numberOfMonths={isTabletMd ? 2 : 1}
-        selected={datesDatePicker}
+        selected={datePicker.datesDatePicker}
         onSelectRange={updateDatePickerDates}
       />
       {isTabletMd && (
         <div className="date-result">
-          {datesDatePicker.from && datesDatePicker.to ? (
+          {datePicker.datesDatePicker.from && datePicker.datesDatePicker.to ? (
             <>
               <span className="date-result__dates">
-                {formattedDatesForDatePicker}
+                {datePicker.formattedDatesForDatePicker}
               </span>
               <span className="date-result__days">
-                {`(${datesDays} ${datesDays >= 2 ? 'nights' : 'night'})`}
+                {`(${datePicker.datesDays} ${datePicker.datesDays >= 2 ? 'nights' : 'night'})`}
               </span>
               <Button
                 view="transparent"

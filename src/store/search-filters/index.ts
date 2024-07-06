@@ -10,39 +10,7 @@ import {
 } from '@/utils/common';
 
 import { DatepickerTabEnum } from '@/blocks/date-pickers-search';
-
-export type GuestType = {
-  rooms: number;
-  adults: number;
-  children: number[];
-};
-
-interface SearchFiltersState {
-  defaultDayCount: number;
-  countNextMonth: number;
-  guests: GuestType;
-  guestsFormattedMessage: string;
-  datesDatePicker: DateRange;
-  datesMonth: DateRange;
-  monthDays: number;
-  datesDays: number;
-  formattedDatesForDatePicker: string;
-  formattedDatesForMonth: string;
-  activeFormattedDates: string;
-  activeTabDates: DatepickerTabEnum;
-  messageDepartureDate: string;
-  messageReturnDate: string;
-  messageMonthsDate: string;
-  updateGuests: (guests: GuestType) => void;
-  updateDatePickerDates: (from: Date, to?: Date) => void;
-  resetDatesDatePicker: () => void;
-  updateDatesForMonthByCounter: (days: number) => void;
-  updateDatesForMonth: (from: Date) => void;
-  resetDatesForMonth: () => void;
-  clearActiveFormattedDates: () => void;
-  updateTab: (tab: DatepickerTabEnum) => void;
-  updateMonthDays: (days: number) => void;
-}
+import { GuestType, SearchFiltersState } from './types';
 
 const defaultDateRange: DateRange = {
   from: undefined,
@@ -64,72 +32,92 @@ const defaultDays = 7;
 const useSearchFilterStore = create<SearchFiltersState>()(
   devtools(
     immer((set) => ({
-      messageDepartureDate: 'Select a departure date',
-      messageReturnDate: 'Select a return date',
-      messageMonthsDate: 'Select a month',
-      countNextMonth: 18,
-      defaultDayCount: defaultDays,
+      datePicker: {
+        messageDepartureDate: 'Select a departure date',
+        messageReturnDate: 'Select a return date',
+        datesDatePicker: defaultDateRange,
+        formattedDatesForDatePicker: '',
+        datesDays: 0,
+      },
+      dateMonth: {
+        messageMonthsDate: 'Select a month',
+        countNextMonth: 18,
+        defaultDayCount: defaultDays,
+        datesMonth: defaultDateRange,
+        monthDays: defaultDays,
+        formattedDatesForMonth: '',
+      },
       guests: {
         rooms: 1,
         adults: 1,
         children: [],
       },
       guestsFormattedMessage: '',
-      datesDatePicker: defaultDateRange,
-      datesMonth: defaultDateRange,
-      monthDays: defaultDays,
-      datesDays: 0,
-      formattedDatesForDatePicker: '',
-      formattedDatesForMonth: '',
       activeFormattedDates: '',
       activeTabDates: DatepickerTabEnum.Dates,
       updateDatePickerDates: (from: Date, to?: Date) => {
-        set(() => ({
-          datesDatePicker: { from, to },
+        set((state) => ({
+          datePicker: {
+            ...state.datePicker,
+            datesDatePicker: { from, to },
+          },
         }));
-        set(() => {
-          if (to) {
-            return {
-              datesDays: intervalToDuration({
+        set((state) => {
+          if (!to) return;
+          return {
+            datePicker: {
+              ...state.datePicker,
+              datePicker: intervalToDuration({
                 start: from,
                 end: to,
               }).days,
-            };
-          }
+            },
+          };
         });
-        set(() => {
+        set((state) => {
           const formattedDateStr = getFormattedDateString(from, to);
-
           return {
-            formattedDatesForDatePicker: formattedDateStr,
+            datePicker: {
+              ...state.datePicker,
+              formattedDatesForDatePicker: formattedDateStr,
+            },
             activeFormattedDates: formattedDateStr,
           };
         });
       },
       resetDatesDatePicker: () => {
-        set(() => ({
+        set((state) => ({
           activeFormattedDates: '',
-          datesDatePicker: defaultDateRange,
-          formattedDatesForDatePicker: '',
+          datePicker: {
+            ...state.datePicker,
+            datesDatePicker: defaultDateRange,
+            formattedDatesForDatePicker: '',
+          },
         }));
       },
       updateDatesForMonthByCounter: (days: number) => {
         set((state) => {
-          if (state.datesMonth.from) {
+          if (state.dateMonth.datesMonth.from) {
             const formattedDateStr = getFormattedDateMonthString(
-              state.datesMonth.from,
+              state.dateMonth.datesMonth.from,
               days,
             );
 
             return {
-              formattedDatesForMonth: formattedDateStr,
               activeFormattedDates: formattedDateStr,
-              monthDays: days,
+              dateMonth: {
+                ...state.dateMonth,
+                monthDays: days,
+                formattedDatesForMonth: formattedDateStr,
+              },
             };
           }
 
           return {
-            monthDays: days,
+            dateMonth: {
+              ...state.dateMonth,
+              monthDays: days,
+            },
           };
         });
       },
@@ -137,25 +125,31 @@ const useSearchFilterStore = create<SearchFiltersState>()(
         set((state) => {
           const formattedDateStr = getFormattedDateMonthString(
             date,
-            state.monthDays,
+            state.dateMonth.monthDays,
           );
           return {
-            datesMonth: {
-              from: startOfMonth(date),
-              to: endOfMonth(date),
+            dateMonth: {
+              ...state.dateMonth,
+              datesMonth: {
+                from: startOfMonth(date),
+                to: endOfMonth(date),
+              },
+              monthDays: state.dateMonth.monthDays,
+              formattedDatesForMonth: formattedDateStr,
             },
-            monthDays: state.monthDays,
-            formattedDatesForMonth: formattedDateStr,
             activeFormattedDates: formattedDateStr,
           };
         });
       },
       resetDatesForMonth: () => {
-        set(() => ({
-          monthDays: defaultDays,
-          datesMonth: defaultDateRange,
+        set((state) => ({
           activeFormattedDates: '',
-          formattedDatesForMonth: '',
+          dateMonth: {
+            ...state.dateMonth,
+            monthDays: state.dateMonth.defaultDayCount,
+            datesMonth: defaultDateRange,
+            formattedDatesForMonth: '',
+          },
         }));
       },
       updateGuests: (guests: GuestType) => {
@@ -168,10 +162,10 @@ const useSearchFilterStore = create<SearchFiltersState>()(
         set((state) => {
           let formattedDateStr = '';
           if (tab === DatepickerTabEnum.Dates) {
-            formattedDateStr = state.formattedDatesForDatePicker;
+            formattedDateStr = state.datePicker.formattedDatesForDatePicker;
           }
           if (tab === DatepickerTabEnum.Month) {
-            formattedDateStr = state.formattedDatesForMonth;
+            formattedDateStr = state.dateMonth.formattedDatesForMonth;
           }
 
           return {
@@ -186,9 +180,14 @@ const useSearchFilterStore = create<SearchFiltersState>()(
         }));
       },
       updateMonthDays: (days: number) => {
-        return {
-          monthDays: days,
-        };
+        set((state) => {
+          return {
+            dateMonth: {
+              ...state.dateMonth,
+              monthDays: days,
+            },
+          };
+        });
       },
     })),
   ),

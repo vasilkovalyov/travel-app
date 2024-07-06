@@ -15,34 +15,29 @@ export default function DatePickerModalResult({
 }) {
   const {
     activeTabDates,
-    datesMonth,
-    monthDays,
-    datesDays,
-    datesDatePicker,
-    messageMonthsDate,
-    messageDepartureDate,
-    messageReturnDate,
-    formattedDatesForDatePicker,
+    dateMonth,
+    datePicker,
     resetDatesForMonth,
     resetDatesDatePicker,
   } = useSearchFilterStore();
 
   const getMessageForDate = () => {
-    if (!datesDatePicker.from && !datesDatePicker.to)
-      return messageDepartureDate;
-    if (datesDatePicker.from && !datesDatePicker.to) return messageReturnDate;
+    if (!datePicker.datesDatePicker.from && !datePicker.datesDatePicker.to)
+      return datePicker.messageDepartureDate;
+    if (datePicker.datesDatePicker.from && !datePicker.datesDatePicker.to)
+      return datePicker.messageReturnDate;
     return null;
   };
 
   function renderInfoForDates() {
-    if (datesDatePicker.from && datesDatePicker.to) {
+    if (datePicker.datesDatePicker.from && datePicker.datesDatePicker.to) {
       return (
         <>
           <span className="date-result__dates">
-            {formattedDatesForDatePicker}
+            {datePicker.formattedDatesForDatePicker}
           </span>
           <span className="date-result__days">
-            {`(${datesDays} ${datesDays >= 2 ? 'nights' : 'night'})`}
+            {`(${datePicker.datesDays} ${datePicker.datesDays >= 2 ? 'nights' : 'night'})`}
           </span>
         </>
       );
@@ -51,19 +46,19 @@ export default function DatePickerModalResult({
   }
 
   function renderInfoForMonth() {
-    if (datesMonth.from) {
+    if (dateMonth.datesMonth.from) {
       return (
         <>
           <span className="date-result__dates">
-            {format(datesMonth.from, shortDateFormat)}
+            {format(dateMonth.datesMonth.from, shortDateFormat)}
           </span>
           <span className="date-result__days">
-            {`(${monthDays} ${monthDays >= 2 ? 'nights' : 'night'})`}
+            {`(${dateMonth.monthDays} ${dateMonth.monthDays >= 2 ? 'nights' : 'night'})`}
           </span>
         </>
       );
     }
-    return messageMonthsDate;
+    return dateMonth.messageMonthsDate;
   }
 
   function onHandleReset() {

@@ -42,10 +42,7 @@ function getNextMonths(
 
 export default function BlockDatePickerMonth() {
   const {
-    datesMonth,
-    countNextMonth,
-    monthDays,
-    messageMonthsDate,
+    dateMonth,
     updateDatesForMonthByCounter,
     updateDatesForMonth,
     resetDatesForMonth,
@@ -56,16 +53,19 @@ export default function BlockDatePickerMonth() {
   });
 
   const isCurrentDate = (date: Date): boolean => {
-    if (!datesMonth.from) return false;
-    const formattedDateMonth = format(datesMonth.from, standartDateFormat);
+    if (!dateMonth.datesMonth.from) return false;
+    const formattedDateMonth = format(
+      dateMonth.datesMonth.from,
+      standartDateFormat,
+    );
     const formattedDate = format(date, standartDateFormat);
 
     return formattedDateMonth === formattedDate;
   };
 
   const getMonthes = isTabletMd
-    ? getNextMonths(countNextMonth)
-    : getNextMonths(countNextMonth, shortDateFormat2);
+    ? getNextMonths(dateMonth.countNextMonth)
+    : getNextMonths(dateMonth.countNextMonth, shortDateFormat2);
 
   return (
     <div className="block-date-picker-month">
@@ -76,7 +76,7 @@ export default function BlockDatePickerMonth() {
           title="nights"
           className="block-date-picker-month__counter"
           minValue={1}
-          value={monthDays}
+          value={dateMonth.monthDays}
           onChange={updateDatesForMonthByCounter}
         />
         <div className="block-date-picker-month__grid">
@@ -106,13 +106,13 @@ export default function BlockDatePickerMonth() {
       </div>
       {isTabletMd && (
         <div className="date-result">
-          {datesMonth.from ? (
+          {dateMonth.datesMonth.from ? (
             <>
               <span className="date-result__dates">
-                {format(datesMonth.from, shortDateFormat)}
+                {format(dateMonth.datesMonth.from, shortDateFormat)}
               </span>
               <span className="date-result__days">
-                {`(${monthDays} ${monthDays >= 2 ? 'nights' : 'night'})`}
+                {`(${dateMonth.monthDays} ${dateMonth.monthDays >= 2 ? 'nights' : 'night'})`}
               </span>
               <Button
                 view="transparent"
@@ -124,7 +124,7 @@ export default function BlockDatePickerMonth() {
               </Button>
             </>
           ) : (
-            messageMonthsDate
+            dateMonth.messageMonthsDate
           )}
         </div>
       )}
