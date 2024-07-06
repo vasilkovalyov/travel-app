@@ -12,7 +12,7 @@ import {
   BlockDatePickerTab,
   DatePickerModalResult,
 } from '../date-pickers-search';
-import { BlockGuestClass } from '../guest-classes-search';
+import { BlockGuestClass } from '../guest-class-search';
 
 import './top-search.scss';
 
