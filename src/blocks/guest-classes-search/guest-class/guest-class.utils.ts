@@ -1,5 +1,5 @@
 import { GuestType } from '@/store/search-filters';
-import { GuestRoomType } from './guests-class.type';
+import { GuestRoomType } from './guest-class.type';
 
 export const defaultRoom: Readonly<GuestRoomType> = {
   room: 1,

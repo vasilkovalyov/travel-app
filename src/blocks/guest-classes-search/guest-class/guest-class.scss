@@ -1,25 +1,4 @@
-.guest-counter {
-  display: grid;
-  column-gap: 8px;
-  grid-template-columns: 1fr 160px;
-  padding: 8px 0;
-
-  &__content {
-    display: grid;
-    row-gap: 2px;
-    font-size: var(--app-text-size-sm);
-  }
-
-  &__title {
-    font-weight: 600;
-  }
-
-  &__description {
-    color: rgb(var(--app-color-grey));
-  }
-}
-
-.block-guests-class {
+.block-guest-class {
   display: grid;
   row-gap: 16px;
 

@@ -1,4 +1,4 @@
-import { BlockGuestsClass, BlockFilter } from '@/blocks';
+import { BlockFilter } from '@/blocks';
 import { FilterToggler } from '@/components';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
 import { useRef } from 'react';
@@ -125,8 +125,6 @@ export default function Ui() {
         <Input />
         <br />
         <FieldPlaceholder title="Anywhere" />
-        <br />
-        <BlockGuestsClass />
         <br />
         <BlockFilter />
         <br />

@@ -1,49 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Counter } from '@/components';
 import { Select } from '@/components/ui';
 import { useSearchFilterStore } from '@/store';
+
+import { GuestCounter } from '../guest-counter';
 
 import {
   defaultRoom,
   getGuestTypeInfo,
   getUpdatedRoom,
-} from './guests-class.utils';
-import { GuestRoomType } from './guests-class.type';
+} from './guest-class.utils';
+import { GuestRoomType } from './guest-class.type';
 
-import './guests-class.scss';
-
-function GuestCounter({
-  id,
-  title,
-  description,
-  value,
-  minValue = 0,
-  room,
-  onChange,
-}: {
-  id: string;
-  title: string;
-  description: string;
-  value: number;
-  minValue?: number;
-  room: number;
-  onChange: (room: number, value: number) => void;
-}) {
-  return (
-    <div className="guest-counter">
-      <div className="guest-counter__content">
-        <label className="guest-counter__title">{title}</label>
-        <p className="guest-counter__description">{description}</p>
-      </div>
-      <Counter
-        id={id}
-        value={value}
-        minValue={minValue}
-        onChange={(value) => onChange(room, value)}
-      />
-    </div>
-  );
-}
+import './guest-class.scss';
 
 export default function BlockGuestClass() {
   const roomCount = 3;
@@ -85,8 +53,8 @@ export default function BlockGuestClass() {
   }, [rooms]);
 
   return (
-    <div className="block-guests-class">
-      <div className="block-guests-class__panel">
+    <div className="block-guest-class">
+      <div className="block-guest-class__panel">
         <Select
           label="How many rooms do you need?"
           onChange={(e) =>
@@ -99,14 +67,14 @@ export default function BlockGuestClass() {
             </option>
           ))}
         </Select>
-        <div className="block-guests-class__rooms">
+        <div className="block-guest-class__rooms">
           {rooms.map((room, index) => (
             <div
               key={`${room.room}-${index}`}
-              className="block-guests-class__room"
+              className="block-guest-class__room"
             >
               {rooms.length !== 1 && <h6>Room {room.room}</h6>}
-              <div key={index} className="block-guests-class__counter-list">
+              <div key={index} className="block-guest-class__counter-list">
                 <GuestCounter
                   id="adults"
                   title="Adults"
@@ -125,9 +93,9 @@ export default function BlockGuestClass() {
                   onChange={onHandleChangeChildren}
                 />
                 {room.children.length ? (
-                  <div className="block-guests-class__childrens">
+                  <div className="block-guest-class__childrens">
                     <p>Age of children at time of return</p>
-                    <div className="block-guests-class__childrens-selects">
+                    <div className="block-guest-class__childrens-selects">
                       {room.children.map((child, index) => (
                         <Select
                           key={`child-${index + 1}`}
