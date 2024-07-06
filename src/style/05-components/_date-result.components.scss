@@ -1,0 +1,25 @@
+.date-result {
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background-color: rgb(var(--app-color-light));
+  text-align: center;
+  font-size: var(--app-text-size-sm);
+  color: rgb(var(--app-color-dark));
+  height: 48px;
+
+  &--dark {
+    background-color: rgb(var(--app-color-dark-light));
+  }
+
+  &__dates {
+    font-weight: 800;
+  }
+
+  &__reset-btn {
+    font-weight: 400;
+  }
+}

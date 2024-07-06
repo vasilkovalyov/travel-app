@@ -1,15 +1,26 @@
 import { useState } from 'react';
 import cn from 'classnames';
 import { Popover } from 'react-tiny-popover';
+import { useMediaQuery } from 'react-responsive';
 
 import { useSearchFilterStore } from '@/store';
-import { FilterToggler } from '@/components';
+import { FilterToggler, Modal } from '@/components';
+import { breakpoints } from '@/constants/breakpoints';
 import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
 
 import GuestClass from '../guests-class/guests-class';
-import { BlockDatesPeriodTab } from '../dates-period-tab';
+import {
+  BlockDatePickerTab,
+  DatePickerModalResult,
+} from '../date-pickers-search';
 
 import './top-search.scss';
+
+enum EnumFilterToggler {
+  Destination = 'destination',
+  TravelDates = 'travel_dates',
+  Guests = 'guests',
+}
 
 export default function TopSearch() {
   const { activeFormattedDates, guestsFormattedMessage } =
@@ -17,6 +28,18 @@ export default function TopSearch() {
 
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
   const [popoverActive, setPopoverActive] = useState<string | null>(null);
+
+  const [modalTravelActive, setModalTravelActive] = useState<boolean>(false);
+
+  const isTabletMd = useMediaQuery({
+    query: `(min-width: ${breakpoints.tabletMd}px)`,
+  });
+
+  function onHandleClickFilter(nameFilter: string | null) {
+    if (isTabletMd) {
+      setPopoverActive(nameFilter);
+    }
+  }
 
   return (
     <div className="top-search">
@@ -44,19 +67,19 @@ export default function TopSearch() {
             label="Going to"
             placeholder="Destination name"
             onFocus={() => {
-              setPopoverActive('destination');
+              onHandleClickFilter(EnumFilterToggler.Destination);
             }}
           />
           <Popover
-            isOpen={popoverActive === 'travel_dates'}
+            isOpen={popoverActive === EnumFilterToggler.TravelDates}
             positions={['bottom', 'left']}
             align="center"
             padding={20}
-            onClickOutside={() => setPopoverActive(null)}
+            onClickOutside={() => onHandleClickFilter(null)}
             clickOutsideCapture={true}
             content={
               <div className="popover">
-                <BlockDatesPeriodTab />
+                <BlockDatePickerTab />
               </div>
             }
           >
@@ -64,15 +87,20 @@ export default function TopSearch() {
               label="Travel dates"
               text={activeFormattedDates}
               readonly
-              onFocus={() => setPopoverActive('travel_dates')}
+              onFocus={() => {
+                onHandleClickFilter(EnumFilterToggler.TravelDates);
+              }}
+              onClick={() => {
+                setModalTravelActive(true);
+              }}
             />
           </Popover>
           <Popover
-            isOpen={popoverActive === 'guests'}
+            isOpen={popoverActive === EnumFilterToggler.Guests}
             positions={['bottom', 'right']}
             align="end"
             padding={20}
-            onClickOutside={() => setPopoverActive(null)}
+            onClickOutside={() => onHandleClickFilter(null)}
             clickOutsideCapture={true}
             content={
               <div className="popover">
@@ -84,7 +112,7 @@ export default function TopSearch() {
               label="Guests & cabin class"
               text={guestsFormattedMessage}
               readonly
-              onFocus={() => setPopoverActive('guests')}
+              onFocus={() => onHandleClickFilter(EnumFilterToggler.Guests)}
             />
           </Popover>
           <Button
@@ -122,6 +150,19 @@ export default function TopSearch() {
           ></Button>
         </div>
       </div>
+
+      <Modal
+        open={modalTravelActive}
+        title="Travel dates"
+        bottomContent={
+          <DatePickerModalResult
+            onHandleClick={() => setModalTravelActive(false)}
+          />
+        }
+        onHandleClose={() => setModalTravelActive(false)}
+      >
+        <BlockDatePickerTab />
+      </Modal>
     </div>
   );
 }

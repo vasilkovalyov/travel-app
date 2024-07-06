@@ -56,6 +56,8 @@ export default function BlockHotels() {
           )}
           <div className="block-hotels__list">
             <HotelCard {...hotelModel} />
+            <HotelCard {...hotelModel} />
+            <HotelCard {...hotelModel} />
           </div>
         </div>
       </div>

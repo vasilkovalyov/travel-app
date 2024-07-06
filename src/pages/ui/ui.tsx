@@ -1,9 +1,4 @@
-import {
-  BlockDates,
-  BlockGuestsClass,
-  BlockMonths,
-  BlockFilter,
-} from '@/blocks';
+import { BlockGuestsClass, BlockFilter } from '@/blocks';
 import { FilterToggler } from '@/components';
 import { Checkbox, Button, Input, FieldPlaceholder } from '@/components/ui';
 import { useRef } from 'react';
@@ -132,10 +127,6 @@ export default function Ui() {
         <FieldPlaceholder title="Anywhere" />
         <br />
         <BlockGuestsClass />
-        <br />
-        <BlockDates />
-        <br />
-        <BlockMonths />
         <br />
         <BlockFilter />
         <br />
