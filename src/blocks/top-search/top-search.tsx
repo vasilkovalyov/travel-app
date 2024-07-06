@@ -12,7 +12,7 @@ import {
   BlockDatePickerTab,
   DatePickerModalResult,
 } from '../date-pickers-search';
-import { BlockGuestClass } from '../guest-class-search';
+import { BlockGuestClass, GuestClassModalResult } from '../guest-class-search';
 
 import './top-search.scss';
 
@@ -27,7 +27,9 @@ export default function TopSearch() {
     useSearchFilterStore();
 
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
-  const [popoverActive, setPopoverActive] = useState<string | null>(null);
+  const [popoverActive, setPopoverActive] = useState<EnumFilterToggler | null>(
+    null,
+  );
   const [modalDestinationActive, setModalDestinationActive] =
     useState<boolean>(false);
   const [modalTravelActive, setModalTravelActive] = useState<boolean>(false);
@@ -37,9 +39,21 @@ export default function TopSearch() {
     query: `(min-width: ${breakpoints.tabletMd}px)`,
   });
 
-  function onHandleClickFilter(nameFilter: string | null) {
+  function onHandleClickFilter(nameFilter: EnumFilterToggler | null) {
     if (isTabletMd) {
       setPopoverActive(nameFilter);
+    }
+  }
+
+  function onHandleClickModal(nameFilter: EnumFilterToggler) {
+    if (isTabletMd) return;
+    if (nameFilter === EnumFilterToggler.TravelDates) {
+      setModalTravelActive(true);
+      return;
+    }
+    if (nameFilter === EnumFilterToggler.Guests) {
+      setModalGuestsActive(true);
+      return;
     }
   }
 
@@ -72,7 +86,7 @@ export default function TopSearch() {
               onHandleClickFilter(EnumFilterToggler.Destination);
             }}
             onClick={() => {
-              setModalDestinationActive(true);
+              onHandleClickModal(EnumFilterToggler.Destination);
             }}
           />
           <Popover
@@ -96,7 +110,7 @@ export default function TopSearch() {
                 onHandleClickFilter(EnumFilterToggler.TravelDates);
               }}
               onClick={() => {
-                setModalTravelActive(true);
+                onHandleClickModal(EnumFilterToggler.TravelDates);
               }}
             />
           </Popover>
@@ -119,7 +133,7 @@ export default function TopSearch() {
               readonly
               onFocus={() => onHandleClickFilter(EnumFilterToggler.Guests)}
               onClick={() => {
-                setModalGuestsActive(true);
+                onHandleClickModal(EnumFilterToggler.Guests);
               }}
             />
           </Popover>
@@ -174,6 +188,11 @@ export default function TopSearch() {
       <Modal
         title="Guests & Cabin Class"
         open={modalGuestsActive}
+        bottomContent={
+          <GuestClassModalResult
+            onHandleClick={() => setModalGuestsActive(false)}
+          />
+        }
         onHandleClose={() => setModalGuestsActive(false)}
       >
         <BlockGuestClass />
