@@ -1,0 +1,14 @@
+.block-date-picker-modal-result {
+  display: grid;
+  row-gap: 12px;
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__next-btn {
+    flex: 1;
+  }
+}

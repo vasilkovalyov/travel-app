@@ -1,13 +1,19 @@
 import cn from 'classnames';
+import { useMediaQuery } from 'react-responsive';
 import { addMonths, format, startOfMonth } from 'date-fns';
 
 import { useSearchFilterStore } from '@/store';
 
 import { Counter } from '@/components';
 import { Button } from '@/components/ui';
-import { shortDateFormat, standartDateFormat } from '@/constants/dates';
+import { breakpoints } from '@/constants/breakpoints';
+import {
+  shortDateFormat,
+  shortDateFormat2,
+  standartDateFormat,
+} from '@/constants/dates';
 
-import './months.scss';
+import './date-picker-month.scss';
 
 type MonthType = {
   date: Date;
@@ -15,7 +21,10 @@ type MonthType = {
   title: string;
 };
 
-function getNextMonths(countMonth: number): MonthType[] {
+function getNextMonths(
+  countMonth: number,
+  titleFormat: string = shortDateFormat,
+): MonthType[] {
   const months: MonthType[] = [];
   const currentDate = startOfMonth(new Date().setUTCDate(1));
 
@@ -24,50 +33,54 @@ function getNextMonths(countMonth: number): MonthType[] {
     months.push({
       date: futureDate,
       value: format(futureDate, standartDateFormat),
-      title: format(futureDate, shortDateFormat),
+      title: format(futureDate, titleFormat),
     });
   }
 
   return months;
 }
 
-export default function BlockMonths() {
-  const messageMonthsDate = 'Select a month';
-
+export default function BlockDatePickerMonth() {
   const {
     datesMonth,
     countNextMonth,
     monthDays,
+    messageMonthsDate,
     updateDatesForMonthByCounter,
     updateDatesForMonth,
     resetDatesForMonth,
   } = useSearchFilterStore();
+
+  const isTabletMd = useMediaQuery({
+    query: `(min-width: ${breakpoints.tabletMd}px)`,
+  });
 
   const isCurrentDate = (date: Date): boolean => {
     if (!datesMonth.from) return false;
     const formattedDateMonth = format(datesMonth.from, standartDateFormat);
     const formattedDate = format(date, standartDateFormat);
 
-    if (formattedDateMonth === formattedDate) {
-      return true;
-    }
-    return false;
+    return formattedDateMonth === formattedDate;
   };
 
+  const getMonthes = isTabletMd
+    ? getNextMonths(countNextMonth)
+    : getNextMonths(countNextMonth, shortDateFormat2);
+
   return (
-    <div className="block-months">
-      <div className="block-months__content">
+    <div className="block-date-picker-month">
+      <div className="block-date-picker-month__content">
         <Counter
           id="month-days"
           input={false}
           title="nights"
-          className="block-months__counter"
+          className="block-date-picker-month__counter"
           minValue={1}
           value={monthDays}
           onChange={updateDatesForMonthByCounter}
         />
-        <div className="block-months__grid">
-          {getNextMonths(countNextMonth).map(({ date, title, value }) => {
+        <div className="block-date-picker-month__grid">
+          {getMonthes.map(({ date, title, value }) => {
             const isSelected = isCurrentDate(date);
             return (
               <label
@@ -91,26 +104,30 @@ export default function BlockMonths() {
           })}
         </div>
       </div>
-      <div className="months-info">
-        {datesMonth.from ? (
-          <>
-            <span className="dates-info__date">
-              {format(datesMonth.from, shortDateFormat)}
-            </span>
-            <span className="dates-info__nights">({monthDays} nights)</span>
-            <Button
-              view="transparent"
-              size="sm"
-              className="dates-info__reset-btn"
-              onClick={resetDatesForMonth}
-            >
-              Reset
-            </Button>
-          </>
-        ) : (
-          messageMonthsDate
-        )}
-      </div>
+      {isTabletMd && (
+        <div className="date-result">
+          {datesMonth.from ? (
+            <>
+              <span className="date-result__dates">
+                {format(datesMonth.from, shortDateFormat)}
+              </span>
+              <span className="date-result__days">
+                {`(${monthDays} ${monthDays >= 2 ? 'nights' : 'night'})`}
+              </span>
+              <Button
+                view="transparent"
+                size="sm"
+                className="date-result__reset-btn"
+                onClick={resetDatesForMonth}
+              >
+                Reset
+              </Button>
+            </>
+          ) : (
+            messageMonthsDate
+          )}
+        </div>
+      )}
     </div>
   );
 }

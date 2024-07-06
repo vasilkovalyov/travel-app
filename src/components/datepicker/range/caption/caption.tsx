@@ -1,3 +1,4 @@
+import { DatepickerTabEnum } from '@/blocks/date-pickers-search';
 import { CaptionProps } from './caption.type';
 
 export default function Caption({}: CaptionProps) {
@@ -7,7 +8,7 @@ export default function Caption({}: CaptionProps) {
     const { name, value } = e.target;
     const newDate = new Date(date);
 
-    if (name === 'month') {
+    if (name === DatepickerTabEnum.Month) {
       newDate.setMonth(value);
     } else {
       newDate.setFullYear(value);

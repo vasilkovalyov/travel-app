@@ -1,4 +1,6 @@
-.block-months {
+@use '@/style/03-mixins/common.mixins' as common;
+
+.block-date-picker-month {
   display: grid;
   row-gap: 12px;
 
@@ -13,7 +15,11 @@
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 6px;
+
+    @include common.media(mobile_md) {
+      gap: 12px;
+    }
   }
 
   .counter {
@@ -33,7 +39,7 @@
   align-items: center;
   justify-content: center;
   height: 48px;
-  padding-inline: 20px;
+  padding-inline: 10px;
   border-radius: 10px;
   white-space: nowrap;
   font-weight: 600;
@@ -42,6 +48,10 @@
   border: 1px solid rgb(228 221 215);
   background-color: rgb(var(--app-color-light));
   cursor: pointer;
+
+  @include common.media(mobile_md) {
+    padding-inline: 20px;
+  }
 
   &--selected {
     color: rgb(var(--app-color-light));
@@ -64,23 +74,5 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-  }
-}
-
-.months-info {
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 8px 12px;
-  background-color: rgb(var(--app-color-light));
-  text-align: center;
-  font-size: var(--app-text-size-sm);
-  color: rgb(var(--app-color-dark));
-  height: 48px;
-
-  &__date {
-    font-weight: 800;
   }
 }

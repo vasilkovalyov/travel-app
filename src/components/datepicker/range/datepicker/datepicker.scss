@@ -1,3 +1,4 @@
+@use '@/style/03-mixins/common.mixins' as common;
 @import 'react-day-picker/dist/style.css';
 
 .datepicker {
@@ -12,15 +13,21 @@
   --rdp-selected-color: rgb(var(--app-color-light));
 
   margin: 0;
-  max-width: max-content;
+  max-width: 100%;
+  width: 100%;
+  border-radius: 12px;
   background-color: rgb(var(--app-color-light));
+
+  @include common.media(tablet_md) {
+    max-width: max-content;
+  }
 
   .rdp-months {
     gap: 6px;
   }
 
   .rdp-month {
-    margin: 0;
+    margin: 0 auto;
     padding: 12px 8px;
   }
 

@@ -1,4 +1,4 @@
-.block-dates-period-tab {
+.block-date-picker-tab {
   display: grid;
   row-gap: 12px;
 
@@ -7,6 +7,7 @@
     justify-content: center;
     gap: 12px;
   }
+
   .btn {
     &.active {
       pointer-events: none;

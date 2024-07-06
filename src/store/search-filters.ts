@@ -1,13 +1,15 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { startOfMonth, endOfMonth } from 'date-fns';
+import { startOfMonth, endOfMonth, intervalToDuration } from 'date-fns';
 
 import { DateRange } from '@/types/common';
 import {
   getFormattedDateMonthString,
   getFormattedDateString,
 } from '@/utils/common';
+
+import { DatepickerTabEnum } from '@/blocks/date-pickers-search';
 
 export type GuestType = {
   rooms: number;
@@ -16,17 +18,21 @@ export type GuestType = {
 };
 
 interface SearchFiltersState {
-  countNextMonth: number;
   defaultDayCount: number;
+  countNextMonth: number;
   guests: GuestType;
   guestsFormattedMessage: string;
   datesDatePicker: DateRange;
   datesMonth: DateRange;
   monthDays: number;
+  datesDays: number;
   formattedDatesForDatePicker: string;
   formattedDatesForMonth: string;
   activeFormattedDates: string;
-  activeTabDates: string;
+  activeTabDates: DatepickerTabEnum;
+  messageDepartureDate: string;
+  messageReturnDate: string;
+  messageMonthsDate: string;
   updateGuests: (guests: GuestType) => void;
   updateDatePickerDates: (from: Date, to?: Date) => void;
   resetDatesDatePicker: () => void;
@@ -34,7 +40,7 @@ interface SearchFiltersState {
   updateDatesForMonth: (from: Date) => void;
   resetDatesForMonth: () => void;
   clearActiveFormattedDates: () => void;
-  updateTab: (tab: string) => void;
+  updateTab: (tab: DatepickerTabEnum) => void;
   updateMonthDays: (days: number) => void;
 }
 
@@ -58,6 +64,9 @@ const defaultDays = 7;
 const useSearchFilterStore = create<SearchFiltersState>()(
   devtools(
     immer((set) => ({
+      messageDepartureDate: 'Select a departure date',
+      messageReturnDate: 'Select a return date',
+      messageMonthsDate: 'Select a month',
       countNextMonth: 18,
       defaultDayCount: defaultDays,
       guests: {
@@ -69,14 +78,25 @@ const useSearchFilterStore = create<SearchFiltersState>()(
       datesDatePicker: defaultDateRange,
       datesMonth: defaultDateRange,
       monthDays: defaultDays,
+      datesDays: 0,
       formattedDatesForDatePicker: '',
       formattedDatesForMonth: '',
       activeFormattedDates: '',
-      activeTabDates: 'dates',
+      activeTabDates: DatepickerTabEnum.Dates,
       updateDatePickerDates: (from: Date, to?: Date) => {
         set(() => ({
           datesDatePicker: { from, to },
         }));
+        set(() => {
+          if (to) {
+            return {
+              datesDays: intervalToDuration({
+                start: from,
+                end: to,
+              }).days,
+            };
+          }
+        });
         set(() => {
           const formattedDateStr = getFormattedDateString(from, to);
 
@@ -104,6 +124,7 @@ const useSearchFilterStore = create<SearchFiltersState>()(
             return {
               formattedDatesForMonth: formattedDateStr,
               activeFormattedDates: formattedDateStr,
+              monthDays: days,
             };
           }
 
@@ -143,13 +164,13 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           guestsFormattedMessage: getGuestFormattedMessage(guests),
         }));
       },
-      updateTab: (tab: string) => {
+      updateTab: (tab: DatepickerTabEnum) => {
         set((state) => {
           let formattedDateStr = '';
-          if (tab === 'dates') {
+          if (tab === DatepickerTabEnum.Dates) {
             formattedDateStr = state.formattedDatesForDatePicker;
           }
-          if (tab === 'month') {
+          if (tab === DatepickerTabEnum.Month) {
             formattedDateStr = state.formattedDatesForMonth;
           }
 

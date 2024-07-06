@@ -14,6 +14,7 @@ import './datepicker.scss';
 
 export default function DatePicker({
   selected,
+  numberOfMonths = 1,
   onSelectRange,
 }: DatePickerProps) {
   const [hoveredRange, setHoveredRange] =
@@ -112,7 +113,7 @@ export default function DatePicker({
 
   return (
     <DayPicker
-      numberOfMonths={2}
+      numberOfMonths={numberOfMonths}
       mode="range"
       selected={selectedRange}
       captionLayout="dropdown-buttons"
