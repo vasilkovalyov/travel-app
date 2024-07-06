@@ -8,11 +8,11 @@ import { FilterToggler, Modal } from '@/components';
 import { breakpoints } from '@/constants/breakpoints';
 import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
 
-import GuestClass from '../guests-class/guests-class';
 import {
   BlockDatePickerTab,
   DatePickerModalResult,
 } from '../date-pickers-search';
+import { BlockGuestClass } from '../guest-classes-search';
 
 import './top-search.scss';
 
@@ -28,8 +28,10 @@ export default function TopSearch() {
 
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
   const [popoverActive, setPopoverActive] = useState<string | null>(null);
-
+  const [modalDestinationActive, setModalDestinationActive] =
+    useState<boolean>(false);
   const [modalTravelActive, setModalTravelActive] = useState<boolean>(false);
+  const [modalGuestsActive, setModalGuestsActive] = useState<boolean>(false);
 
   const isTabletMd = useMediaQuery({
     query: `(min-width: ${breakpoints.tabletMd}px)`,
@@ -69,6 +71,9 @@ export default function TopSearch() {
             onFocus={() => {
               onHandleClickFilter(EnumFilterToggler.Destination);
             }}
+            onClick={() => {
+              setModalDestinationActive(true);
+            }}
           />
           <Popover
             isOpen={popoverActive === EnumFilterToggler.TravelDates}
@@ -104,7 +109,7 @@ export default function TopSearch() {
             clickOutsideCapture={true}
             content={
               <div className="popover">
-                <GuestClass />
+                <BlockGuestClass />
               </div>
             }
           >
@@ -113,6 +118,9 @@ export default function TopSearch() {
               text={guestsFormattedMessage}
               readonly
               onFocus={() => onHandleClickFilter(EnumFilterToggler.Guests)}
+              onClick={() => {
+                setModalGuestsActive(true);
+              }}
             />
           </Popover>
           <Button
@@ -162,6 +170,13 @@ export default function TopSearch() {
         onHandleClose={() => setModalTravelActive(false)}
       >
         <BlockDatePickerTab />
+      </Modal>
+      <Modal
+        title="Guests & Cabin Class"
+        open={modalGuestsActive}
+        onHandleClose={() => setModalGuestsActive(false)}
+      >
+        <BlockGuestClass />
       </Modal>
     </div>
   );
