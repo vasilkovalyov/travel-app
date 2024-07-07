@@ -92,6 +92,8 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           if (childrenCount === 0) {
             updatedRooms[roomNumber - 1].children = [];
             state.guests.rooms = updatedRooms;
+            const guestResult = getGuestTypeInfo(updatedRooms);
+            state.guests.result.children = guestResult.children;
             state.guests.formattedMessage = getGuestFormattedMessage(
               state.guests.result,
             );

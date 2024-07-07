@@ -1,7 +1,9 @@
 import { Select } from '@/components/ui';
 import { useSearchFilterStore } from '@/store';
 
-import { GuestCounter } from '../guest-counter';
+// import { GuestCounter } from '../guest-counter';
+import { Counter } from '@/components';
+import { GuestCounterContainer } from '../guest-counter-container';
 
 import './guest-class.scss';
 
@@ -33,23 +35,25 @@ export default function BlockGuestClass() {
             >
               {guests.rooms.length !== 1 && <h6>Room {room.room}</h6>}
               <div key={index} className="block-guest-class__counter-list">
-                <GuestCounter
-                  id="adults"
-                  title="Adults"
-                  description="18+ years"
-                  value={room.adults}
-                  minValue={1}
-                  room={room.room}
-                  onChange={updateAdults}
-                />
-                <GuestCounter
-                  id="children"
+                <GuestCounterContainer title="Adults" description="18+ years">
+                  <Counter
+                    id="adults"
+                    value={room.adults}
+                    minValue={1}
+                    onChange={(value) => updateAdults(room.room, value)}
+                  />
+                </GuestCounterContainer>
+                <GuestCounterContainer
                   title="Children"
                   description="0-17 years"
-                  value={room.children.length}
-                  room={room.room}
-                  onChange={updateChildren}
-                />
+                >
+                  <Counter
+                    id="children"
+                    value={room.children.length}
+                    minValue={0}
+                    onChange={(value) => updateChildren(room.room, value)}
+                  />
+                </GuestCounterContainer>
                 {room.children.length ? (
                   <div className="block-guest-class__childrens">
                     <p>Age of children at time of return</p>
