@@ -82,6 +82,9 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           updatedRooms[roomNumber - 1].adults = adultCount;
           state.guests.rooms = updatedRooms;
           state.guests.result.adults = adultCount;
+          state.guests.formattedMessage = getGuestFormattedMessage(
+            state.guests.result,
+          );
         }),
       updateChildren: (roomNumber: number, childrenCount: number) =>
         set((state) => {
@@ -89,6 +92,9 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           if (childrenCount === 0) {
             updatedRooms[roomNumber - 1].children = [];
             state.guests.rooms = updatedRooms;
+            state.guests.formattedMessage = getGuestFormattedMessage(
+              state.guests.result,
+            );
             return;
           }
           if (updatedRooms[roomNumber - 1].children.length > childrenCount) {
@@ -98,6 +104,9 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           }
           state.guests.rooms = updatedRooms;
           state.guests.result.children = getTotalChildren(updatedRooms);
+          state.guests.formattedMessage = getGuestFormattedMessage(
+            state.guests.result,
+          );
         }),
       updateChildAge: (
         roomNumber: number,
@@ -117,11 +126,10 @@ const useSearchFilterStore = create<SearchFiltersState>()(
                 start: from,
                 end: to,
               }).days || 0;
-
-            const formattedDateStr = getFormattedDateString(from, to);
-            state.datePicker.formattedDates = formattedDateStr;
-            state.activeFormattedDates = formattedDateStr;
           }
+          const formattedDateStr = getFormattedDateString(from, to);
+          state.datePicker.formattedDates = formattedDateStr;
+          state.activeFormattedDates = formattedDateStr;
           state.datePicker.datesRange = { from, to };
         }),
       resetDatePickerDates: () =>
