@@ -9,28 +9,27 @@ export default function GuestClassModalResult({
 }: {
   onHandleClick?: () => void;
 }) {
-  const { guests } = useSearchFilterStore();
-
-  function onHandleReset() {}
+  const { guests, resetGuests } = useSearchFilterStore();
+  const { adults, children, rooms } = guests.result;
 
   return (
     <div className="block-guest-class-modal-result">
       <div className="guest-class-info">
         <div className="guest-class-info__item">
           <span className="guest-class-info__title">Rooms: </span>
-          {guests.rooms}
+          {rooms}
         </div>
         <div className="guest-class-info__item">
           <span className="guest-class-info__title">Adults: </span>
-          {guests.adults}
+          {adults}
         </div>
         <div className="guest-class-info__item">
           <span className="guest-class-info__title">Children: </span>
-          {guests.children.length}
+          {children}
         </div>
       </div>
       <div className="block-guest-class-modal-result__controls">
-        <Button view="transparent" size="sm" onClick={onHandleReset}>
+        <Button view="transparent" size="sm" onClick={resetGuests}>
           Reset
         </Button>
         <Button

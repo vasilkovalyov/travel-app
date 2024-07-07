@@ -43,9 +43,9 @@ function getNextMonths(
 export default function BlockDatePickerMonth() {
   const {
     dateMonth,
-    updateDatesForMonthByCounter,
-    updateDatesForMonth,
-    resetDatesForMonth,
+    updateDateMonthByCounter,
+    updateDateMonth,
+    resetDateMonth,
   } = useSearchFilterStore();
 
   const isTabletMd = useMediaQuery({
@@ -53,9 +53,9 @@ export default function BlockDatePickerMonth() {
   });
 
   const isCurrentDate = (date: Date): boolean => {
-    if (!dateMonth.datesMonth.from) return false;
+    if (!dateMonth.datesRange.from) return false;
     const formattedDateMonth = format(
-      dateMonth.datesMonth.from,
+      dateMonth.datesRange.from,
       standartDateFormat,
     );
     const formattedDate = format(date, standartDateFormat);
@@ -64,8 +64,8 @@ export default function BlockDatePickerMonth() {
   };
 
   const getMonthes = isTabletMd
-    ? getNextMonths(dateMonth.countNextMonth)
-    : getNextMonths(dateMonth.countNextMonth, shortDateFormat2);
+    ? getNextMonths(dateMonth.countMonth)
+    : getNextMonths(dateMonth.countMonth, shortDateFormat2);
 
   return (
     <div className="block-date-picker-month">
@@ -76,8 +76,8 @@ export default function BlockDatePickerMonth() {
           title="nights"
           className="block-date-picker-month__counter"
           minValue={1}
-          value={dateMonth.monthDays}
-          onChange={updateDatesForMonthByCounter}
+          value={dateMonth.days}
+          onChange={updateDateMonthByCounter}
         />
         <div className="block-date-picker-month__grid">
           {getMonthes.map(({ date, title, value }) => {
@@ -95,7 +95,7 @@ export default function BlockDatePickerMonth() {
                   className="month-btn__input"
                   value={value}
                   checked={isSelected}
-                  onChange={() => updateDatesForMonth(date)}
+                  onChange={() => updateDateMonth(date)}
                 />
                 <span className="month-btn__title">{title}</span>
                 <div className="month-btn__border"></div>
@@ -106,19 +106,19 @@ export default function BlockDatePickerMonth() {
       </div>
       {isTabletMd && (
         <div className="date-result">
-          {dateMonth.datesMonth.from ? (
+          {dateMonth.datesRange.from ? (
             <>
               <span className="date-result__dates">
-                {format(dateMonth.datesMonth.from, shortDateFormat)}
+                {format(dateMonth.datesRange.from, shortDateFormat)}
               </span>
               <span className="date-result__days">
-                {`(${dateMonth.monthDays} ${dateMonth.monthDays >= 2 ? 'nights' : 'night'})`}
+                {`(${dateMonth.days} ${dateMonth.days >= 2 ? 'nights' : 'night'})`}
               </span>
               <Button
                 view="transparent"
                 size="sm"
                 className="date-result__reset-btn"
-                onClick={resetDatesForMonth}
+                onClick={resetDateMonth}
               >
                 Reset
               </Button>

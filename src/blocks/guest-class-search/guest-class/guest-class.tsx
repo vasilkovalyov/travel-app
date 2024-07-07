@@ -1,65 +1,23 @@
-import { useEffect, useState } from 'react';
 import { Select } from '@/components/ui';
 import { useSearchFilterStore } from '@/store';
 
 import { GuestCounter } from '../guest-counter';
-
-import {
-  defaultRoom,
-  getGuestTypeInfo,
-  getUpdatedRoom,
-} from './guest-class.utils';
-import { GuestRoomType } from './guest-class.type';
 
 import './guest-class.scss';
 
 export default function BlockGuestClass() {
   const roomCount = 3;
   const childrenMaxAge = 18;
-  const { updateGuests } = useSearchFilterStore();
-  const [rooms, setRooms] = useState<GuestRoomType[]>([defaultRoom]);
-
-  function onHandleChangeAdults(room: number, value: number) {
-    const arr = [...rooms];
-    arr[room - 1].adults = value;
-    setRooms(arr);
-  }
-
-  function onHandleChangeChildren(room: number, value: number) {
-    const arr = [...rooms];
-    if (value === 0) {
-      arr[room - 1].children = [];
-      setRooms(arr);
-      return;
-    }
-
-    if (arr[room - 1].children.length > value) {
-      arr[room - 1].children.pop();
-    } else {
-      arr[room - 1].children.push(0);
-    }
-
-    setRooms(arr);
-  }
-
-  function onHandleChangeChildAge(room: number, child: number, value: number) {
-    const arr = [...rooms];
-    arr[room - 1].children[child] = value;
-    setRooms(arr);
-  }
-
-  useEffect(() => {
-    updateGuests(getGuestTypeInfo(rooms));
-  }, [rooms]);
+  const { guests, updateAdults, updateChildren, updateRooms, updateChildAge } =
+    useSearchFilterStore();
 
   return (
     <div className="block-guest-class">
       <div className="block-guest-class__panel">
         <Select
           label="How many rooms do you need?"
-          onChange={(e) =>
-            setRooms(getUpdatedRoom(rooms, +e.currentTarget.value))
-          }
+          value={guests.rooms.length}
+          onChange={(e) => updateRooms(guests.rooms, +e.currentTarget.value)}
         >
           {Array.from(Array(roomCount).keys()).map((item) => (
             <option key={item} value={item + 1}>
@@ -68,12 +26,12 @@ export default function BlockGuestClass() {
           ))}
         </Select>
         <div className="block-guest-class__rooms">
-          {rooms.map((room, index) => (
+          {guests.rooms.map((room, index) => (
             <div
               key={`${room.room}-${index}`}
               className="block-guest-class__room"
             >
-              {rooms.length !== 1 && <h6>Room {room.room}</h6>}
+              {guests.rooms.length !== 1 && <h6>Room {room.room}</h6>}
               <div key={index} className="block-guest-class__counter-list">
                 <GuestCounter
                   id="adults"
@@ -82,7 +40,7 @@ export default function BlockGuestClass() {
                   value={room.adults}
                   minValue={1}
                   room={room.room}
-                  onChange={onHandleChangeAdults}
+                  onChange={updateAdults}
                 />
                 <GuestCounter
                   id="children"
@@ -90,7 +48,7 @@ export default function BlockGuestClass() {
                   description="0-17 years"
                   value={room.children.length}
                   room={room.room}
-                  onChange={onHandleChangeChildren}
+                  onChange={updateChildren}
                 />
                 {room.children.length ? (
                   <div className="block-guest-class__childrens">
@@ -102,7 +60,7 @@ export default function BlockGuestClass() {
                           id={`child-${index + 1}`}
                           defaultValue={child}
                           onChange={(e) =>
-                            onHandleChangeChildAge(
+                            updateChildAge(
                               room.room,
                               index,
                               +e.currentTarget.value,

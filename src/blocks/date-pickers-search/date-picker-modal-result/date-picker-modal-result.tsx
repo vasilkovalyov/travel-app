@@ -17,27 +17,27 @@ export default function DatePickerModalResult({
     activeTabDates,
     dateMonth,
     datePicker,
-    resetDatesForMonth,
-    resetDatesDatePicker,
+    resetDateMonth,
+    resetDatePickerDates,
   } = useSearchFilterStore();
 
   const getMessageForDate = () => {
-    if (!datePicker.datesDatePicker.from && !datePicker.datesDatePicker.to)
-      return datePicker.messageDepartureDate;
-    if (datePicker.datesDatePicker.from && !datePicker.datesDatePicker.to)
-      return datePicker.messageReturnDate;
+    if (!datePicker.datesRange.from && !datePicker.datesRange.to)
+      return datePicker.messageDeparture;
+    if (datePicker.datesRange.from && !datePicker.datesRange.to)
+      return datePicker.messageReturn;
     return null;
   };
 
   function renderInfoForDates() {
-    if (datePicker.datesDatePicker.from && datePicker.datesDatePicker.to) {
+    if (datePicker.datesRange.from && datePicker.datesRange.to) {
       return (
         <>
           <span className="date-result__dates">
-            {datePicker.formattedDatesForDatePicker}
+            {datePicker.formattedDates}
           </span>
           <span className="date-result__days">
-            {`(${datePicker.datesDays} ${datePicker.datesDays >= 2 ? 'nights' : 'night'})`}
+            {`(${datePicker.daysRangeCount} ${datePicker.daysRangeCount >= 2 ? 'nights' : 'night'})`}
           </span>
         </>
       );
@@ -46,14 +46,14 @@ export default function DatePickerModalResult({
   }
 
   function renderInfoForMonth() {
-    if (dateMonth.datesMonth.from) {
+    if (dateMonth.datesRange.from) {
       return (
         <>
           <span className="date-result__dates">
-            {format(dateMonth.datesMonth.from, shortDateFormat)}
+            {format(dateMonth.datesRange.from, shortDateFormat)}
           </span>
           <span className="date-result__days">
-            {`(${dateMonth.monthDays} ${dateMonth.monthDays >= 2 ? 'nights' : 'night'})`}
+            {`(${dateMonth.days} ${dateMonth.days >= 2 ? 'nights' : 'night'})`}
           </span>
         </>
       );
@@ -63,10 +63,10 @@ export default function DatePickerModalResult({
 
   function onHandleReset() {
     if (activeTabDates === DatepickerTabEnum.Dates) {
-      resetDatesDatePicker();
+      resetDatePickerDates();
     }
     if (activeTabDates === DatepickerTabEnum.Month) {
-      resetDatesForMonth();
+      resetDateMonth();
     }
   }
 

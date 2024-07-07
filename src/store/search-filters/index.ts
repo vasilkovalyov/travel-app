@@ -10,21 +10,34 @@ import {
 } from '@/utils/common';
 
 import { DatepickerTabEnum } from '@/blocks/date-pickers-search';
-import { GuestType, SearchFiltersState } from './types';
+import { SearchFiltersState } from './types';
+import { GuestRoomType } from '@/blocks/guest-class-search';
+import {
+  getGuestFormattedMessage,
+  getGuestTypeInfo,
+  getTotalChildren,
+  getUpdatedRoom,
+} from './utils';
 
 const defaultDateRange: DateRange = {
   from: undefined,
   to: undefined,
 };
 
-const getGuestFormattedMessage = (guests: GuestType): string => {
-  let adults = `${guests.adults} ${guests.adults > 1 ? 'adults' : 'adult'}`;
-  let rooms = `${guests.rooms} ${guests.rooms > 1 ? 'rooms' : 'room'}`;
-  const childrenLength = guests.children.length;
-  let children = childrenLength
-    ? `, ${childrenLength} ${childrenLength > 1 ? 'children' : 'child'}`
-    : '';
-  return `${adults}, ${rooms}${children}`;
+const defaultGuests = {
+  result: {
+    rooms: 1,
+    adults: 1,
+    children: 0,
+  },
+  formattedMessage: '',
+  rooms: [
+    {
+      room: 1,
+      adults: 1,
+      children: [],
+    },
+  ],
 };
 
 const defaultDays = 7;
@@ -33,162 +46,145 @@ const useSearchFilterStore = create<SearchFiltersState>()(
   devtools(
     immer((set) => ({
       datePicker: {
-        messageDepartureDate: 'Select a departure date',
-        messageReturnDate: 'Select a return date',
-        datesDatePicker: defaultDateRange,
-        formattedDatesForDatePicker: '',
-        datesDays: 0,
+        messageDeparture: 'Select a departure date',
+        messageReturn: 'Select a return date',
+        formattedDates: '',
+        datesRange: defaultDateRange,
+        daysRangeCount: 0,
       },
       dateMonth: {
         messageMonthsDate: 'Select a month',
-        countNextMonth: 18,
+        formattedDates: '',
+        countMonth: 18,
         defaultDayCount: defaultDays,
-        datesMonth: defaultDateRange,
-        monthDays: defaultDays,
-        formattedDatesForMonth: '',
+        datesRange: defaultDateRange,
+        days: defaultDays,
       },
-      guests: {
-        rooms: 1,
-        adults: 1,
-        children: [],
-      },
+      guests: defaultGuests,
       guestsFormattedMessage: '',
       activeFormattedDates: '',
       activeTabDates: DatepickerTabEnum.Dates,
-      updateDatePickerDates: (from: Date, to?: Date) => {
-        set((state) => ({
-          datePicker: {
-            ...state.datePicker,
-            datesDatePicker: { from, to },
-          },
-        }));
+      updateRooms: (rooms: GuestRoomType[], roomNumber: number) =>
         set((state) => {
-          if (!to) return;
-          return {
-            datePicker: {
-              ...state.datePicker,
-              datePicker: intervalToDuration({
+          const updatedRooms = getUpdatedRoom(rooms, roomNumber);
+          const result = getGuestTypeInfo(updatedRooms);
+          state.guests.rooms = updatedRooms;
+          state.guests.result = result;
+          state.guests.formattedMessage = getGuestFormattedMessage(result);
+        }),
+      resetGuests: () =>
+        set((state) => {
+          state.guests = defaultGuests;
+        }),
+      updateAdults: (roomNumber: number, adultCount: number) =>
+        set((state) => {
+          const updatedRooms = [...state.guests.rooms];
+          updatedRooms[roomNumber - 1].adults = adultCount;
+          state.guests.rooms = updatedRooms;
+          state.guests.result.adults = adultCount;
+        }),
+      updateChildren: (roomNumber: number, childrenCount: number) =>
+        set((state) => {
+          const updatedRooms = [...state.guests.rooms];
+          if (childrenCount === 0) {
+            updatedRooms[roomNumber - 1].children = [];
+            state.guests.rooms = updatedRooms;
+            return;
+          }
+          if (updatedRooms[roomNumber - 1].children.length > childrenCount) {
+            updatedRooms[roomNumber - 1].children.pop();
+          } else {
+            updatedRooms[roomNumber - 1].children.push(0);
+          }
+          state.guests.rooms = updatedRooms;
+          state.guests.result.children = getTotalChildren(updatedRooms);
+        }),
+      updateChildAge: (
+        roomNumber: number,
+        childNumber: number,
+        childAge: number,
+      ) =>
+        set((state) => {
+          const updatedRooms = [...state.guests.rooms];
+          updatedRooms[roomNumber - 1].children[childNumber] = childAge;
+          state.guests.rooms = updatedRooms;
+        }),
+      updateDatePickerDates: (from: Date, to?: Date) =>
+        set((state) => {
+          if (to) {
+            state.datePicker.daysRangeCount =
+              intervalToDuration({
                 start: from,
                 end: to,
-              }).days,
-            },
-          };
-        });
+              }).days || 0;
+
+            const formattedDateStr = getFormattedDateString(from, to);
+            state.datePicker.formattedDates = formattedDateStr;
+            state.activeFormattedDates = formattedDateStr;
+          }
+          state.datePicker.datesRange = { from, to };
+        }),
+      resetDatePickerDates: () =>
         set((state) => {
-          const formattedDateStr = getFormattedDateString(from, to);
-          return {
-            datePicker: {
-              ...state.datePicker,
-              formattedDatesForDatePicker: formattedDateStr,
-            },
-            activeFormattedDates: formattedDateStr,
-          };
-        });
-      },
-      resetDatesDatePicker: () => {
-        set((state) => ({
-          activeFormattedDates: '',
-          datePicker: {
-            ...state.datePicker,
-            datesDatePicker: defaultDateRange,
-            formattedDatesForDatePicker: '',
-          },
-        }));
-      },
-      updateDatesForMonthByCounter: (days: number) => {
+          state.activeFormattedDates = '';
+          state.datePicker.datesRange = defaultDateRange;
+          state.datePicker.formattedDates = '';
+          state.datePicker.daysRangeCount = 0;
+        }),
+      updateDateMonthByCounter: (days: number) =>
         set((state) => {
-          if (state.dateMonth.datesMonth.from) {
+          if (state.dateMonth.datesRange.from) {
             const formattedDateStr = getFormattedDateMonthString(
-              state.dateMonth.datesMonth.from,
+              state.dateMonth.datesRange.from,
               days,
             );
 
-            return {
-              activeFormattedDates: formattedDateStr,
-              dateMonth: {
-                ...state.dateMonth,
-                monthDays: days,
-                formattedDatesForMonth: formattedDateStr,
-              },
-            };
+            state.activeFormattedDates = formattedDateStr;
+            state.dateMonth.days = days;
+            state.dateMonth.formattedDates = formattedDateStr;
           }
-
-          return {
-            dateMonth: {
-              ...state.dateMonth,
-              monthDays: days,
-            },
-          };
-        });
-      },
-      updateDatesForMonth: (date: Date) => {
+          state.dateMonth.days = days;
+        }),
+      updateDateMonth: (date: Date) =>
         set((state) => {
           const formattedDateStr = getFormattedDateMonthString(
             date,
-            state.dateMonth.monthDays,
+            state.dateMonth.days,
           );
-          return {
-            dateMonth: {
-              ...state.dateMonth,
-              datesMonth: {
-                from: startOfMonth(date),
-                to: endOfMonth(date),
-              },
-              monthDays: state.dateMonth.monthDays,
-              formattedDatesForMonth: formattedDateStr,
-            },
-            activeFormattedDates: formattedDateStr,
+          state.dateMonth.datesRange = {
+            from: startOfMonth(date),
+            to: endOfMonth(date),
           };
-        });
-      },
-      resetDatesForMonth: () => {
-        set((state) => ({
-          activeFormattedDates: '',
-          dateMonth: {
-            ...state.dateMonth,
-            monthDays: state.dateMonth.defaultDayCount,
-            datesMonth: defaultDateRange,
-            formattedDatesForMonth: '',
-          },
-        }));
-      },
-      updateGuests: (guests: GuestType) => {
-        set(() => ({
-          guests: guests,
-          guestsFormattedMessage: getGuestFormattedMessage(guests),
-        }));
-      },
-      updateTab: (tab: DatepickerTabEnum) => {
+          state.dateMonth.days = state.dateMonth.days;
+          state.dateMonth.formattedDates = formattedDateStr;
+        }),
+      updateDaysMonth: (days: number) =>
+        set((state) => {
+          state.dateMonth.days = days;
+        }),
+      resetDateMonth: () =>
+        set((state) => {
+          state.dateMonth.days = state.dateMonth.defaultDayCount;
+          state.dateMonth.datesRange = defaultDateRange;
+          state.dateMonth.formattedDates = '';
+        }),
+      clearActiveFormattedDates: () =>
+        set((state) => {
+          state.activeFormattedDates = '';
+        }),
+      updateTab: (tab: DatepickerTabEnum) =>
         set((state) => {
           let formattedDateStr = '';
           if (tab === DatepickerTabEnum.Dates) {
-            formattedDateStr = state.datePicker.formattedDatesForDatePicker;
+            formattedDateStr = state.datePicker.formattedDates;
           }
           if (tab === DatepickerTabEnum.Month) {
-            formattedDateStr = state.dateMonth.formattedDatesForMonth;
+            formattedDateStr = state.dateMonth.formattedDates;
           }
 
-          return {
-            activeTabDates: tab,
-            activeFormattedDates: formattedDateStr,
-          };
-        });
-      },
-      clearActiveFormattedDates: () => {
-        set(() => ({
-          activeFormattedDates: '',
-        }));
-      },
-      updateMonthDays: (days: number) => {
-        set((state) => {
-          return {
-            dateMonth: {
-              ...state.dateMonth,
-              monthDays: days,
-            },
-          };
-        });
-      },
+          state.activeTabDates = tab;
+          state.activeFormattedDates = formattedDateStr;
+        }),
     })),
   ),
 );

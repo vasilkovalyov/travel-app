@@ -1,39 +1,51 @@
 import { DatepickerTabEnum } from '@/blocks/date-pickers-search';
+import { GuestRoomType } from '@/blocks/guest-class-search';
 import { DateRange } from '@/types/common';
 
 export type GuestType = {
   rooms: number;
   adults: number;
-  children: number[];
+  children: number;
 };
 
 export interface SearchFiltersState {
   datePicker: {
-    messageDepartureDate: string;
-    messageReturnDate: string;
-    datesDatePicker: DateRange;
-    formattedDatesForDatePicker: string;
-    datesDays: number;
+    messageDeparture: string;
+    messageReturn: string;
+    datesRange: DateRange;
+    formattedDates: string;
+    daysRangeCount: number;
   };
   dateMonth: {
+    formattedDates: string;
     messageMonthsDate: string;
-    countNextMonth: number;
+    countMonth: number;
     defaultDayCount: number;
-    datesMonth: DateRange;
-    monthDays: number;
-    formattedDatesForMonth: string;
+    datesRange: DateRange;
+    days: number;
   };
-  guests: GuestType;
-  guestsFormattedMessage: string;
+  guests: {
+    result: GuestType;
+    formattedMessage: string;
+    rooms: GuestRoomType[];
+  };
   activeFormattedDates: string;
   activeTabDates: DatepickerTabEnum;
-  updateGuests: (guests: GuestType) => void;
+  updateRooms: (rooms: GuestRoomType[], roomNumber: number) => void;
+  resetGuests: () => void;
+  updateAdults: (roomNumber: number, adultCount: number) => void;
+  updateChildren: (roomNumber: number, childrenCount: number) => void;
+  updateChildAge: (
+    roomNumber: number,
+    childNumber: number,
+    childAge: number,
+  ) => void;
   updateDatePickerDates: (from: Date, to?: Date) => void;
-  resetDatesDatePicker: () => void;
-  updateDatesForMonthByCounter: (days: number) => void;
-  updateDatesForMonth: (from: Date) => void;
-  resetDatesForMonth: () => void;
+  resetDatePickerDates: () => void;
+  updateDateMonthByCounter: (days: number) => void;
+  updateDateMonth: (from: Date) => void;
+  updateDaysMonth: (days: number) => void;
+  resetDateMonth: () => void;
   clearActiveFormattedDates: () => void;
   updateTab: (tab: DatepickerTabEnum) => void;
-  updateMonthDays: (days: number) => void;
 }

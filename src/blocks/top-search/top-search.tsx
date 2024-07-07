@@ -2,9 +2,11 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { Popover } from 'react-tiny-popover';
 import { useMediaQuery } from 'react-responsive';
+import { format } from 'date-fns';
 
 import { useSearchFilterStore } from '@/store';
 import { FilterToggler, Modal } from '@/components';
+import { shortDateFormat3 } from '@/constants/dates';
 import { breakpoints } from '@/constants/breakpoints';
 import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
 
@@ -23,15 +25,14 @@ enum EnumFilterToggler {
 }
 
 export default function TopSearch() {
-  const { activeFormattedDates, guestsFormattedMessage } =
-    useSearchFilterStore();
+  const { datePicker, guests, activeFormattedDates } = useSearchFilterStore();
 
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
   const [popoverActive, setPopoverActive] = useState<EnumFilterToggler | null>(
     null,
   );
-  const [modalDestinationActive, setModalDestinationActive] =
-    useState<boolean>(false);
+  // const [modalDestinationActive, setModalDestinationActive] =
+  //   useState<boolean>(false);
   const [modalTravelActive, setModalTravelActive] = useState<boolean>(false);
   const [modalGuestsActive, setModalGuestsActive] = useState<boolean>(false);
 
@@ -56,6 +57,27 @@ export default function TopSearch() {
       return;
     }
   }
+
+  const getFilterPlaceholderDescription = () => {
+    const dateFrom =
+      datePicker.datesRange.from &&
+      format(datePicker.datesRange.from, shortDateFormat3);
+    const dateTo =
+      datePicker.datesRange.to &&
+      format(datePicker.datesRange.to, shortDateFormat3);
+
+    const dates = dateFrom && dateTo ? `${dateFrom} - ${dateTo} · ` : '';
+
+    const guestText = guests.result.adults >= 2 ? 'adults' : 'adult';
+    const roomText = guests.result.rooms >= 2 ? 'rooms' : 'room';
+    const childText = guests.result.children >= 2 ? 'children' : 'child';
+
+    const childrenText = guests.result.children
+      ? `, ${guests.result.children} ${childText}`
+      : '';
+
+    return `${dates} ${guests.result.adults} ${guestText}, ${guests.result.rooms} ${roomText} ${childrenText}`;
+  };
 
   return (
     <div className="top-search">
@@ -129,7 +151,7 @@ export default function TopSearch() {
           >
             <FilterToggler
               label="Guests & cabin class"
-              text={guestsFormattedMessage}
+              text={guests.formattedMessage}
               readonly
               onFocus={() => onHandleClickFilter(EnumFilterToggler.Guests)}
               onClick={() => {
@@ -153,14 +175,14 @@ export default function TopSearch() {
           })}
         >
           <FieldPlaceholder
-            title="Anywhere · LGW + 5"
-            description="Jul 8 - Jul 12 · 2 Adults, 1 Room, Economy"
+            // title="Anywhere · LGW + 5"
+            description={getFilterPlaceholderDescription()}
             className="top-search__placeholder-common"
           />
           <div className="top-search__placeholders-grid">
             <FieldPlaceholder title="Anywhere" />
             <FieldPlaceholder title={activeFormattedDates} />
-            <FieldPlaceholder title={guestsFormattedMessage} />
+            <FieldPlaceholder title={guests.formattedMessage} />
           </div>
           <Button icon={IconEnum.EDIT} variant="secondary" size="sm">
             Edit
@@ -172,7 +194,6 @@ export default function TopSearch() {
           ></Button>
         </div>
       </div>
-
       <Modal
         open={modalTravelActive}
         title="Travel dates"
