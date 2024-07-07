@@ -16,7 +16,9 @@ export default function FieldPlaceholder({
 
   return (
     <div className={classnames}>
-      <p className="field-placeholder__title text-truncate">{title}</p>
+      {title && (
+        <p className="field-placeholder__title text-truncate">{title}</p>
+      )}
       {description && (
         <p className="field-placeholder__description text-truncate">
           {description}
