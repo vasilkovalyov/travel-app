@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import cn from 'classnames';
 import { Popover } from 'react-tiny-popover';
 import { useMediaQuery } from 'react-responsive';
