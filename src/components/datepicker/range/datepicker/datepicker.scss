@@ -73,9 +73,11 @@
     font-weight: 600;
 
     &:not(.rdp-day_selected) {
-      &:hover {
-        background-color: transparent;
-        border: 2px solid rgb(var(--app-color-primary));
+      @include common.hover {
+        &:hover {
+          background-color: transparent;
+          border: 2px solid rgb(var(--app-color-primary));
+        }
       }
     }
   }

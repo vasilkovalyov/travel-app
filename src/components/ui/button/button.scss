@@ -31,8 +31,10 @@
   cursor: pointer;
   appearance: none;
 
-  &:hover {
-    --app-button-bg: rgb(var(--app-color-primary-dark));
+  @include common.hover {
+    &:hover {
+      --app-button-bg: rgb(var(--app-color-primary-dark));
+    }
   }
 
   &[disabled] {
@@ -78,8 +80,10 @@
   }
 
   &--fill.btn--secondary {
-    &:hover {
-      background-color: rgb(var(--app-color-secondary-dark));
+    @include common.hover {
+      &:hover {
+        background-color: rgb(var(--app-color-secondary-dark));
+      }
     }
   }
 
@@ -91,17 +95,21 @@
     text-decoration: underline;
     font-weight: 600;
 
-    &:hover {
-      --app-button-bg: transparent;
+    @include common.hover {
+      &:hover {
+        --app-button-bg: transparent;
+      }
     }
   }
 
   &--outline {
     --app-button-bg: transparent;
 
-    &:hover {
-      --app-button-bg: rgb(var(--app-color-primary));
-      --app-button-color: rgb(var(--app-color-light));
+    @include common.hover {
+      &:hover {
+        --app-button-bg: rgb(var(--app-color-primary));
+        --app-button-color: rgb(var(--app-color-light));
+      }
     }
   }
 
@@ -109,8 +117,10 @@
     --app-button-color: rgb(var(--app-color-primary));
     --app-button-border-color: rgb(var(--app-color-primary));
 
-    &:hover {
-      --app-button-color: rgb(var(--app-color-light));
+    @include common.hover {
+      &:hover {
+        --app-button-color: rgb(var(--app-color-light));
+      }
     }
   }
 
@@ -124,9 +134,11 @@
     --app-button-border-color: rgb(var(--app-color-secondary));
     --app-button-color: rgb(var(--app-color-secondary));
 
-    &:hover {
-      --app-button-color: rgb(var(--app-color-light));
-      --app-button-bg: rgb(var(--app-color-secondary));
+    @include common.hover {
+      &:hover {
+        --app-button-color: rgb(var(--app-color-light));
+        --app-button-bg: rgb(var(--app-color-secondary));
+      }
     }
   }
 
@@ -135,8 +147,10 @@
     --app-button-border-color: transparent;
     --app-button-color: rgb(var(--app-color-black));
 
-    &:hover {
-      --app-button-bg: rgb(var(--app-color-light));
+    @include common.hover {
+      &:hover {
+        --app-button-bg: rgb(var(--app-color-light));
+      }
     }
   }
 

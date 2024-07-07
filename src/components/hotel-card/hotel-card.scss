@@ -159,8 +159,10 @@
   &__title {
     color: rgb(var(--app-color-primary));
 
-    &:hover {
-      text-decoration: underline;
+    @include common.hover {
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
