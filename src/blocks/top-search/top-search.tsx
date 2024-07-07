@@ -102,6 +102,7 @@ export default function TopSearch() {
           })}
         >
           <FilterToggler
+            id="destination-field"
             label="Going to"
             placeholder="Destination name"
             onFocus={() => {
@@ -125,6 +126,7 @@ export default function TopSearch() {
             }
           >
             <FilterToggler
+              id="travel-date-field"
               label="Travel dates"
               text={activeFormattedDates}
               readonly
@@ -150,6 +152,7 @@ export default function TopSearch() {
             }
           >
             <FilterToggler
+              id="guests-field"
               label="Guests & cabin class"
               text={guests.formattedMessage}
               readonly

@@ -8,6 +8,7 @@ import './filter-toggler.scss';
 const FilterToggler = forwardRef(
   (
     {
+      id,
       label,
       text = '',
       placeholder,
@@ -58,10 +59,11 @@ const FilterToggler = forwardRef(
 
     return (
       <div ref={ref} className={classnames}>
-        <label className="filter-toggler__label text-truncate">{label}</label>
+        <p className="filter-toggler__label text-truncate">{label}</p>
         {isFocusedInput ? (
           <Input
             ref={inputRef as any}
+            id={id}
             autoComplete="off"
             placeholder={placeholder}
             value={inputValue}
