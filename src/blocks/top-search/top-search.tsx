@@ -15,6 +15,7 @@ import {
   DatePickerModalResult,
 } from '../date-pickers-search';
 import { BlockGuestClass, GuestClassModalResult } from '../guest-class-search';
+import { dataAttributes } from './top-search.attributes';
 
 import './top-search.scss';
 
@@ -80,7 +81,7 @@ export default function TopSearch() {
   };
 
   return (
-    <div className="top-search">
+    <div data-testid={dataAttributes.rootBlock} className="top-search">
       <div className="container top-search__container">
         <div
           className={cn('top-search__toggler', {
@@ -105,6 +106,8 @@ export default function TopSearch() {
             id="destination-field"
             label="Going to"
             placeholder="Destination name"
+            dataTestIdInput={dataAttributes.filterTogglerDestinationInput}
+            dataTestIdButton={dataAttributes.filterTogglerDestinationBottom}
             onFocus={() => {
               onHandleClickFilter(EnumFilterToggler.Destination);
             }}
@@ -130,6 +133,8 @@ export default function TopSearch() {
               label="Travel dates"
               text={activeFormattedDates}
               readonly
+              dataTestIdInput={dataAttributes.filterTogglerTravelInput}
+              dataTestIdButton={dataAttributes.filterTogglerTravelBottom}
               onFocus={() => {
                 onHandleClickFilter(EnumFilterToggler.TravelDates);
               }}
@@ -156,6 +161,8 @@ export default function TopSearch() {
               label="Guests & cabin class"
               text={guests.formattedMessage}
               readonly
+              dataTestIdInput={dataAttributes.filterTogglerGuestsInput}
+              dataTestIdButton={dataAttributes.filterTogglerGuestsButton}
               onFocus={() => onHandleClickFilter(EnumFilterToggler.Guests)}
               onClick={() => {
                 onHandleClickModal(EnumFilterToggler.Guests);
