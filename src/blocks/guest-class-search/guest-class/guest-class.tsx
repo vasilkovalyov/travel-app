@@ -1,9 +1,10 @@
 import { Select } from '@/components/ui';
 import { useSearchFilterStore } from '@/store';
 
-// import { GuestCounter } from '../guest-counter';
 import { Counter } from '@/components';
 import { GuestCounterContainer } from '../guest-counter-container';
+
+import { dataAttributes } from './guest-class.test-attributes';
 
 import './guest-class.scss';
 
@@ -14,11 +15,12 @@ export default function BlockGuestClass() {
     useSearchFilterStore();
 
   return (
-    <div className="block-guest-class">
+    <div data-testid={dataAttributes.rootBlock} className="block-guest-class">
       <div className="block-guest-class__panel">
         <Select
           label="How many rooms do you need?"
           value={guests.rooms.length}
+          data-testid={dataAttributes.selectRooms}
           onChange={(e) => updateRooms(guests.rooms, +e.currentTarget.value)}
         >
           {Array.from(Array(roomCount).keys()).map((item) => (
@@ -32,6 +34,7 @@ export default function BlockGuestClass() {
             <div
               key={`${room.room}-${index}`}
               className="block-guest-class__room"
+              data-testid={dataAttributes.roomItem}
             >
               {guests.rooms.length !== 1 && <h6>Room {room.room}</h6>}
               <div key={index} className="block-guest-class__counter-list">
@@ -40,6 +43,7 @@ export default function BlockGuestClass() {
                     id="adults"
                     value={room.adults}
                     minValue={1}
+                    data-testid={dataAttributes.counterAdults}
                     onChange={(value) => updateAdults(room.room, value)}
                   />
                 </GuestCounterContainer>
@@ -51,18 +55,23 @@ export default function BlockGuestClass() {
                     id="children"
                     value={room.children.length}
                     minValue={0}
+                    data-testid={dataAttributes.counterChildren}
                     onChange={(value) => updateChildren(room.room, value)}
                   />
                 </GuestCounterContainer>
                 {room.children.length ? (
-                  <div className="block-guest-class__childrens">
+                  <div
+                    className="block-guest-class__children"
+                    data-testid={dataAttributes.childrenWrapper}
+                  >
                     <p>Age of children at time of return</p>
-                    <div className="block-guest-class__childrens-selects">
+                    <div className="block-guest-class__children-selects">
                       {room.children.map((child, index) => (
                         <Select
                           key={`child-${index + 1}`}
                           id={`child-${index + 1}`}
                           defaultValue={child}
+                          data-testid={dataAttributes.childSelectAge}
                           onChange={(e) =>
                             updateChildAge(
                               room.room,

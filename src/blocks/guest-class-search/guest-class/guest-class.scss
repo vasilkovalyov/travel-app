@@ -27,12 +27,12 @@
     row-gap: 14px;
   }
 
-  &__childrens {
+  &__children {
     display: grid;
     row-gap: 12px;
   }
 
-  &__childrens-selects {
+  &__children-selects {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
