@@ -13,6 +13,8 @@ const FilterToggler = forwardRef(
       text = '',
       placeholder,
       readonly,
+      dataTestIdInput,
+      dataTestIdButton,
       onBlur,
       onFocus,
       onClick,
@@ -71,6 +73,7 @@ const FilterToggler = forwardRef(
             largeSize
             clearTextButton
             readOnly={readonly}
+            data-testid={dataTestIdInput}
             onCustomBlur={onCustomBlurInput}
             onChange={(e) => setInputValue(e.currentTarget.value)}
           />
@@ -78,6 +81,7 @@ const FilterToggler = forwardRef(
           <Button
             view="transparent"
             className="filter-toggler__button text-truncate"
+            data-testid={dataTestIdButton}
             onFocus={onFocusButton}
             onClick={onClick}
           >
