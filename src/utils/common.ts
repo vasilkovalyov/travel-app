@@ -28,3 +28,16 @@ export function getFormattedDateMonthString(date: Date, days: number): string {
 
   return `${formattedDateFrom}, ${days} ${daysStr}`;
 }
+
+export function getCountKeysOfArray<T>(arrayOfObjs: T[], key: keyof T): number {
+  return arrayOfObjs.reduce<number>((acc, obj) => {
+    if (Array.isArray(obj[key])) {
+      return (acc += obj[key].length);
+    }
+    if (typeof obj[key] === 'number') {
+      acc += obj[key];
+      return acc;
+    }
+    return acc;
+  }, 0);
+}

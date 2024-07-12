@@ -5,12 +5,13 @@ import { startOfMonth, endOfMonth, intervalToDuration } from 'date-fns';
 
 import { DateRange } from '@/types/common';
 import {
+  getCountKeysOfArray,
   getFormattedDateMonthString,
   getFormattedDateString,
 } from '@/utils/common';
 
 import { DatepickerTabEnum } from '@/blocks/date-pickers-search';
-import { SearchFiltersState } from './types';
+import { GuestType, SearchFiltersState } from './types';
 import { GuestRoomType } from '@/blocks/guest-class-search';
 import {
   getGuestFormattedMessage,
@@ -74,14 +75,25 @@ const useSearchFilterStore = create<SearchFiltersState>()(
         }),
       resetGuests: () =>
         set((state) => {
-          state.guests = defaultGuests;
+          const room = state.guests.rooms[0];
+          const guestResult: GuestType = {
+            rooms: 1,
+            adults: room.adults,
+            children: room.children.length,
+          };
+          state.guests.result = guestResult;
+          state.guests.rooms.length = 1;
+          state.guests.formattedMessage = getGuestFormattedMessage(guestResult);
         }),
       updateAdults: (roomNumber: number, adultCount: number) =>
         set((state) => {
           const updatedRooms = [...state.guests.rooms];
           updatedRooms[roomNumber - 1].adults = adultCount;
           state.guests.rooms = updatedRooms;
-          state.guests.result.adults = adultCount;
+          state.guests.result.adults = getCountKeysOfArray(
+            updatedRooms,
+            'adults',
+          );
           state.guests.formattedMessage = getGuestFormattedMessage(
             state.guests.result,
           );
@@ -92,8 +104,8 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           if (childrenCount === 0) {
             updatedRooms[roomNumber - 1].children = [];
             state.guests.rooms = updatedRooms;
-            const guestResult = getGuestTypeInfo(updatedRooms);
-            state.guests.result.children = guestResult.children;
+            const guestResult = getCountKeysOfArray(updatedRooms, 'children');
+            state.guests.result.children = guestResult;
             state.guests.formattedMessage = getGuestFormattedMessage(
               state.guests.result,
             );
@@ -167,6 +179,7 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           };
           state.dateMonth.days = state.dateMonth.days;
           state.dateMonth.formattedDates = formattedDateStr;
+          state.activeFormattedDates = formattedDateStr;
         }),
       updateDaysMonth: (days: number) =>
         set((state) => {
@@ -177,6 +190,7 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           state.dateMonth.days = state.dateMonth.defaultDayCount;
           state.dateMonth.datesRange = defaultDateRange;
           state.dateMonth.formattedDates = '';
+          state.activeFormattedDates = '';
         }),
       clearActiveFormattedDates: () =>
         set((state) => {
