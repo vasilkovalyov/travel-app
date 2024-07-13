@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('icons/icomoon.eot?vh6h5k');
+  src: url('icons/icomoon.eot?qmt8mx');
   src:
-    url('icons/icomoon.eot?vh6h5k#iefix') format('embedded-opentype'),
-    url('icons/icomoon.ttf?vh6h5k') format('truetype'),
-    url('icons/icomoon.woff?vh6h5k') format('woff'),
-    url('icons/icomoon.svg?vh6h5k#icomoon') format('svg');
+    url('icons/icomoon.eot?qmt8mx#iefix') format('embedded-opentype'),
+    url('icons/icomoon.ttf?qmt8mx') format('truetype'),
+    url('icons/icomoon.woff?qmt8mx') format('woff'),
+    url('icons/icomoon.svg?qmt8mx#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,7 @@
 
 [class^='icon-'],
 [class*=' icon-'] {
-  /* use !important to prevent issues with browser extensions that change icons */
+  /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: never;
   font-style: normal;
@@ -30,11 +30,17 @@
 .icon-filter:before {
   content: '\e90a';
 }
-.icon-location:before {
-  content: '\e909';
-}
 .icon-star:before {
   content: '\e908';
+}
+.icon-arrow-left:before {
+  content: '\e90b';
+}
+.icon-chevron-right:before {
+  content: '\e90c';
+}
+.icon-location:before {
+  content: '\e909';
 }
 .icon-chevron-down:before {
   content: '\e907';
