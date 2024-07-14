@@ -1,0 +1,25 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+.header {
+  padding-block: 12px;
+  background-color: rgb(var(--app-color-light));
+
+  &__container {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    column-gap: 20px;
+
+    @include common.media(tablet) {
+      grid-template-columns: 174px 1fr;
+    }
+  }
+
+  &__tools {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__menu-toggler {
+    padding-inline: 10px;
+  }
+}

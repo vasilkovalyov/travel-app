@@ -7,9 +7,6 @@ import { ActiveSubmenusType } from '@/components';
 interface MainNavigationState {
   menuTitle: string;
   activeSubmenus: ActiveSubmenusType;
-  isOpenedMenu: boolean;
-  openMenu: () => void;
-  closeMenu: () => void;
   updateMenuTitle: (title: string) => void;
   updateSubmenus: (
     level: number,
@@ -27,17 +24,7 @@ const useMainNavigationStore = create<MainNavigationState>()(
     immer((set) => ({
       menuTitle: defaultTitle,
       prevTitle: null,
-      isOpenedMenu: false,
       activeSubmenus: {},
-      openMenu: () =>
-        set((state) => {
-          state.isOpenedMenu = true;
-          ``;
-        }),
-      closeMenu: () =>
-        set((state) => {
-          state.isOpenedMenu = false;
-        }),
       backMenu: () =>
         set((state) => {
           const copySubmenus = { ...state.activeSubmenus };
