@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 
 import { useStaticFilterStore } from '@/store';
 
-import { HotelCard, FilterModal, hotelModel } from '@/components';
+import { HotelCard, hotelModel, ModalAside } from '@/components';
 import { Button, IconEnum } from '@/components/ui';
 import { BlockFilter } from '../filter';
 
@@ -18,6 +18,10 @@ export default function BlockHotels() {
   const isTabletMd = useMediaQuery({
     query: `(min-width: ${breakpoints.tabletMd}px)`,
   });
+
+  function onHandleCloseModal() {
+    setOpenFilter(false);
+  }
 
   return (
     <section className="block-hotels">
@@ -61,15 +65,25 @@ export default function BlockHotels() {
           </div>
         </div>
       </div>
-      {openFilter && (
-        <FilterModal
-          open={openFilter}
-          title="Filter Results"
-          onHandleClose={() => setOpenFilter(false)}
-        >
-          <BlockFilter />
-        </FilterModal>
-      )}
+      <ModalAside
+        id="side-modal-filter"
+        title="Filter Results"
+        open={openFilter}
+        contentPadding
+        footer={
+          <Button
+            variant="secondary"
+            size="lg"
+            fullwidth
+            onClick={onHandleCloseModal}
+          >
+            Looking for matches
+          </Button>
+        }
+        onClose={onHandleCloseModal}
+      >
+        <BlockFilter />
+      </ModalAside>
     </section>
   );
 }

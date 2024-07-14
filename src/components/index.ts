@@ -9,4 +9,4 @@ export * from './hotel-card';
 export * from './rating';
 export * from './modal';
 export * from './portal';
-export * from './filter-modal';
+export * from './modal-aside';
