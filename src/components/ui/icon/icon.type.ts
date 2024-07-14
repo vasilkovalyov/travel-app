@@ -12,4 +12,5 @@ export enum IconEnum {
   STAR = 'star',
   LOCATION = 'location',
   FILTER = 'filter',
+  BURGER = 'burger',
 }
