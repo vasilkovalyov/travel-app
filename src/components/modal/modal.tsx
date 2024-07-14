@@ -23,20 +23,16 @@ export default function Modal({
     if (open) {
       document.body.classList.add(bodyActiveModalCn);
     }
-    document.body.addEventListener('keydown', onHandleCloseEscapeKey);
-    return () => {
-      document.body.removeEventListener('keydown', onHandleCloseEscapeKey);
-      document.body.classList.remove(bodyActiveModalCn);
-    };
-  }, [onHandleClose]);
+  }, [open]);
 
   useEffect(() => {
-    if (open) {
-      document.body.classList.add(bodyActiveModalCn);
-    } else {
-      // document.body.classList.remove(bodyActiveModalCn);
-    }
-  }, [open]);
+    return () => {
+      if (document.body.classList.contains(bodyActiveModalCn)) {
+        document.body.removeEventListener('keydown', onHandleCloseEscapeKey);
+        document.body.classList.remove(bodyActiveModalCn);
+      }
+    };
+  }, [onHandleClose]);
 
   if (!open) return null;
 
