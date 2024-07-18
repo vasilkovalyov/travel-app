@@ -63,7 +63,6 @@ export default function MainMenu() {
         {children && children.length ? (
           <>
             <div
-              tabIndex={-1}
               role="menuitem"
               data-option="true"
               data-default-gutters="true"
@@ -89,7 +88,6 @@ export default function MainMenu() {
             {href ? (
               <Link
                 to={href}
-                tabIndex={-1}
                 role="menuitem"
                 data-option="true"
                 data-default-gutters="true"
@@ -99,7 +97,6 @@ export default function MainMenu() {
               </Link>
             ) : (
               <div
-                tabIndex={-1}
                 role="menuitem"
                 data-option="true"
                 data-default-gutters="true"

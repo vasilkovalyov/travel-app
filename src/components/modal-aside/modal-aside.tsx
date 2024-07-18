@@ -32,6 +32,7 @@ function ModalAside({
   }, [open]);
 
   useEffect(() => {
+    document.body.addEventListener('keydown', onHandleCloseEscapeKey);
     return () => {
       if (document.body.classList.contains(bodyActiveModalCn)) {
         document.body.removeEventListener('keydown', onHandleCloseEscapeKey);

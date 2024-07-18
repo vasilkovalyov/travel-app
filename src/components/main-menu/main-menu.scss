@@ -2,6 +2,8 @@
 
 .main-menu {
   overflow: hidden auto;
+  flex: 1;
+  background-color: rgb(var(--app-color-light));
 
   &__list {
     @include common.animate(transform);
@@ -34,6 +36,10 @@
     gap: 16px;
     color: rgb(var(--app-color-dark));
     background-color: rgb(var(--app-color-light));
+
+    &:focus-visible {
+      outline: 2px solid rgb(var(--app-color-black));
+    }
 
     @include common.hover {
       &:hover {

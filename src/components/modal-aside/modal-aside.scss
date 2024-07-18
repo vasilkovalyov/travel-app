@@ -35,11 +35,15 @@
   }
 
   &:not(.modal-aside--position-right) &__box {
-    @include positionModal();
+    @include common.media(tablet) {
+      @include positionModal();
+    }
   }
 
   &--position-right &__box {
-    @include positionModal(right);
+    @include common.media(tablet) {
+      @include positionModal(right);
+    }
   }
 
   &__box {
@@ -74,10 +78,12 @@
   }
 
   &__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     padding: var(--modal-aside-content-padding);
     overflow-y: auto;
     background-color: rgb(var(--app-color-dark-light));
-    flex: 1;
   }
 
   &__content--with-padding {
