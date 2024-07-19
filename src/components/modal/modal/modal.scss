@@ -20,8 +20,6 @@
   }
 
   &__box {
-    --modal-margin: 20px;
-
     position: relative;
     background-color: rgb(var(--app-color-light));
     display: flex;
@@ -31,8 +29,8 @@
     height: 100%;
 
     @include common.media(mobile_md) {
-      max-height: calc(100% - var(--modal-margin) * 2);
-      max-width: calc(100% - var(--modal-margin) * 2);
+      max-height: calc(100% - 40px);
+      max-width: calc(100% - 40px);
       width: 90%;
       height: auto;
       border-radius: 20px;

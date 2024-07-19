@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import { useModal } from '../hooks/useModal';
 
+import { Button, IconEnum } from '@/components/ui';
 import { ReactPortal } from '@/components';
 
 import { ModalAsideProps } from './modal-aside.type';
@@ -49,7 +50,16 @@ function ModalAside({
     <ReactPortal wrapperId={`react-portal-${id}`}>
       <div className={cn('modal-aside', modificationCn, className)}>
         <div className="modal-aside__overlay overlay" onClick={onClose}></div>
-        <div className="modal-aside__box">{children}</div>
+        <div className="modal-aside__box">
+          {children}
+          <Button
+            iconSize={22}
+            view="transparent"
+            icon={IconEnum.CROSS}
+            onClick={onClose}
+            className="modal-aside__close-btn"
+          />
+        </div>
       </div>
     </ReactPortal>
   );
