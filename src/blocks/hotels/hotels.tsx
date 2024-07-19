@@ -3,7 +3,14 @@ import { useMediaQuery } from 'react-responsive';
 
 import { useStaticFilterStore } from '@/store';
 
-import { HotelCard, hotelModel, ModalAside } from '@/components';
+import {
+  HotelCard,
+  hotelModel,
+  ModalAside,
+  ModalHeader,
+  ModalContent,
+  ModalFooter,
+} from '@/components';
 import { Button, IconEnum } from '@/components/ui';
 import { BlockFilter } from '../filter';
 
@@ -43,7 +50,7 @@ export default function BlockHotels() {
               size="md"
               onClick={() => setOpenFilter(!openFilter)}
             >
-              Filter results{''}
+              Filter results
               {selectedFilterCount !== 0 && (
                 <span className="filter-toggler-btn__counter">
                   {selectedFilterCount}
@@ -69,8 +76,13 @@ export default function BlockHotels() {
         id="side-modal-filter"
         title="Filter Results"
         open={openFilter}
-        contentPadding
-        footer={
+        onClose={onHandleCloseModal}
+      >
+        <ModalHeader title="Filter Results" />
+        <ModalContent innerPadding>
+          <BlockFilter />
+        </ModalContent>
+        <ModalFooter>
           <Button
             variant="secondary"
             size="lg"
@@ -79,10 +91,7 @@ export default function BlockHotels() {
           >
             Looking for matches
           </Button>
-        }
-        onClose={onHandleCloseModal}
-      >
-        <BlockFilter />
+        </ModalFooter>
       </ModalAside>
     </section>
   );

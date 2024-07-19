@@ -1,0 +1,14 @@
+.modal-header {
+  padding: 12px 40px 12px 12px;
+  background-color: rgb(var(--app-color-light));
+  border-bottom: 2px solid rgb(228 221 215);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 1 60px;
+
+  &__title {
+    flex-grow: 1;
+  }
+}

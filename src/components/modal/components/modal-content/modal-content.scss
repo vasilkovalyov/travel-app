@@ -1,0 +1,17 @@
+:root {
+  --modal-content-padding: 0;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: rgb(var(--app-color-dark-light));
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--modal-content-padding);
+
+  &--with-padding {
+    --modal-content-padding: 16px 16px;
+  }
+}

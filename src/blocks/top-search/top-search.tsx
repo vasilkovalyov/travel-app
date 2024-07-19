@@ -5,7 +5,13 @@ import { useMediaQuery } from 'react-responsive';
 import { format } from 'date-fns';
 
 import { useSearchFilterStore } from '@/store';
-import { FilterToggler, Modal } from '@/components';
+import {
+  FilterToggler,
+  Modal,
+  ModalHeader,
+  ModalContent,
+  ModalFooter,
+} from '@/components';
 import { shortDateFormat3 } from '@/constants/dates';
 import { breakpoints } from '@/constants/breakpoints';
 import { Button, FieldPlaceholder, IconEnum } from '@/components/ui';
@@ -201,27 +207,31 @@ export default function TopSearch() {
       </div>
       <Modal
         open={modalTravelActive}
-        title="Travel dates"
-        bottomContent={
+        onClose={() => setModalTravelActive(false)}
+      >
+        <ModalHeader title="Travel dates" />
+        <ModalContent innerPadding>
+          <BlockDatePickerTab />
+        </ModalContent>
+        <ModalFooter>
           <DatePickerModalResult
             onHandleClick={() => setModalTravelActive(false)}
           />
-        }
-        onHandleClose={() => setModalTravelActive(false)}
-      >
-        <BlockDatePickerTab />
+        </ModalFooter>
       </Modal>
       <Modal
-        title="Guests & Cabin Class"
         open={modalGuestsActive}
-        bottomContent={
+        onClose={() => setModalGuestsActive(false)}
+      >
+        <ModalHeader title="Guests & Cabin Class" />
+        <ModalContent innerPadding>
+          <BlockGuestClass />
+        </ModalContent>
+        <ModalFooter>
           <GuestClassModalResult
             onHandleClick={() => setModalGuestsActive(false)}
           />
-        }
-        onHandleClose={() => setModalGuestsActive(false)}
-      >
-        <BlockGuestClass />
+        </ModalFooter>
       </Modal>
     </div>
   );

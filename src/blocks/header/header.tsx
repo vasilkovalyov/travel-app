@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useMainNavigationStore } from '@/store';
 
 import { Button, IconEnum } from '@/components/ui';
-import { MainMenu, ModalAside } from '@/components';
+import { MainMenu, ModalAside, ModalHeader, ModalContent } from '@/components';
 
 import { Pages } from '@/constants/pages';
 import { breakpoints } from '@/constants/breakpoints';
@@ -44,25 +44,24 @@ export default function Header() {
       <ModalAside
         id="side-modal-menu"
         open={openMenu}
-        title={menuTitle}
         position="right"
         onClose={() => {
           setOpenMenu(false);
         }}
-        header={
-          <>
-            {Object.keys(activeSubmenus).length ? (
-              <Button
-                icon={IconEnum.ARROW_LEFT}
-                iconSize={24}
-                view="transparent"
-                onClick={backMenu}
-              ></Button>
-            ) : null}
-          </>
-        }
       >
-        <MainMenu />
+        <ModalHeader title={menuTitle}>
+          {Object.keys(activeSubmenus).length ? (
+            <Button
+              icon={IconEnum.ARROW_LEFT}
+              iconSize={24}
+              view="transparent"
+              onClick={backMenu}
+            ></Button>
+          ) : null}
+        </ModalHeader>
+        <ModalContent>
+          <MainMenu />
+        </ModalContent>
       </ModalAside>
     </header>
   );

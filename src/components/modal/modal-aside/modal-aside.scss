@@ -1,11 +1,9 @@
 @use '@/style/03-mixins/common.mixins' as common;
 
 :root {
-  --modal-aside-width: 100%;
-  --modal-aside-header-height: 60px;
-  --modal-aside-footer-height: 72px;
   --modal-aside-content-padding: 0;
   --modal-aside-position: left;
+  --modal-aside-width: 100%;
 }
 
 @keyframes slide {
@@ -60,40 +58,5 @@
       max-width: var(--modal-aside-width);
       animation: slide 0.25s ease forwards;
     }
-  }
-
-  &__header {
-    padding: 12px;
-    background-color: rgb(var(--app-color-light));
-    border-bottom: 2px solid rgb(228 221 215);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    height: var(--modal-aside-header-height);
-  }
-
-  &__title {
-    flex-grow: 1;
-  }
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: var(--modal-aside-content-padding);
-    overflow-y: auto;
-    background-color: rgb(var(--app-color-dark-light));
-  }
-
-  &__content--with-padding {
-    --modal-aside-content-padding: 16px;
-  }
-
-  &__footer {
-    padding: 12px;
-    background-color: rgb(var(--app-color-light));
-    border-top: 2px solid rgb(228 221 215);
-    height: var(--modal-aside-footer-height);
   }
 }

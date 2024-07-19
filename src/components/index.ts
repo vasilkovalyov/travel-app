@@ -9,5 +9,4 @@ export * from './hotel-card';
 export * from './rating';
 export * from './modal';
 export * from './portal';
-export * from './modal-aside';
 export * from './main-menu';
