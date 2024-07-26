@@ -53,10 +53,10 @@ const FilterToggler = forwardRef(
       onBlur && onBlur();
     }
 
-    function onFocusButton() {
+    function onButtonClick() {
       setIsFocusedInput(true);
       onClick && onClick();
-      // onFocus && onFocus();
+      onFocus && onFocus();
     }
 
     return (
@@ -82,8 +82,7 @@ const FilterToggler = forwardRef(
             view="transparent"
             className="filter-toggler__button text-truncate"
             data-testid={dataTestIdButton}
-            onFocus={onFocusButton}
-            onClick={onClick}
+            onClick={onButtonClick}
           >
             {inputValue}
           </Button>
