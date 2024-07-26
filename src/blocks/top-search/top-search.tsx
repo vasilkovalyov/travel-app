@@ -41,14 +41,11 @@ export default function TopSearch() {
     query: `(min-width: ${breakpoints.tabletMd}px)`,
   });
 
-  function onHandleClickFilter(nameFilter: EnumFilterToggler | null) {
+  function onHandleClickModal(nameFilter: EnumFilterToggler) {
     if (isTabletMd) {
       setPopoverActive(nameFilter);
+      return;
     }
-  }
-
-  function onHandleClickModal(nameFilter: EnumFilterToggler) {
-    if (isTabletMd) return;
     if (nameFilter === EnumFilterToggler.TravelDates) {
       setModalTravelActive(true);
       return;
@@ -108,9 +105,6 @@ export default function TopSearch() {
             placeholder="Destination name"
             dataTestIdInput={dataAttributes.filterTogglerDestinationInput}
             dataTestIdButton={dataAttributes.filterTogglerDestinationBottom}
-            onFocus={() => {
-              onHandleClickFilter(EnumFilterToggler.Destination);
-            }}
             onClick={() => {
               onHandleClickModal(EnumFilterToggler.Destination);
             }}
@@ -120,7 +114,7 @@ export default function TopSearch() {
             positions={['bottom', 'left']}
             align="center"
             padding={20}
-            onClickOutside={() => onHandleClickFilter(null)}
+            onClickOutside={() => setPopoverActive(null)}
             clickOutsideCapture={true}
             content={
               <div className="popover">
@@ -135,9 +129,6 @@ export default function TopSearch() {
               readonly
               dataTestIdInput={dataAttributes.filterTogglerTravelInput}
               dataTestIdButton={dataAttributes.filterTogglerTravelBottom}
-              onFocus={() => {
-                onHandleClickFilter(EnumFilterToggler.TravelDates);
-              }}
               onClick={() => {
                 onHandleClickModal(EnumFilterToggler.TravelDates);
               }}
@@ -148,7 +139,7 @@ export default function TopSearch() {
             positions={['bottom', 'right']}
             align="end"
             padding={20}
-            onClickOutside={() => onHandleClickFilter(null)}
+            onClickOutside={() => setPopoverActive(null)}
             clickOutsideCapture={true}
             content={
               <div className="popover">
@@ -163,7 +154,6 @@ export default function TopSearch() {
               readonly
               dataTestIdInput={dataAttributes.filterTogglerGuestsInput}
               dataTestIdButton={dataAttributes.filterTogglerGuestsButton}
-              onFocus={() => onHandleClickFilter(EnumFilterToggler.Guests)}
               onClick={() => {
                 onHandleClickModal(EnumFilterToggler.Guests);
               }}
@@ -194,7 +184,12 @@ export default function TopSearch() {
             <FieldPlaceholder title={activeFormattedDates} />
             <FieldPlaceholder title={guests.formattedMessage} />
           </div>
-          <Button icon={IconEnum.EDIT} variant="secondary" size="sm">
+          <Button
+            icon={IconEnum.EDIT}
+            variant="secondary"
+            size="sm"
+            tabIndex={1}
+          >
             Edit
           </Button>
           <Button
