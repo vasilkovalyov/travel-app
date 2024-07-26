@@ -58,20 +58,30 @@ export default function MainMenu() {
       );
     };
 
+    const onHandleMenuClick = () => {
+      updateSubmenus(level, id, prevTitle);
+      updateMenuTitle(title);
+    };
+
     return (
       <li key={id} className="main-menu__item">
         {children && children.length ? (
           <>
             <div
               role="menuitem"
+              tabIndex={0}
               data-option="true"
               data-default-gutters="true"
               aria-haspopup="true"
               aria-expanded={isExpandedDataAttrValue ? 'true' : 'false'}
               className="main-menu__title"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onHandleMenuClick();
+                }
+              }}
               onClick={() => {
-                updateSubmenus(level, id, prevTitle);
-                updateMenuTitle(title);
+                onHandleMenuClick();
               }}
             >
               {renderTitle()}
@@ -88,6 +98,7 @@ export default function MainMenu() {
             {href ? (
               <Link
                 to={href}
+                tabIndex={0}
                 role="menuitem"
                 data-option="true"
                 data-default-gutters="true"
