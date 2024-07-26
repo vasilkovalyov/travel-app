@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import cn from 'classnames';
 
 import { useModal } from '../hooks/useModal';
@@ -16,46 +16,47 @@ export default function Modal({
   className,
   onClose,
 }: ModalProps) {
-  const {
-    addClassOpenOnBody,
-    isHasAcvieModalClassName,
-    addEventListenerClose,
-    removeEventListenerClose,
-  } = useModal();
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  const { addClassOpenOnBody, eventKeyListener, removeEventKeyListener } =
+    useModal({
+      onClose,
+    });
 
   useEffect(() => {
     if (open) {
       addClassOpenOnBody();
+      if (ref && ref.current) {
+        eventKeyListener(ref.current);
+      }
     }
+    return () => {
+      removeEventKeyListener();
+    };
   }, [open]);
 
-  useEffect(() => {
-    addEventListenerClose(onClose);
-    return () => {
-      if (isHasAcvieModalClassName()) {
-        removeEventListenerClose(onClose);
-      }
-    };
-  }, [onClose]);
-
-  if (!open) return null;
-
   return (
-    <ReactPortal
-      wrapperId="react-portal-modal-container"
-      className={cn('modal', className)}
-    >
-      <div className="modal__overlay overlay" onClick={onClose}></div>
-      <div className="modal__box">
-        {children}
-        <Button
-          iconSize={22}
-          view="transparent"
-          icon={IconEnum.CROSS}
-          onClick={onClose}
-          className="modal__close-btn"
-        />
-      </div>
+    <ReactPortal wrapperId="react-portal-modal-container">
+      {open && (
+        <div
+          ref={ref}
+          tabIndex={-1}
+          className={cn('modal', className)}
+          aria-modal={true}
+        >
+          <div className="modal__overlay overlay" onClick={onClose}></div>
+          <div className="modal__box">
+            <Button
+              iconSize={22}
+              view="transparent"
+              icon={IconEnum.CROSS}
+              onClick={onClose}
+              className="modal__close-btn"
+            />
+            {children}
+          </div>
+        </div>
+      )}
     </ReactPortal>
   );
 }
