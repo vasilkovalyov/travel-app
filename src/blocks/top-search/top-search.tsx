@@ -101,6 +101,35 @@ export default function TopSearch() {
           </Button>
         </div>
         <div
+          className={cn('top-search__placeholders', {
+            'top-search__placeholders--hide': visibleFilters,
+          })}
+        >
+          <FieldPlaceholder
+            // title="Anywhere · LGW + 5"
+            description={getFilterPlaceholderDescription()}
+            className="top-search__placeholder-common"
+          />
+          <div className="top-search__placeholders-grid">
+            <FieldPlaceholder title="Anywhere" />
+            <FieldPlaceholder title={activeFormattedDates} />
+            <FieldPlaceholder title={guests.formattedMessage} />
+          </div>
+          <Button
+            icon={IconEnum.EDIT}
+            variant="secondary"
+            size="sm"
+            tabIndex={1}
+          >
+            Edit
+          </Button>
+          <Button
+            className="top-search__placeholders-btn"
+            view="transparent"
+            onClick={() => setVisibleFilters(true)}
+          ></Button>
+        </div>
+        <div
           className={cn('top-search__filters', {
             'top-search__filters--visible': visibleFilters,
           })}
@@ -174,35 +203,6 @@ export default function TopSearch() {
           >
             Search
           </Button>
-        </div>
-        <div
-          className={cn('top-search__placeholders', {
-            'top-search__placeholders--hide': visibleFilters,
-          })}
-        >
-          <FieldPlaceholder
-            // title="Anywhere · LGW + 5"
-            description={getFilterPlaceholderDescription()}
-            className="top-search__placeholder-common"
-          />
-          <div className="top-search__placeholders-grid">
-            <FieldPlaceholder title="Anywhere" />
-            <FieldPlaceholder title={activeFormattedDates} />
-            <FieldPlaceholder title={guests.formattedMessage} />
-          </div>
-          <Button
-            icon={IconEnum.EDIT}
-            variant="secondary"
-            size="sm"
-            tabIndex={1}
-          >
-            Edit
-          </Button>
-          <Button
-            className="top-search__placeholders-btn"
-            view="transparent"
-            onClick={() => setVisibleFilters(true)}
-          ></Button>
         </div>
       </div>
       <Modal
