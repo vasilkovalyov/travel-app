@@ -2,10 +2,6 @@
   display: grid;
   row-gap: 8px;
 
-  &:focus-visible {
-    outline: 1px solid rgb(var(--app-color-primary-dark));
-  }
-
   &__label {
     font-size: var(--app-text-size-sm);
     font-weight: 800;
@@ -20,5 +16,9 @@
     font-size: var(--app-text-size-base);
     border: 1px solid rgb(var(--app-color-black));
     display: block;
+
+    &:focus-visible {
+      outline: 1px solid rgb(var(--app-color-primary-dark));
+    }
   }
 }
