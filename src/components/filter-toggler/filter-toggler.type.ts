@@ -6,6 +6,7 @@ export type FilterTogglerType = {
   readonly?: boolean;
   dataTestIdInput: string;
   dataTestIdButton: string;
+  resetToggler?: boolean;
   onFocus?: () => void;
   onBlur?: () => void;
   onClick?: () => void;

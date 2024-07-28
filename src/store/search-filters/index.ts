@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { startOfMonth, endOfMonth, intervalToDuration } from 'date-fns';
+import { startOfMonth, endOfMonth, intervalToDuration, format } from 'date-fns';
 
 import { DateRange } from '@/types/common';
 import {
@@ -19,6 +19,7 @@ import {
   getTotalChildren,
   getUpdatedRoom,
 } from './utils';
+import { standartDateFormatReversed } from '@/constants/dates';
 
 const defaultDateRange: DateRange = {
   from: undefined,
@@ -45,7 +46,7 @@ const defaultDays = 7;
 
 const useSearchFilterStore = create<SearchFiltersState>()(
   devtools(
-    immer((set) => ({
+    immer((set, get) => ({
       datePicker: {
         messageDeparture: 'Select a departure date',
         messageReturn: 'Select a return date',
@@ -65,6 +66,13 @@ const useSearchFilterStore = create<SearchFiltersState>()(
       guestsFormattedMessage: '',
       activeFormattedDates: '',
       activeTabDates: DatepickerTabEnum.Dates,
+      _setRooms: (rooms: GuestRoomType[]) =>
+        set((state) => {
+          const result = getGuestTypeInfo(rooms);
+          state.guests.rooms = rooms;
+          state.guests.result = result;
+          state.guests.formattedMessage = getGuestFormattedMessage(result);
+        }),
       updateRooms: (rooms: GuestRoomType[], roomNumber: number) =>
         set((state) => {
           const updatedRooms = getUpdatedRoom(rooms, roomNumber);
@@ -209,6 +217,80 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           state.activeTabDates = tab;
           state.activeFormattedDates = formattedDateStr;
         }),
+      _getCheckInOutUrlSearchParams: () => {
+        const state = get();
+        const dateRange = state.datePicker.datesRange;
+        const url = new URLSearchParams();
+
+        if (dateRange.from) {
+          url.append(
+            'checkIn',
+            format(dateRange.from, standartDateFormatReversed),
+          );
+        }
+        if (dateRange.to) {
+          url.append(
+            'checkOut',
+            format(dateRange.to, standartDateFormatReversed),
+          );
+        }
+        return url;
+      },
+      _getGuestsUrlSearchParams: () => {
+        const state = get();
+        const url = new URLSearchParams();
+
+        let childAgesTotal: number[] = [];
+
+        for (let [index, room] of state.guests.rooms.entries()) {
+          url.append(`rooms.${index}.adults`, room.adults.toString());
+          if (room.children.length) {
+            url.append(`rooms.${index}.childAges`, room.children.join(','));
+          }
+          childAgesTotal = [...childAgesTotal, ...room.children];
+        }
+
+        url.append('adults', state.guests.result.adults.toString());
+        url.append('childAges', childAgesTotal.join(','));
+
+        return url;
+      },
+      setToStoreSearchParamsFromUrl: (params: URLSearchParams) => {
+        const state = get();
+        let rooms: GuestRoomType[] = [];
+
+        const rangeDates: Date[] = [];
+        for (const [key, item] of params.entries()) {
+          if (key === 'checkIn') rangeDates.push(new Date(item));
+          if (key === 'checkOut') rangeDates.push(new Date(item));
+          if (key.split('.')[2] === 'adults') {
+            const index = +key.split('.')[1];
+            rooms[index] = {
+              ...rooms[index],
+              room: index,
+              adults: +item,
+            };
+          }
+          if (key.split('.')[2] === 'childAges') {
+            const index = +key.split('.')[1];
+            rooms[index] = {
+              ...rooms[index],
+              room: index,
+              children: item.split(',').map((item) => Number(item.trim())),
+            };
+          }
+        }
+        state.updateDatePickerDates(rangeDates[0], rangeDates[1]);
+        state._setRooms(rooms);
+      },
+      getSearchFilterUrlParams: () => {
+        const state = get();
+
+        return new URLSearchParams({
+          ...Object.fromEntries(state._getCheckInOutUrlSearchParams()),
+          ...Object.fromEntries(state._getGuestsUrlSearchParams()),
+        });
+      },
     })),
   ),
 );

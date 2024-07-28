@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Popover } from 'react-tiny-popover';
 import { useMediaQuery } from 'react-responsive';
@@ -32,14 +32,19 @@ enum EnumFilterToggler {
 }
 
 export default function TopSearch() {
-  const { datePicker, guests, activeFormattedDates } = useSearchFilterStore();
+  const {
+    datePicker,
+    guests,
+    activeFormattedDates,
+    getSearchFilterUrlParams,
+    setToStoreSearchParamsFromUrl,
+  } = useSearchFilterStore();
 
   const [visibleFilters, setVisibleFilters] = useState<boolean>(false);
   const [popoverActive, setPopoverActive] = useState<EnumFilterToggler | null>(
     null,
   );
-  // const [modalDestinationActive, setModalDestinationActive] =
-  //   useState<boolean>(false);
+
   const [modalTravelActive, setModalTravelActive] = useState<boolean>(false);
   const [modalGuestsActive, setModalGuestsActive] = useState<boolean>(false);
 
@@ -82,6 +87,20 @@ export default function TopSearch() {
 
     return `${dates} ${guests.result.adults} ${guestText}, ${guests.result.rooms} ${roomText} ${childrenText}`;
   };
+
+  function onHandleSearch() {
+    const currentUrl = new URL(window.location.toString());
+    const formattedUrl = getSearchFilterUrlParams();
+    for (let [key, item] of formattedUrl.entries()) {
+      currentUrl.searchParams.set(key, item);
+    }
+    window.history.pushState({}, '', currentUrl.href);
+  }
+
+  useEffect(() => {
+    const currentUrl = new URL(window.location.toString());
+    setToStoreSearchParamsFromUrl(currentUrl.searchParams);
+  }, []);
 
   return (
     <div data-testid={dataAttributes.rootBlock} className="top-search">
@@ -138,6 +157,7 @@ export default function TopSearch() {
             id="destination-field"
             label="Going to"
             placeholder="Destination name"
+            resetToggler
             dataTestIdInput={dataAttributes.filterTogglerDestinationInput}
             dataTestIdButton={dataAttributes.filterTogglerDestinationBottom}
             onClick={() => {
@@ -200,6 +220,7 @@ export default function TopSearch() {
             variant="secondary"
             size="xl"
             className="top-search__search-btn"
+            onClick={onHandleSearch}
           >
             Search
           </Button>

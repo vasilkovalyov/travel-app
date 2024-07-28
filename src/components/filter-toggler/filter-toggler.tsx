@@ -13,6 +13,7 @@ const FilterToggler = forwardRef(
       text = '',
       placeholder,
       readonly,
+      resetToggler = false,
       dataTestIdInput,
       dataTestIdButton,
       onBlur,
@@ -71,7 +72,7 @@ const FilterToggler = forwardRef(
             value={inputValue}
             className="filter-toggler__text-field"
             largeSize
-            clearTextButton
+            clearTextButton={resetToggler}
             readOnly={readonly}
             data-testid={dataTestIdInput}
             onCustomBlur={onCustomBlurInput}
