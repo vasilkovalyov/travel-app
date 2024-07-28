@@ -21,6 +21,25 @@ import {
 } from './utils';
 import { standartDateFormatReversed } from '@/constants/dates';
 
+const sortByListData = [
+  {
+    id: 'recommended',
+    title: 'Recommended',
+  },
+  {
+    id: 'price-cheap-first',
+    title: 'Price (Cheapest first)',
+  },
+  {
+    id: 'customer-rating',
+    title: 'Customer Rating (Highest first)',
+  },
+  {
+    id: 'star-rating',
+    title: 'Star Rating (Highest first)',
+  },
+];
+
 const defaultDateRange: DateRange = {
   from: undefined,
   to: undefined,
@@ -66,6 +85,18 @@ const useSearchFilterStore = create<SearchFiltersState>()(
       guestsFormattedMessage: '',
       activeFormattedDates: '',
       activeTabDates: DatepickerTabEnum.Dates,
+      sortByList: sortByListData,
+      selectedSortId: sortByListData[0].id,
+      updateSortBy: (id: string) =>
+        set((state) => {
+          state.selectedSortId = id;
+        }),
+      getSelectedSortTitle: () => {
+        const state = get();
+        return state.sortByList.filter(
+          (item) => item.id === state.selectedSortId,
+        )[0].title;
+      },
       _setRooms: (rooms: GuestRoomType[]) =>
         set((state) => {
           const result = getGuestTypeInfo(rooms);
@@ -217,6 +248,12 @@ const useSearchFilterStore = create<SearchFiltersState>()(
           state.activeTabDates = tab;
           state.activeFormattedDates = formattedDateStr;
         }),
+      _getSortUrlSearchParameter: () => {
+        const state = get();
+        const url = new URLSearchParams();
+        url.append('sort', state.selectedSortId);
+        return url;
+      },
       _getCheckInOutUrlSearchParams: () => {
         const state = get();
         const dateRange = state.datePicker.datesRange;
@@ -279,6 +316,9 @@ const useSearchFilterStore = create<SearchFiltersState>()(
               children: item.split(',').map((item) => Number(item.trim())),
             };
           }
+          if (key === 'sort') {
+            state.updateSortBy(item);
+          }
         }
         state.updateDatePickerDates(rangeDates[0], rangeDates[1]);
         state._setRooms(rooms);
@@ -289,6 +329,7 @@ const useSearchFilterStore = create<SearchFiltersState>()(
         return new URLSearchParams({
           ...Object.fromEntries(state._getCheckInOutUrlSearchParams()),
           ...Object.fromEntries(state._getGuestsUrlSearchParams()),
+          ...Object.fromEntries(state._getSortUrlSearchParameter()),
         });
       },
     })),

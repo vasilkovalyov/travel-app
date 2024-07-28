@@ -1,0 +1,10 @@
+.sort-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  &__title {
+    font-weight: 600;
+    color: rgb(var(--app-color-dark));
+  }
+}

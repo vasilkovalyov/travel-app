@@ -31,6 +31,13 @@ export interface SearchFiltersState {
   };
   activeFormattedDates: string;
   activeTabDates: DatepickerTabEnum;
+  sortByList: {
+    id: string;
+    title: string;
+  }[];
+  selectedSortId: string;
+  updateSortBy: (id: string) => void;
+  getSelectedSortTitle: () => string;
   _setRooms: (rooms: GuestRoomType[]) => void;
   updateRooms: (rooms: GuestRoomType[], roomNumber: number) => void;
   resetGuests: () => void;
@@ -49,6 +56,7 @@ export interface SearchFiltersState {
   resetDateMonth: () => void;
   clearActiveFormattedDates: () => void;
   updateTab: (tab: DatepickerTabEnum) => void;
+  _getSortUrlSearchParameter: () => URLSearchParams;
   _getCheckInOutUrlSearchParams: () => URLSearchParams;
   _getGuestsUrlSearchParams: () => URLSearchParams;
   setToStoreSearchParamsFromUrl: (params: URLSearchParams) => void;
