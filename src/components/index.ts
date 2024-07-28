@@ -10,3 +10,4 @@ export * from './rating';
 export * from './modal';
 export * from './portal';
 export * from './main-menu';
+export * from './switcher-list';

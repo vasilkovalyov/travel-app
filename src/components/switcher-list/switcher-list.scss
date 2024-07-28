@@ -1,0 +1,53 @@
+@use '@/style/03-mixins/common.mixins' as common;
+
+:root {
+  --app-switcher-btn-color: rgb(var(--app-color-dark));
+  --app-switcher-btn-bg: transparent;
+}
+
+.switcher-list {
+  padding-inline: 4px;
+  padding-bottom: 16px;
+}
+
+.switcher-btn {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  color: rgb(var(--app-switcher-btn-color));
+  background-color: var(--app-switcher-btn-bg);
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  text-align: left;
+  border: none;
+
+  &:not(.active) {
+    @include common.hover {
+      &:hover {
+        background-color: rgb(var(--app-color-blue-light));
+      }
+    }
+  }
+
+  &.active {
+    --app-switcher-btn-color: rgb(var(--app-color-light));
+    --app-switcher-btn-bg: rgb(var(--app-color-primary));
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgb(var(--app-color-dark));
+    outline-offset: -2px;
+  }
+
+  &__title {
+    font-weight: 600;
+    color: var(--app-switcher-btn-color);
+    flex: 1 1 auto;
+  }
+
+  &__icon {
+    color: rgb(var(--app-color-light));
+  }
+}
