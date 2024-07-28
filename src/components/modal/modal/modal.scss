@@ -1,6 +1,10 @@
 @use '@/style/02-utils/_utils.animation' as animation;
 @use '@/style/03-mixins/common.mixins' as common;
 
+:root {
+  --app-modal-width: 100%;
+}
+
 .modal {
   --modal-padding: 12px;
 
@@ -19,6 +23,12 @@
     --modal-padding: 20px;
   }
 
+  &--small &__box {
+    @include common.media(mobile_md) {
+      --app-modal-width: 500px;
+    }
+  }
+
   &__box {
     position: relative;
     background-color: rgb(var(--app-color-light));
@@ -26,18 +36,22 @@
     flex-direction: column;
     overflow: hidden;
     width: 100%;
+    max-width: var(--app-modal-width);
     height: 100%;
 
     @include common.media(mobile_md) {
+      --app-modal-width: calc(100% - 40px);
+
       max-height: calc(100% - 40px);
-      max-width: calc(100% - 40px);
+      // max-width: var(--app-modal-width);
       width: 90%;
       height: auto;
       border-radius: 20px;
     }
 
     @include common.media(tablet) {
-      width: 80%;
+      --app-modal-width: 80%;
+      // width: 80%;
     }
   }
 

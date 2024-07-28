@@ -12,7 +12,7 @@ export function useModal({ onClose }: UseModalProps) {
 
   function eventKeyListener(el: HTMLElement) {
     focusedElements.current = el.querySelectorAll<HTMLElement>(
-      'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabIndex="-1"]',
+      'a[href], button, label, textarea, input, select, [tabindex="-1"]',
     );
 
     el.focus();
